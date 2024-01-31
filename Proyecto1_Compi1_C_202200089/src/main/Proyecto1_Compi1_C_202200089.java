@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package main;
-import GUI.Principal;
+import GUI.gui;
 
 /**
  *
@@ -17,7 +17,7 @@ public class Proyecto1_Compi1_C_202200089 {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        Principal miInterfaz = new Principal();
+        gui miInterfaz = new gui();
         // Hacer visible la interfaz
         miInterfaz.setVisible(true);
         
