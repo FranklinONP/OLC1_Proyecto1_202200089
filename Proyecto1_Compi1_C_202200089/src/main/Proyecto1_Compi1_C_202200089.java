@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package main;
+import GUI.Principal;
 
 /**
  *
@@ -15,6 +16,15 @@ public class Proyecto1_Compi1_C_202200089 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+
+        Principal miInterfaz = new Principal();
+        // Hacer visible la interfaz
+        miInterfaz.setVisible(true);
+        
+    //    EditorDeTexto et= new EditorDeTexto();
+    //    et.setVisible(true);
+        
+       
     }
     
 }
