@@ -13,9 +13,8 @@ import javax.swing.JTextArea;
  * @author 50232
  */
 public class Principal extends javax.swing.JFrame {
-    
-    
-    private int contador=1;
+    //Variables Globales
+    private int contadorPestanas=1;
     /**
      * Creates new form Principal
      */
@@ -56,14 +55,14 @@ public class Principal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu8 = new javax.swing.JMenu();
-        jMenu9 = new javax.swing.JMenu();
         jMenu10 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -139,9 +138,25 @@ public class Principal extends javax.swing.JFrame {
         jLabel3.setText("Consola");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
 
+        jButton3.setText("Ejecutar");
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
+
+        jButton4.setText("+Pestaña");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
+
         jMenu7.setText("Archivo");
 
         jMenuItem3.setText("Nuevo Archivo");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem3);
 
         jMenuItem4.setText("Abrir Archivo");
@@ -154,12 +169,6 @@ public class Principal extends javax.swing.JFrame {
         jMenu7.add(jMenuItem6);
 
         jMenuBar2.add(jMenu7);
-
-        jMenu8.setText("+ Pestaña");
-        jMenuBar2.add(jMenu8);
-
-        jMenu9.setText("Ejecutar");
-        jMenuBar2.add(jMenu9);
 
         jMenu10.setText("Reportes");
 
@@ -179,44 +188,41 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("HOla mundo desde Nuevo Archivo");
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        JPanel panel4 = new JPanel();
+
+        // Crear un JTextArea editable con tamaño predeterminado
+        JTextArea textArea1 = new JTextArea();
+
+        // Establecer el tamaño preferido del JTextArea
+        textArea1.setPreferredSize(new Dimension(498, 273));
+
+        // Permitir la edición del JTextArea
+        textArea1.setEditable(true);
+
+        // Agregar el JTextArea al panel
+        panel4.add(textArea1);
+
+        // Agregar el panel al JTabbedPane
+        jTabbedPane1.addTab("Archivo " + contadorPestanas, panel4);
+        contadorPestanas++;
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
-        });
-    }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -229,8 +235,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
