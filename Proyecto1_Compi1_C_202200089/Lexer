@@ -1,0 +1,38 @@
+%%
+
+%class Lexer
+%unicode
+%int
+%line
+%column
+
+%{
+  public static void main(String[] args) throws Exception {
+    Lexer lexer = new Lexer(System.in);
+    lexer.yylex();
+  }
+%}
+
+Identificador = [a-zA-Z_][a-zA-Z_0-9]*
+Numero = [0-9]+
+PalabraReservada = "if"|"else"|"while"|"for"
+
+%%
+
+{Identificador} { 
+  System.out.println("Identificador: " + yytext()); 
+}
+
+{Numero} { 
+  System.out.println("Número: " + yytext()); 
+}
+
+{PalabraReservada} { 
+  System.out.println("Palabra reservada: " + yytext()); 
+}
+
+[\n\t ]+ { /* Ignorar espacios en blanco */ }
+
+. { 
+  System.out.println("Símbolo no reconocido: " + yytext()); 
+}
