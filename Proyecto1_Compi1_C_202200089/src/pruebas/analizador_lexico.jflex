@@ -18,7 +18,7 @@ import java_cup.runtime.*;
 %ignorecase
 
 %init{
-    yyline=0;
+    yyline=1;
     yychar=0;
 %init}
 
@@ -26,7 +26,6 @@ DOS_PUNTOS = ":"
 MENOR_QUE = "<"
 MAYOR_QUE = ">"
 GUION = "-"
-PUNTO = "."
 COMA = ","
 PUNTO_Y_COMA = ";"
 PARENTESIS_IZQUIERDO = "("
@@ -37,13 +36,18 @@ SIGNO_IGUAL = "="
 COMILLA_DOBLE = "\""
 
 
-STRING=[a-zA-Z_]+
+NUMEROS = [0-9]+(\.[0-9]+)?
+
 ESPACIO_BLANCO = [ \t\n\r]+
+
+STRING=[a-zA-Z_]+
+
 
 COMENTARIO_MULTILINEA = "<!" .*? "!>"
 COMENTARIO_LINEA = "!" .*
 
-NUMEROS =[0-9]
+
+
 
 RESERVADA_PROGRAM = "Program"
 RESERVADA_END = "End"
@@ -83,16 +87,13 @@ RESERVADA_EXEC = "Exec"
 
 <YYINITIAL> {COMENTARIO_MULTILINEA} { System.out.println(yytext()) ; }
 <YYINITIAL> {COMENTARIO_LINEA} { System.out.println(yytext()) ;}
+
 <YYINITIAL> {ESPACIO_BLANCO} { System.out.println(yytext()) ; }
-
-<YYINITIAL> {NUMEROS} { System.out.println(yytext()) ; return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()) ; }
-
 
 <YYINITIAL> {DOS_PUNTOS} { System.out.println(yytext()) ; return new Symbol(sym.DOS_PUNTOS, yyline, yycolumn, yytext()) ; }
 <YYINITIAL> {MENOR_QUE} { System.out.println(yytext()) ; return new Symbol(sym.MENOR_QUE, yyline, yycolumn, yytext()) ; }
 <YYINITIAL> {MAYOR_QUE} { System.out.println(yytext()) ; return new Symbol(sym.MAYOR_QUE, yyline, yycolumn, yytext()) ; }
 <YYINITIAL> {GUION} { System.out.println(yytext()) ; return new Symbol(sym.GUION, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {PUNTO} { System.out.println(yytext()) ; return new Symbol(sym.PUNTO, yyline, yycolumn, yytext()) ; }
 <YYINITIAL> {COMA} { System.out.println(yytext()) ; return new Symbol(sym.COMA, yyline, yycolumn, yytext()) ; }
 <YYINITIAL> {PUNTO_Y_COMA} { System.out.println(yytext()) ; return new Symbol(sym.PUNTO_Y_COMA, yyline, yycolumn, yytext()) ; }
 <YYINITIAL> {PARENTESIS_IZQUIERDO} { System.out.println(yytext()) ; return new Symbol(sym.PARENTESIS_IZQUIERDO, yyline, yycolumn, yytext()) ; }
@@ -136,6 +137,10 @@ RESERVADA_EXEC = "Exec"
 
 
 <YYINITIAL> {STRING} { System.out.println(yytext()) ; return new Symbol(sym.STRING, yyline, yycolumn, yytext()) ; }
+
+<YYINITIAL> {NUMEROS} { System.out.println(yytext()) ; return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()) ; }
+
+
 
 <YYINITIAL>  . {
     System.out.println("Este es un error lexico: "+yytext()+", en la linea: "+yyline+", en la columna: "+yycolumn);

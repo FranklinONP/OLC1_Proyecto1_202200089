@@ -15,6 +15,7 @@ public class sym {
   public static final int PARENTESIS_IZQUIERDO = 9;
   public static final int PUNTO_Y_COMA = 8;
   public static final int NUMEROS = 48;
+  public static final int MALFORMADO = 49;
   public static final int RESERVADA_END = 16;
   public static final int DOS_PUNTOS = 2;
   public static final int RESERVADA_EJEY_GRAFICA = 41;
@@ -106,7 +107,8 @@ public class sym {
   "RESRVADA_LABEL_GRAFICA",
   "RESERVADA_EXEC",
   "STRING",
-  "NUMEROS"
+  "NUMEROS",
+  "MALFORMADO"
   };
 }
 
