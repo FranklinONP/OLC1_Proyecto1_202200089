@@ -71,7 +71,8 @@ public class pruebaaaa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String codigo = jTextArea1.getText();
+        
+        String codigo = jTextArea1.getText();
     try {
         analizador_lexico scanner = new analizador_lexico(new java.io.StringReader(codigo));
         analizador_sintactico analizador = new analizador_sintactico(scanner);

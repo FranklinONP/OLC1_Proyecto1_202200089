@@ -9,55 +9,54 @@ package pruebas;
 public class sym {
   /* terminals */
   public static final int PARENTESIS_DERECHO = 10;
-  public static final int RESERVADA_PROGRAM = 15;
-  public static final int RESERVADA_GRAFICA_LINEA = 37;
-  public static final int RESERVADA_MODA = 28;
+  public static final int RESERVADA_PROGRAM = 14;
+  public static final int RESERVADA_MODA = 27;
   public static final int PARENTESIS_IZQUIERDO = 9;
   public static final int PUNTO_Y_COMA = 8;
-  public static final int NUMEROS = 48;
-  public static final int MALFORMADO = 49;
-  public static final int RESERVADA_END = 16;
+  public static final int NUMEROS = 47;
+  public static final int RESERVADA_END = 15;
   public static final int DOS_PUNTOS = 2;
-  public static final int RESERVADA_EJEY_GRAFICA = 41;
+  public static final int RESERVADA_EJEY_GRAFICA = 40;
   public static final int CORCHETE_DERECHO = 12;
-  public static final int RESERVADA_MAX = 30;
+  public static final int RESERVADA_MAX = 29;
   public static final int SIGNO_IGUAL = 13;
-  public static final int RESERVADA_VAR = 17;
-  public static final int RESERVADA_GRAFICA_PIE = 36;
-  public static final int RESERVADA_TITULOX_GRAFICA = 42;
-  public static final int RESERVADA_GRAFIA_HISTOGRAMA = 38;
-  public static final int RESRVADA_LABEL_GRAFICA = 45;
-  public static final int RESERVADA_EXEC = 46;
+  public static final int RESERVADA_VAR = 16;
+  public static final int RESERVADA_GRAFICA_PIE = 35;
+  public static final int RESERVADA_TITULOX_GRAFICA = 41;
+  public static final int RESERVADA_GRAFIA_HISTOGRAMA = 37;
+  public static final int RESRVADA_LABEL_GRAFICA = 44;
+  public static final int RESERVADA_EXEC = 45;
   public static final int GUION = 5;
   public static final int CORCHETE_IZQUIERDO = 11;
-  public static final int RESERVADA_CONSOLE = 32;
-  public static final int COMILLA_DOBLE = 14;
+  public static final int RESERVADA_CONSOLE = 31;
   public static final int EOF = 0;
   public static final int error = 1;
   public static final int COMA = 7;
-  public static final int RESERVADA_CHAR = 19;
+  public static final int RESERVADA_CHAR = 18;
   public static final int MAYOR_QUE = 4;
-  public static final int RESERVADA_MEDIA = 26;
-  public static final int RESERVADA_DOUBLE = 18;
-  public static final int RESERVADA_PRINT = 33;
-  public static final int RESERVADA_VALUES_GRAFICA = 44;
+  public static final int RESERVADA_MEDIA = 25;
+  public static final int RESERVADA_DOUBLE = 17;
+  public static final int IDENTIFICADORES = 48;
+  public static final int RESERVADA_PRINT = 32;
+  public static final int RESERVADA_VALUES_GRAFICA = 43;
   public static final int PUNTO = 6;
-  public static final int RESERVADA_TITULOY_GRAFICA = 43;
-  public static final int RESERVADA_COLUMN = 34;
-  public static final int RESERVADA_MIN = 31;
-  public static final int RESERVADA_MULTIPLICACION = 23;
-  public static final int RESERVADA_EJEX_GRAFICA = 40;
-  public static final int RESERVADA_GRAFICA_BARRA = 35;
-  public static final int STRING = 47;
-  public static final int RESERVADA_VARIANZA = 29;
+  public static final int RESERVADA_TITULOY_GRAFICA = 42;
+  public static final int RESERVADA_COLUMN = 33;
+  public static final int RESERVADA_MIN = 30;
+  public static final int RESERVADA_MULTIPLICACION = 22;
+  public static final int RESERVADA_EJEX_GRAFICA = 39;
+  public static final int RESERVADA_GRAFICA_BARRA = 34;
+  public static final int STRING = 46;
+  public static final int RESERVADA_VARIANZA = 28;
   public static final int MENOR_QUE = 3;
-  public static final int RESERVADA_RESTA = 22;
-  public static final int RESERVADA_SUMA = 21;
-  public static final int RESERVADA_TITULO_GRAFICA = 39;
-  public static final int RESERVADA_ARRAY = 20;
-  public static final int RESERVADA_MEDIANA = 27;
-  public static final int RESERVADA_DIVISION = 24;
-  public static final int RESERVADA_MODULO = 25;
+  public static final int RESERVADA_RESTA = 21;
+  public static final int RESERVADA_SUMA = 20;
+  public static final int RESERVADA_TITULO_GRAFICA = 38;
+  public static final int RESERVADA_ARRAY = 19;
+  public static final int RESERVADA_MEDIANA = 26;
+  public static final int RESERVADA_DIVISION = 23;
+  public static final int RESERVADA_MODULO = 24;
+  public static final int RESERVADA_GRAFICA_LINE = 36;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -73,7 +72,6 @@ public class sym {
   "CORCHETE_IZQUIERDO",
   "CORCHETE_DERECHO",
   "SIGNO_IGUAL",
-  "COMILLA_DOBLE",
   "RESERVADA_PROGRAM",
   "RESERVADA_END",
   "RESERVADA_VAR",
@@ -96,7 +94,7 @@ public class sym {
   "RESERVADA_COLUMN",
   "RESERVADA_GRAFICA_BARRA",
   "RESERVADA_GRAFICA_PIE",
-  "RESERVADA_GRAFICA_LINEA",
+  "RESERVADA_GRAFICA_LINE",
   "RESERVADA_GRAFIA_HISTOGRAMA",
   "RESERVADA_TITULO_GRAFICA",
   "RESERVADA_EJEX_GRAFICA",
@@ -108,7 +106,7 @@ public class sym {
   "RESERVADA_EXEC",
   "STRING",
   "NUMEROS",
-  "MALFORMADO"
+  "IDENTIFICADORES"
   };
 }
 
