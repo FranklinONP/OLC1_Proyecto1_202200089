@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+//Importacion de los analizadores
+import Analizadores.analizador_lexico;
+import Analizadores.analizador_sintactico;
 
 import java.awt.BorderLayout;
 import java.io.BufferedReader;
@@ -101,6 +104,11 @@ public class gui extends javax.swing.JFrame {
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
 
         jButton3.setText("Ejecutar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -350,6 +358,29 @@ public class gui extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = jTabbedPane1.getSelectedIndex();
+        JPanel selectedPanel = (JPanel) jTabbedPane1.getComponentAt(selectedIndex);
+        JScrollPane scrollPane = (JScrollPane) selectedPanel.getComponent(0);
+        JTextArea textArea = (JTextArea) scrollPane.getViewport().getView();
+        String codigo = textArea.getText();
+                
+    try {
+        analizador_lexico scanner = new analizador_lexico(new java.io.StringReader(codigo));
+        analizador_sintactico analizador = new analizador_sintactico(scanner);
+        analizador.parse();
+        System.out.println("Análisis finalizado");
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+         {
+        
+        
+    }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

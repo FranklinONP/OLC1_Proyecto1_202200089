@@ -1,4 +1,4 @@
-package pruebas;
+package Analizadores;
 import java_cup.runtime.Symbol;
 import java_cup.runtime.*;
 

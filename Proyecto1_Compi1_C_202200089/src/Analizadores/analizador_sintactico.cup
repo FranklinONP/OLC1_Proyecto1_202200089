@@ -1,0 +1,52 @@
+package Analizadores;
+
+import java_cup.runtime.*;
+
+parser code
+{:
+
+    public void syntax_error(Symbol s)
+    {
+        System.out.println("Error de sintaxis en la linea " + (s.left) + ", columna " + (s.right) + ". No se esperaba " + s.value);
+    }
+
+
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {
+        System.out.println("Error de sintaxis en la linea " + (s.left) + ", columna " + (s.right) + ". No se esperaba " + s.value );
+    }
+ 
+:}
+
+
+terminal DOS_PUNTOS,MENOR_QUE,MAYOR_QUE,GUION,PUNTO,COMA,PUNTO_Y_COMA,PARENTESIS_IZQUIERDO,
+PARENTESIS_DERECHO, CORCHETE_IZQUIERDO, CORCHETE_DERECHO, SIGNO_IGUAL,RESERVADA_PROGRAM,
+RESERVADA_END, RESERVADA_VAR, RESERVADA_DOUBLE, RESERVADA_CHAR, RESERVADA_ARRAY, RESERVADA_SUMA,
+RESERVADA_RESTA, RESERVADA_MULTIPLICACION, RESERVADA_DIVISION, RESERVADA_MODULO, RESERVADA_MEDIA, 
+RESERVADA_MEDIANA, RESERVADA_MODA, RESERVADA_VARIANZA, RESERVADA_MAX, RESERVADA_MIN, RESERVADA_CONSOLE,
+RESERVADA_PRINT,RESERVADA_COLUMN, RESERVADA_GRAFICA_BARRA, RESERVADA_GRAFICA_PIE, RESERVADA_GRAFICA_LINE,
+RESERVADA_GRAFIA_HISTOGRAMA, RESERVADA_TITULO_GRAFICA, RESERVADA_EJEX_GRAFICA, RESERVADA_EJEY_GRAFICA, 
+RESERVADA_TITULOX_GRAFICA, RESERVADA_TITULOY_GRAFICA, RESERVADA_VALUES_GRAFICA, RESRVADA_LABEL_GRAFICA,
+RESERVADA_EXEC,STRING,NUMEROS,IDENTIFICADORES;
+
+non terminal inicio;
+non terminal lexema;
+non terminal apertura,cerradura;
+non terminal cuerpoPrueba;
+non terminal variable,tipoOperacion,valor,identificador;
+
+
+start with inicio;
+
+inicio::= apertura cerradura;
+
+apertura::= RESERVADA_PROGRAM cuerpoPrueba cerradura;
+
+cerradura::= RESERVADA_END RESERVADA_PROGRAM;
+
+variable::= RESERVADA_VAR DOS_PUNTOS tipoOperacion DOS_PUNTOS DOS_PUNTOS NUMEROS MENOR_QUE GUION valor RESERVADA_END PUNTO_Y_COMA;
+tipoOperacion::= RESERVADA_CHAR CORCHETE_DERECHO CORCHETE_IZQUIERDO |RESERVADA_DOUBLE|RESERVADA_ARRAY;
+valor::= NUMEROS|STRING;
+
+cuerpoPrueba::= variable;
