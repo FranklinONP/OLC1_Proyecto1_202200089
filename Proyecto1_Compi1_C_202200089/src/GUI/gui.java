@@ -36,6 +36,7 @@ public class gui extends javax.swing.JFrame {
      */
     public gui() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

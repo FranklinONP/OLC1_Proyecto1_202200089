@@ -45,7 +45,8 @@ NUMEROS = [0-9]+(\.[0-9]+)?
 ESPACIO_BLANCO = [ \t\n\r]+
 
 STRING ="\"".*?"\""
-IDENTIFICADORES =("@"[a-zA-Z0-9,_]+)|[a-zA-Z0-9_]+ 
+
+ID = ("@"[a-zA-Z][a-zA-Z0-9,_]+)|([a-zA-Z][a-zA-Z0-9_]+ )
 
 RESERVADA_PROGRAM = "Program"
 RESERVADA_END = "End"
@@ -134,7 +135,7 @@ RESERVADA_EXEC = "Exec"
 <YYINITIAL> {RESERVADA_EXEC} { System.out.println("Palabra Reservada: EXEC, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_EXEC, yyline, yycolumn, yytext()) ; }
 
 
-<YYINITIAL> {IDENTIFICADORES} { System.out.println("Se encontro un IDENTIFICADOR Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.STRING, yyline, yycolumn, yytext()) ; }
+<YYINITIAL> {ID} { System.out.println("Se encontro un IDENTIFICADOR Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.ID, yyline, yycolumn, yytext()) ; }
 
 <YYINITIAL> {STRING} { System.out.println("Se encontro una cadena CHAR Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.STRING, yyline, yycolumn, yytext()) ; }
 
