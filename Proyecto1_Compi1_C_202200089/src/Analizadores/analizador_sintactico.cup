@@ -31,21 +31,90 @@ RESERVADA_TITULOX_GRAFICA, RESERVADA_TITULOY_GRAFICA, RESERVADA_VALUES_GRAFICA, 
 RESERVADA_EXEC,STRING,NUMEROS;
 
 non terminal inicio,codigo, declaraciones,textos,numericas,arreglos,acciones;
-non terminal print;
+non terminal print,aritmeticas,declaracion,accion;
 
+
+//==============================================================================
 start with inicio;
+//==============================================================================
 
+
+
+//==============================================================================
 inicio::= RESERVADA_PROGRAM codigo RESERVADA_END RESERVADA_PROGRAM;
+//==============================================================================
 
-codigo::= declaraciones|acciones;
 
-declaraciones::= textos;
 
-textos::= RESERVADA_VAR DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO DOS_PUNTOS DOS_PUNTOS ID
-            MENOR_QUE GUION STRING RESERVADA_END PUNTO_Y_COMA;
+//==============================================================================
+codigo::= declaraciones acciones;
+//==============================================================================
 
-acciones::= print;
 
+
+
+
+//==============================================================================
+declaraciones ::= declaracion | declaracion declaraciones ;
+declaracion ::= textos | numericas | arreglos;
+//==============================================================================
+
+
+
+
+
+
+//==============================================================================
+textos::=   RESERVADA_VAR 
+            DOS_PUNTOS 
+            RESERVADA_CHAR
+            CORCHETE_IZQUIERDO  
+            CORCHETE_DERECHO    
+            DOS_PUNTOS DOS_PUNTOS ID
+            MENOR_QUE 
+            GUION 
+            STRING 
+            RESERVADA_END 
+            PUNTO_Y_COMA;
+//==============================================================================
+
+
+//==============================================================================
+numericas::=RESERVADA_VAR
+            DOS_PUNTOS
+            RESERVADA_DOUBLE
+            DOS_PUNTOS
+            DOS_PUNTOS
+            ID
+            MENOR_QUE
+            GUION
+            NUMEROS
+            RESERVADA_END
+            PUNTO_Y_COMA;
+//==============================================================================
+
+
+//==============================================================================
+//==============================================================================
+
+
+
+
+//==============================================================================
+acciones::=accion|accion acciones;
+accion::=print|aritmeticas;
+
+//==============================================================================
+
+
+//==============================================================================
+aritmeticas::= RESERVADA_SUMA;
+ 
+//==============================================================================
+
+
+
+//==============================================================================
 print::= 
     RESERVADA_CONSOLE:e1
     DOS_PUNTOS:e2 
@@ -56,7 +125,7 @@ print::=
     RESERVADA_END:e6 
     PUNTO_Y_COMA:e7
     {: 
-        System.out.println("Print desde el cup de la cadena: " + s+"\n");
+        System.out.println("\n"+"Print desde el cup de la cadena: " + s+"\n");
     :};
 
 
