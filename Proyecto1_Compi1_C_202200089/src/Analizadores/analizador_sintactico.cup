@@ -32,7 +32,9 @@ RESERVADA_EXEC,STRING,NUMEROS;
 
 non terminal inicio,codigo, declaraciones,textos,numericas,arreglos,acciones;
 non terminal print,aritmeticas,declaracion,accion,printSimple,valorPrint;
-non terminal combinacion, combinado,codigo1;
+non terminal combinacion, combinado,cod;
+non terminal  suma,resta,multiplicacion,division,modulo;
+non terminal valorAritmetico,anidacion;
 
 
 //==============================================================================
@@ -48,23 +50,11 @@ inicio::= RESERVADA_PROGRAM codigo RESERVADA_END RESERVADA_PROGRAM;
 
 
 //==============================================================================
-codigo::= declaraciones|acciones;
+codigo::= cod|cod codigo;
+cod::=textos | numericas | arreglos|print|aritmeticas;
 //==============================================================================
 
-
-
-
-
-//==============================================================================
-declaraciones ::= declaracion | declaracion declaraciones ;
-declaracion ::= textos | numericas | arreglos;
-//==============================================================================
-
-
-
-
-
-
+//Declaraciones de variables
 //==============================================================================
 textos::=   RESERVADA_VAR 
             DOS_PUNTOS 
@@ -111,19 +101,21 @@ printSimple::=
 //==============================================================================
 
 
-
-
-//==============================================================================
-acciones::=accion|accion acciones;
-accion::=print|aritmeticas;
-
 //==============================================================================
 
 
 //==============================================================================
-aritmeticas::= RESERVADA_SUMA;
- 
+aritmeticas::= suma;
+
+suma::= RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico COMA valorAritmetico PARENTESIS_DERECHO PUNTO_Y_COMA;
+
+valorAritmetico::= NUMEROS|ID|anidacion;
+anidacion::=RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico COMA valorAritmetico PARENTESIS_DERECHO;
+
 //==============================================================================
+
+
+
 
 
 

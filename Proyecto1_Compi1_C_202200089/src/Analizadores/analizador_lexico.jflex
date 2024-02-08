@@ -19,7 +19,7 @@ import java_cup.runtime.*;
 
 %init{
     yyline=1;
-    yychar=0;
+    yychar=1;
 %init}
 
 
