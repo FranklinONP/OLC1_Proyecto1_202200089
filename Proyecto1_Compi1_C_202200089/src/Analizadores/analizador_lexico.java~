@@ -421,7 +421,7 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
    */
   public analizador_lexico(java.io.Reader in) {
       yyline=1;
-    yychar=0;
+    yychar=1;
     this.zzReader = in;
   }
 
