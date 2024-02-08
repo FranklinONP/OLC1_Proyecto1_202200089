@@ -31,7 +31,8 @@ RESERVADA_TITULOX_GRAFICA, RESERVADA_TITULOY_GRAFICA, RESERVADA_VALUES_GRAFICA, 
 RESERVADA_EXEC,STRING,NUMEROS;
 
 non terminal inicio,codigo, declaraciones,textos,numericas,arreglos,acciones;
-non terminal print,aritmeticas,declaracion,accion;
+non terminal print,aritmeticas,declaracion,accion,printSimple,valorPrint;
+non terminal combinacion, combinado,codigo1;
 
 
 //==============================================================================
@@ -47,7 +48,7 @@ inicio::= RESERVADA_PROGRAM codigo RESERVADA_END RESERVADA_PROGRAM;
 
 
 //==============================================================================
-codigo::= declaraciones acciones;
+codigo::= declaraciones|acciones;
 //==============================================================================
 
 
@@ -95,6 +96,18 @@ numericas::=RESERVADA_VAR
 
 
 //==============================================================================
+printSimple::=
+    RESERVADA_CONSOLE:e1
+    DOS_PUNTOS:e2 
+    DOS_PUNTOS:e3 
+    RESERVADA_PRINT:e4  
+    SIGNO_IGUAL:e5 
+    STRING:s 
+    RESERVADA_END:e6 
+    PUNTO_Y_COMA:e7
+    {: 
+        System.out.println("\n"+"Print desde el cup de la cadena: " + s+"\n");
+    :};
 //==============================================================================
 
 
@@ -115,17 +128,27 @@ aritmeticas::= RESERVADA_SUMA;
 
 
 //==============================================================================
+//hasta el momento solo combina numeros y string
+valorPrint::= STRING:s {: RESULT = s; :} 
+            | NUMEROS:n {: RESULT = n; :} 
+            | combinado:c {: RESULT = c; :};
+
+combinado::= combinacion:c combinado:cc {: RESULT = c.toString() + cc.toString(); :} 
+            | combinacion:c {: RESULT = c.toString(); :};
+
+
+combinacion::= STRING:s COMA NUMEROS:n {: RESULT = s + n.toString(); :} 
+             | NUMEROS:n COMA STRING:s {: RESULT = n.toString() + s; :};
+
 print::= 
     RESERVADA_CONSOLE:e1
     DOS_PUNTOS:e2 
     DOS_PUNTOS:e3 
     RESERVADA_PRINT:e4  
     SIGNO_IGUAL:e5 
-    STRING:s 
+    valorPrint:s 
     RESERVADA_END:e6 
     PUNTO_Y_COMA:e7
     {: 
         System.out.println("\n"+"Print desde el cup de la cadena: " + s+"\n");
     :};
-
-
