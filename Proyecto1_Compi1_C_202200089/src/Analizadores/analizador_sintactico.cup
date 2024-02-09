@@ -34,7 +34,7 @@ non terminal inicio,codigo, declaraciones,textos,numericas,arreglos,acciones;
 non terminal print,aritmeticas,declaracion,accion,printSimple,valorPrint;
 non terminal combinacion, combinado,cod;
 non terminal  suma,resta,multiplicacion,division,modulo;
-non terminal valorAritmetico,anidacion,valorAritmeticoR,anidacionR;
+non terminal valorAritmetico,anidacion,tipoAnidada;
 
 
 //==============================================================================
@@ -93,7 +93,7 @@ numericas::=RESERVADA_VAR
 
 
 //==============================================================================
-aritmeticas::= suma|resta;
+aritmeticas::= suma|resta|multiplicacion|division|modulo;
 
 suma::= RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
   String strA = a.toString();
@@ -105,18 +105,8 @@ suma::= RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmeti
   float r = x + y;
   System.out.println("\n" + "Suma es: " + r + "\n"); :};
 
-valorAritmetico::= NUMEROS:c {: RESULT= c; :}|ID:c {: RESULT=c; :}|anidacion :c {: RESULT=c; :};
-anidacion::=RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico:c COMA valorAritmetico:d PARENTESIS_DERECHO {: 
-  String strC = c.toString();
-  String strD = d.toString();
 
-  float x = Float.parseFloat(strC);
-  float y = Float.parseFloat(strD);
-
-  float r = x + y;
-  RESULT = r; :};
-
-resta::=RESERVADA_RESTA PARENTESIS_IZQUIERDO valorAritmeticoR:a COMA valorAritmeticoR:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
+resta::=RESERVADA_RESTA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -126,16 +116,64 @@ resta::=RESERVADA_RESTA PARENTESIS_IZQUIERDO valorAritmeticoR:a COMA valorAritme
   float r = x - y;
   System.out.println("\n" + "Resta es: " + r + "\n"); :};
 
-valorAritmeticoR::= NUMEROS:c {: RESULT= c; :}|ID:c {: RESULT=c; :}|anidacionR :c {: RESULT=c; :};
-anidacionR::=RESERVADA_RESTA PARENTESIS_IZQUIERDO valorAritmeticoR:c COMA valorAritmeticoR:d PARENTESIS_DERECHO {: 
+multiplicacion::=RESERVADA_MULTIPLICACION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
+  String strA = a.toString();
+  String strB = b.toString();
+
+  float x = Float.parseFloat(strA);
+  float y = Float.parseFloat(strB);
+
+  float r = x * y;
+  System.out.println("\n" + "Multiplicacion es: " + r + "\n"); :};
+
+division::=RESERVADA_DIVISION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
+  String strA = a.toString();
+  String strB = b.toString();
+
+  float x = Float.parseFloat(strA);
+  float y = Float.parseFloat(strB);
+
+  float r = x / y;
+  System.out.println("\n" + "Division es: " + r + "\n"); :};
+
+modulo::=RESERVADA_MODULO PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
+  String strA = a.toString();
+  String strB = b.toString();
+
+  float x = Float.parseFloat(strA);
+  float y = Float.parseFloat(strB);
+
+  float r = x % y;
+  System.out.println("\n" + "Modulo es: " + r + "\n"); :};
+
+tipoAnidada::=RESERVADA_SUMA {:RESULT="suma";:} |RESERVADA_RESTA {:RESULT="resta";:}|RESERVADA_MULTIPLICACION {:RESULT="multiplicacion";:}|RESERVADA_DIVISION {:RESULT="division";:}|RESERVADA_MODULO {:RESULT="modulo";:};
+
+valorAritmetico::= NUMEROS:c {: RESULT= c; :}|ID:c {: RESULT=c; :}|anidacion :c {: RESULT=c; :};
+anidacion::= tipoAnidada:to PARENTESIS_IZQUIERDO valorAritmetico:c COMA valorAritmetico:d PARENTESIS_DERECHO {: 
   String strC = c.toString();
   String strD = d.toString();
 
   float x = Float.parseFloat(strC);
   float y = Float.parseFloat(strD);
+  
+  if (to.equals("suma")) {
+    float r = x + y;
+    RESULT = r;
+} else if (to.equals("resta")) {
+    float r = x - y; // Fix: Change '+' to '-'
+    RESULT = r;
+} else if (to.equals("multiplicacion")) {
+    float r = x * y; 
+    RESULT = r;
+} else if (to.equals("division")) {
+    float r = x / y; 
+    RESULT = r;
+} else if (to.equals("modulo")) {
+    float r = x % y;
+    RESULT = r;
+}
 
-  float r = x - y;
-  RESULT = r; :};
+   :};
 //==============================================================================
 
 
