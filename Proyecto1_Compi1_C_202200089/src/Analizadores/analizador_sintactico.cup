@@ -36,6 +36,7 @@ non terminal combinacion, combinado,cod;
 non terminal  suma,resta,multiplicacion,division,modulo;
 non terminal valorAritmetico,anidacion,tipoAnidada;
 non terminal tipoArreglo,contenido,contenido2,ultimo;
+non terminal ultimoE,contenidoE,contenidoEE,estadisticas,media,mediana,moda,varianza,max,min;
 
 
 //==============================================================================
@@ -52,7 +53,7 @@ inicio::= RESERVADA_PROGRAM codigo RESERVADA_END RESERVADA_PROGRAM;
 
 //==============================================================================
 codigo::= cod|cod codigo;
-cod::=textos | numericas | arreglos|print|aritmeticas;
+cod::=textos | numericas | arreglos|print|aritmeticas|estadisticas;
 //==============================================================================
 
 //Declaraciones de variables
@@ -184,6 +185,21 @@ anidacion::= tipoAnidada:to PARENTESIS_IZQUIERDO valorAritmetico:c COMA valorAri
    :};
 //==============================================================================
 //Todas las funciones estadisticas
+estadisticas::=media|mediana|moda|varianza|max|min;
+
+contenidoE::= CORCHETE_IZQUIERDO contenidoEE|ID;//De array
+contenidoEE::=NUMEROS COMA contenidoEE|anidacion COMA contenidoEE|ID contenidoEE
+            |NUMEROS CORCHETE_DERECHO|anidacion CORCHETE_DERECHO|ID CORCHETE_DERECHO;//ID double
+
+//2 formas con un arreglo o con mezcla de numeros,artimeticas,id(double)
+
+media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
+mediana::= RESERVADA_MEDIANA PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
+moda::= RESERVADA_MODA PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
+varianza::= RESERVADA_VARIANZA PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
+max::=  RESERVADA_MAX PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
+min::= RESERVADA_MIN PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
+
 
 
 
