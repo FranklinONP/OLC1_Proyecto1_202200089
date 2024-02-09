@@ -35,6 +35,7 @@ non terminal print,aritmeticas,declaracion,accion,printSimple,valorPrint;
 non terminal combinacion, combinado,cod;
 non terminal  suma,resta,multiplicacion,division,modulo;
 non terminal valorAritmetico,anidacion,tipoAnidada;
+non terminal tipoArreglo,contenido,contenido2,ultimo;
 
 
 //==============================================================================
@@ -83,8 +84,15 @@ numericas::=RESERVADA_VAR
             RESERVADA_END
             PUNTO_Y_COMA;
 //==============================================================================
+tipoArreglo::=RESERVADA_DOUBLE|RESERVADA_CHAR;
 
+ultimo::= ID CORCHETE_DERECHO|NUMEROS CORCHETE_DERECHO|anidacion CORCHETE_DERECHO;
 
+arreglos::=RESERVADA_ARRAY DOS_PUNTOS tipoArreglo DOS_PUNTOS DOS_PUNTOS ID MENOR_QUE GUION CORCHETE_IZQUIERDO contenido RESERVADA_END PUNTO_Y_COMA;
+
+contenido::= contenido2 contenido|contenido2 ultimo;
+
+contenido2::= anidacion COMA | NUMEROS COMA|ID COMA;   //FALTAN LAS ESTADISTICAS 
 //==============================================================================
 //==============================================================================
 
@@ -175,7 +183,7 @@ anidacion::= tipoAnidada:to PARENTESIS_IZQUIERDO valorAritmetico:c COMA valorAri
 
    :};
 //==============================================================================
-
+//Todas las funciones estadisticas
 
 
 
