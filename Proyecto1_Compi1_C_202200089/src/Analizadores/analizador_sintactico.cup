@@ -45,8 +45,8 @@ non terminal tipoArreglo,contenido,contenido2,ultimo;
 non terminal ultimoE,contenidoE,contenidoEE,estadisticas,media,mediana,moda,varianza,max,min;
 non terminal desicionprint,print1,print2;
 non terminal contenidoD,contenidoS,contenido2s,ultimoS;
-non terminal graficas, pie,barras,linea,histograma,valorNumerico;
-
+non terminal graficas, pie,barras,linea,histograma,valorNumerico,comb,text;
+non terminal pp,ppp;
 
 //==============================================================================
 start with inicio;
@@ -62,7 +62,7 @@ inicio::= RESERVADA_PROGRAM codigo RESERVADA_END RESERVADA_PROGRAM;
 
 //==============================================================================
 codigo::= cod|cod codigo;
-cod::=textos | numericas | arreglos|print|aritmeticas|estadisticas|graficas;
+cod::=textos | numericas | arreglos|print|graficas;
 //==============================================================================
 
 //Declaraciones de variables
@@ -72,12 +72,14 @@ textos::=   RESERVADA_VAR
             RESERVADA_CHAR
             CORCHETE_IZQUIERDO  
             CORCHETE_DERECHO    
-            DOS_PUNTOS DOS_PUNTOS ID
+            DOS_PUNTOS DOS_PUNTOS 
+            text
             MENOR_QUE 
             GUION 
             STRING 
             RESERVADA_END 
             PUNTO_Y_COMA;
+text::=ID|RESERVADA_TITULO_GRAFICA;
 //==============================================================================
 
 
@@ -95,11 +97,11 @@ numericas::=RESERVADA_VAR
             RESERVADA_END
             PUNTO_Y_COMA;
 
-valorNumerico::= NUMEROS|ID|aritmeticas;
+valorNumerico::= NUMEROS|ID|aritmeticas|estadisticas;
 //==============================================================================
 tipoArreglo::=RESERVADA_DOUBLE|RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO;
 
-ultimo::= ID CORCHETE_DERECHO|NUMEROS CORCHETE_DERECHO|anidacion CORCHETE_DERECHO;
+ultimo::= ID CORCHETE_DERECHO|NUMEROS CORCHETE_DERECHO|anidacion CORCHETE_DERECHO|CORCHETE_DERECHO;
 
 arreglos::=RESERVADA_ARRAY DOS_PUNTOS tipoArreglo DOS_PUNTOS DOS_PUNTOS IDE MENOR_QUE GUION CORCHETE_IZQUIERDO contenidoD  RESERVADA_END PUNTO_Y_COMA;
 
@@ -108,7 +110,7 @@ contenidoS::= STRING COMA contenidoS|STRING CORCHETE_DERECHO;
 
 
 contenido::= contenido2 contenido|contenido2 ultimo;
-contenido2::= anidacion COMA | NUMEROS COMA|ID COMA;   //FALTAN LAS ESTADISTICAS 
+contenido2::= anidacion COMA | NUMEROS COMA|IDE COMA|estadisticas COMA|estadisticas;   //FALTAN LAS ESTADISTICAS 
 //==============================================================================
 //==============================================================================
 
@@ -117,9 +119,9 @@ contenido2::= anidacion COMA | NUMEROS COMA|ID COMA;   //FALTAN LAS ESTADISTICAS
 
 
 //==============================================================================
-aritmeticas::= suma|resta|multiplicacion|division|modulo;
+aritmeticas ::= suma:r{:RESULT=r;:}|resta:r{:RESULT=r;:}|multiplicacion:r{:RESULT=r;:}|division:r{:RESULT=r;:}|modulo:r {:RESULT=r;:};
 
-suma::= RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA {:
+suma::= RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO  {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -127,10 +129,11 @@ suma::= RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmeti
   float y = Float.parseFloat(strB);
 
   float r = x + y;
-  System.out.println("\n" + "Suma es: " + r + "\n"); :};
+  System.out.println("\n" + "Suma es: " + r + "\n");
+  RESULT=r; :};
 
 
-resta::=RESERVADA_RESTA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA {:
+resta::=RESERVADA_RESTA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -138,9 +141,10 @@ resta::=RESERVADA_RESTA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmet
   float y = Float.parseFloat(strB);
 
   float r = x - y;
-  System.out.println("\n" + "Resta es: " + r + "\n"); :};
+  System.out.println("\n" + "Resta es: " + r + "\n");
+    RESULT=r; :};
 
-multiplicacion::=RESERVADA_MULTIPLICACION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA {:
+multiplicacion::=RESERVADA_MULTIPLICACION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO  {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -148,9 +152,10 @@ multiplicacion::=RESERVADA_MULTIPLICACION PARENTESIS_IZQUIERDO valorAritmetico:a
   float y = Float.parseFloat(strB);
 
   float r = x * y;
-  System.out.println("\n" + "Multiplicacion es: " + r + "\n"); :};
+  System.out.println("\n" + "Multiplicacion es: " + r + "\n"); 
+  RESULT=r;  :};
 
-division::=RESERVADA_DIVISION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA {:
+division::=RESERVADA_DIVISION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -158,9 +163,10 @@ division::=RESERVADA_DIVISION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorA
   float y = Float.parseFloat(strB);
 
   float r = x / y;
-  System.out.println("\n" + "Division es: " + r + "\n"); :};
+  System.out.println("\n" + "Division es: " + r + "\n");
+  RESULT=r;   :};
 
-modulo::=RESERVADA_MODULO PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA {:
+modulo::=RESERVADA_MODULO PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO  {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -168,11 +174,12 @@ modulo::=RESERVADA_MODULO PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritm
   float y = Float.parseFloat(strB);
 
   float r = x % y;
-  System.out.println("\n" + "Modulo es: " + r + "\n"); :};
+  System.out.println("\n" + "Modulo es: " + r + "\n");
+  RESULT=r;   :};
 
 tipoAnidada::=RESERVADA_SUMA {:RESULT="suma";:} |RESERVADA_RESTA {:RESULT="resta";:}|RESERVADA_MULTIPLICACION {:RESULT="multiplicacion";:}|RESERVADA_DIVISION {:RESULT="division";:}|RESERVADA_MODULO {:RESULT="modulo";:};
 
-valorAritmetico::= NUMEROS:c {: RESULT= c; :}|ID:c {: RESULT=c; :}|anidacion :c {: RESULT=c; :};
+valorAritmetico::= NUMEROS:c {: RESULT= c; :}|ID:c {: RESULT=c; :}|anidacion :c {: RESULT=c; :}|estadisticas:c=1{: RESULT=c; :};//para mientras lo de estadistico===========================
 anidacion::= tipoAnidada:to PARENTESIS_IZQUIERDO valorAritmetico:c COMA valorAritmetico:d PARENTESIS_DERECHO {: 
   String strC = c.toString();
   String strD = d.toString();
@@ -202,7 +209,7 @@ anidacion::= tipoAnidada:to PARENTESIS_IZQUIERDO valorAritmetico:c COMA valorAri
 //Todas las funciones estadisticas
 estadisticas::=media|mediana|moda|varianza|max|min;
 
-contenidoE::= CORCHETE_IZQUIERDO contenidoEE|ID;//De array
+contenidoE::= CORCHETE_IZQUIERDO contenidoEE|IDE;//De array
 contenidoEE::=NUMEROS COMA contenidoEE|anidacion COMA contenidoEE|ID contenidoEE
             |NUMEROS CORCHETE_DERECHO|anidacion CORCHETE_DERECHO|ID CORCHETE_DERECHO;//ID double
 
@@ -222,17 +229,6 @@ min::= RESERVADA_MIN PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
 
 //==============================================================================
 //hasta el momento solo combina numeros y string
-valorPrint::= STRING:s {: RESULT = s; :} 
-            | NUMEROS:n {: RESULT = n; :} 
-            | combinado:c {: RESULT = c; :};
-
-combinado::= combinacion:c combinado:cc {: RESULT = c.toString() + cc.toString(); :} 
-            | combinacion:c {: RESULT = c.toString(); :};
-
-
-combinacion::= STRING:s COMA NUMEROS:n {: RESULT = s + n.toString(); :} 
-             | NUMEROS:n COMA STRING:s {: RESULT = n.toString() + s; :};
-
 print::= 
     RESERVADA_CONSOLE:e1
     DOS_PUNTOS:e2 
@@ -240,6 +236,7 @@ print::=
     desicionprint;
 
 desicionprint::=print1|print2;
+
 print1::=
     RESERVADA_PRINT:e4  
     SIGNO_IGUAL:e5 
@@ -250,54 +247,143 @@ print1::=
         System.out.println("\n"+"Print desde el cup de la cadena: " + s+"\n");
     :};
 
+
+
+valorPrint ::= STRING:s {: RESULT = s; :}
+            | NUMEROS:n {: RESULT = n; :}
+            | ID:iddd {: RESULT = iddd; :}
+            | aritmeticas:ar {: RESULT = ar; :}
+            | estadisticas:st {: RESULT = st; :}
+            | combinado:c {: RESULT = c; :};
+
+combinado ::= combinacion:c combinado:cc {: RESULT = c.toString() + cc.toString(); :}
+            | combinacion:c {: RESULT = c.toString(); :}
+            | combinacion:c comb:r{: RESULT = c.toString() + r.toString(); :};
+
+combinacion ::= STRING:s COMA {: RESULT = s; :}
+             | NUMEROS:n COMA {: RESULT = n.toString(); :}
+             | aritmeticas:ar COMA {: RESULT = ar; :}
+             | estadisticas:st COMA {: RESULT = st; :}
+             | ID:iddd COMA {: RESULT = iddd; :};
+
+comb ::= STRING:s {: RESULT = s; :}
+        | ID:iddd {: RESULT = iddd; :}
+        | aritmeticas:ar {: RESULT = ar; :}
+        | estadisticas:st {: RESULT = st; :}
+        | NUMEROS:n {: RESULT = n.toString(); :};
+
+
+
 print2::=RESERVADA_COLUMN 
         SIGNO_IGUAL
-        ID
+        pp
         GUION
         MAYOR_QUE
-        ID //De Array
+        ppp
         RESERVADA_END
         PUNTO_Y_COMA;
 
+pp::=STRING|ID;
+ppp::=IDE|CORCHETE_IZQUIERDO contenidoD ;
 
+//====================================================== GRAFICAS =========================================
 graficas::=pie|barras|linea|histograma;
 
 pie::=  RESERVADA_GRAFICA_PIE
         PARENTESIS_IZQUIERDO
+
         RESRVADA_LABEL_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO
-        SIGNO_IGUAL
-        CORCHETE_IZQUIERDO
-        contenidoS
-        RESERVADA_END
-        PUNTO_Y_COMA
-        RESERVADA_VALUES_GRAFICA DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_DOUBLE
-        SIGNO_IGUAL
-        CORCHETE_IZQUIERDO
-        contenido
-        RESERVADA_END
-        PUNTO_Y_COMA
+        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoS RESERVADA_END PUNTO_Y_COMA
+        
+        
+        RESERVADA_VALUES_GRAFICA 
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_DOUBLE SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoD RESERVADA_END PUNTO_Y_COMA
+       
+
         RESERVADA_TITULO_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO
-        SIGNO_IGUAL
-        STRING
-        RESERVADA_END
-        PUNTO_Y_COMA
-        
-        RESERVADA_EXEC
-        RESERVADA_GRAFICA_PIE
-        RESERVADA_END
-        PUNTO_Y_COMA
-        
-        PARENTESIS_DERECHO
-        RESERVADA_END
-        PUNTO_Y_COMA;
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+       
 
-/*RESERVADA_COLUMN, RESERVADA_GRAFICA_BARRA, RESERVADA_GRAFICA_PIE, RESERVADA_GRAFICA_LINE,
-RESERVADA_GRAFIA_HISTOGRAMA, RESERVADA_TITULO_GRAFICA, RESERVADA_EJEX_GRAFICA, RESERVADA_EJEY_GRAFICA, 
-RESERVADA_TITULOX_GRAFICA, RESERVADA_TITULOY_GRAFICA, RESERVADA_VALUES_GRAFICA, RESRVADA_LABEL_GRAFICA,
-RESERVADA_EXEC*/
+        RESERVADA_EXEC   RESERVADA_GRAFICA_PIE  RESERVADA_END PUNTO_Y_COMA
+     
 
+        PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA;
+
+barras::=RESERVADA_GRAFICA_BARRA
+        PARENTESIS_IZQUIERDO
+
+        RESERVADA_TITULO_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+        
+        
+        RESERVADA_EJEX_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoS RESERVADA_END PUNTO_Y_COMA
+       
+        RESERVADA_EJEY_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_DOUBLE SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoD RESERVADA_END PUNTO_Y_COMA
+       
+
+        RESERVADA_TITULOX_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+
+
+        RESERVADA_TITULOY_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+       
+
+        RESERVADA_EXEC   RESERVADA_GRAFICA_BARRA  RESERVADA_END PUNTO_Y_COMA
+     
+        PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA;
+
+linea::= RESERVADA_GRAFICA_LINE
+        PARENTESIS_IZQUIERDO
+
+        RESERVADA_TITULO_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+        
+        
+        RESERVADA_EJEX_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoS RESERVADA_END PUNTO_Y_COMA
+       
+        RESERVADA_EJEY_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_DOUBLE SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoD RESERVADA_END PUNTO_Y_COMA
+       
+
+        RESERVADA_TITULOX_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+
+
+        RESERVADA_TITULOY_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+       
+
+        RESERVADA_EXEC RESERVADA_GRAFICA_LINE  RESERVADA_END PUNTO_Y_COMA
+     
+        PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA;
+
+histograma::= RESERVADA_GRAFIA_HISTOGRAMA
+        PARENTESIS_IZQUIERDO
+        RESERVADA_TITULO_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+
+        RESERVADA_VALUES_GRAFICA 
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoD RESERVADA_END PUNTO_Y_COMA
+
+        RESERVADA_EXEC RESERVADA_GRAFIA_HISTOGRAMA  RESERVADA_END PUNTO_Y_COMA
+     
+        PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA;
