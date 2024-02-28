@@ -24,7 +24,9 @@ import Errores.Error_;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import Tokens.Token;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *
@@ -34,6 +36,16 @@ public class gui extends javax.swing.JFrame {
 
     //Variables Globales
     public static LinkedList<Error_> lista_errores = new LinkedList<Error_>();
+    
+    //Para tabla de tokens
+    public static LinkedList<Token> listaTokens = new LinkedList<Token>();
+    
+    //Para guardar todo lo que voy a imprimir
+    public static LinkedList<String> listaPrint=new LinkedList<String>();
+    
+    //Para guardar variables y sus atributos tipo double
+    public static Map<String, Map> mapaDouble = new HashMap<>();
+    
     private static int contadorPestanas = 1;
     HashMap<JPanel, File> tabFileMap = new HashMap<>();
 
@@ -377,7 +389,7 @@ public class gui extends javax.swing.JFrame {
         htmlBuilder.append("<html lang=\"en\">\n");
         htmlBuilder.append("<head>\n");
         htmlBuilder.append("<meta charset=\"UTF-8\">\n");
-        htmlBuilder.append("<title>Errores</title>\n");
+        htmlBuilder.append("<title>Tabla de errores</title>\n");
         htmlBuilder.append("</head>\n");
         htmlBuilder.append("<body>\n");
 
@@ -414,7 +426,54 @@ public class gui extends javax.swing.JFrame {
             e.printStackTrace(); // Imprimir detalles del error
         }
     }
+     public static void tablaTokens(LinkedList<Token> listT, String filePath) {
+        StringBuilder htmlBuilder = new StringBuilder();
 
+        // Crear la estructura básica del documento HTML
+        htmlBuilder.append("<!DOCTYPE html>\n");
+        htmlBuilder.append("<html lang=\"en\">\n");
+        htmlBuilder.append("<head>\n");
+        htmlBuilder.append("<meta charset=\"UTF-8\">\n");
+        htmlBuilder.append("<title>Tabla de Tokens</title>\n");
+        htmlBuilder.append("</head>\n");
+        htmlBuilder.append("<body>\n");
+
+        // Generar una tabla para mostrar los errores
+        htmlBuilder.append("<table border=\"1\">\n");
+        htmlBuilder.append("<tr>\n");
+        htmlBuilder.append("<th>#</th>\n");
+        htmlBuilder.append("<th>Línea</th>\n");
+        htmlBuilder.append("<th>Columna</th>\n");
+        htmlBuilder.append("<th>Lexema</th>\n");
+        htmlBuilder.append("<th>Tipo</th>\n");
+        htmlBuilder.append("</tr>\n");
+        Integer i=0;
+        for (Token error : listT) {
+            i=i+1;
+            htmlBuilder.append("<tr>\n");
+            htmlBuilder.append("<td>").append(i).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getLinea()).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getColumna()).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getLexema()).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getTipo()).append("</td>\n");
+            htmlBuilder.append("</tr>\n");
+        }
+
+        htmlBuilder.append("</table>\n");
+
+        // Cerrar el documento HTML
+        htmlBuilder.append("</body>\n");
+        htmlBuilder.append("</html>\n");
+
+        // Guardar el contenido HTML en un archivo
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(htmlBuilder.toString());
+            System.out.println("Archivo HTML guardado en: " + filePath);
+        } catch (IOException e) {
+            System.err.println("Error al guardar el archivo HTML: " + e.getMessage());
+            e.printStackTrace(); // Imprimir detalles del error
+        }
+    }
 
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -433,8 +492,12 @@ public class gui extends javax.swing.JFrame {
         for (Error_ arg : lista_errores) {
                 System.out.println(arg.toString());
             }
+        //////////////////////////////////
         String filePath = "errores.html";
         generateHtmlFileFromErrors(lista_errores, filePath);
+        
+        String filePathh = "ttokens.html";
+        tablaTokens(listaTokens, filePathh); 
         
     } catch (Exception e) {
         e.printStackTrace();

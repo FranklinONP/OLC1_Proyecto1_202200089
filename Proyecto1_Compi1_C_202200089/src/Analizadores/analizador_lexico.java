@@ -5,7 +5,9 @@ import java_cup.runtime.Symbol;
 import java_cup.runtime.*;
 
 import Errores.Error_;
+import Tokens.Token;
 import static GUI.gui.lista_errores;
+import static GUI.gui.listaTokens;
 
 
 
@@ -816,7 +818,9 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
             // fall through
           case 52: break;
           case 2: 
-            { System.out.println("Lexema -Menor que- "+yytext()) ; return new Symbol(sym.MENOR_QUE, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Menor que-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.MENOR_QUE, yyline, yycolumn, yytext());
             } 
             // fall through
           case 53: break;
@@ -831,122 +835,162 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
             // fall through
           case 55: break;
           case 5: 
-            { System.out.println("Lexema -Mayor que- "+yytext()) ; return new Symbol(sym.MAYOR_QUE, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Mayor que-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.MAYOR_QUE, yyline, yycolumn, yytext());
             } 
             // fall through
           case 56: break;
           case 6: 
-            { System.out.println("Lexema -Dos Puntos- "+yytext()) ; return new Symbol(sym.DOS_PUNTOS, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Dos Puntos-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.DOS_PUNTOS, yyline, yycolumn, yytext());
             } 
             // fall through
           case 57: break;
           case 7: 
-            { System.out.println("Lexema -Guion- "+yytext()) ; return new Symbol(sym.GUION, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Guion-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.GUION, yyline, yycolumn, yytext());
             } 
             // fall through
           case 58: break;
           case 8: 
-            { System.out.println("Lexema -Coma "+yytext()) ; return new Symbol(sym.COMA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Coma-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.COMA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 59: break;
           case 9: 
-            { System.out.println("Lexema -Punto y coma- "+yytext()) ; return new Symbol(sym.PUNTO_Y_COMA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Punto y coma-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.PUNTO_Y_COMA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 60: break;
           case 10: 
-            { System.out.println("Lexema -Parentesis izquierdo- "+yytext()) ; return new Symbol(sym.PARENTESIS_IZQUIERDO, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Parentesis izquierdo-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.PARENTESIS_IZQUIERDO, yyline, yycolumn, yytext());
             } 
             // fall through
           case 61: break;
           case 11: 
-            { System.out.println("Lexema -Parentesis derecho- "+yytext()) ; return new Symbol(sym.PARENTESIS_DERECHO, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Parentesis derecho-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.PARENTESIS_DERECHO, yyline, yycolumn, yytext());
             } 
             // fall through
           case 62: break;
           case 12: 
-            { System.out.println("Lexema -Corchete izquierdo- "+yytext()) ; return new Symbol(sym.CORCHETE_IZQUIERDO, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Corchete izquierdo-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.CORCHETE_IZQUIERDO, yyline, yycolumn, yytext());
             } 
             // fall through
           case 63: break;
           case 13: 
-            { System.out.println("Lexema -Corchete derecho- "+yytext()) ; return new Symbol(sym.CORCHETE_DERECHO, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Corchete derecho-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.CORCHETE_DERECHO, yyline, yycolumn, yytext());
             } 
             // fall through
           case 64: break;
           case 14: 
-            { System.out.println("Lexema -Signo igual- "+yytext()) ; return new Symbol(sym.SIGNO_IGUAL, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Signo igual-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.SIGNO_IGUAL, yyline, yycolumn, yytext());
             } 
             // fall through
           case 65: break;
           case 15: 
-            { System.out.println("Se encontro una cadena numerica Fila: " + yyline +  "Columna: " + yycolumn + " Texto: " + yytext()) ; return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline,yycolumn,yytext(),"Double");listaTokens.add(ntk) ; return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()) ;
             } 
             // fall through
           case 66: break;
           case 16: 
-            { System.out.println("Se encontro un IDENTIFICADOR ->> Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.ID, yytext());
+            { Token ntk = new Token(yyline,yycolumn,yytext(),"Id");listaTokens.add(ntk) ; return new Symbol(sym.ID, yytext());
             } 
             // fall through
           case 67: break;
           case 17: 
-            { System.out.println("Se encontro una cadena CHAR Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()); return new Symbol(sym.STRING, yytext());
+            { Token ntk = new Token(yyline,yycolumn,yytext(),"STRING");listaTokens.add(ntk); return new Symbol(sym.STRING, yytext());
             } 
             // fall through
           case 68: break;
           case 18: 
-            { System.out.println("Palabra Reservada: ARRAY, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_ARRAY, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: ARRAY");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_ARRAY, yyline, yycolumn, yytext());
             } 
             // fall through
           case 69: break;
           case 19: 
-            { System.out.println("Se encontro ID de array Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.IDE, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline,yycolumn,yytext(),"ID array");listaTokens.add(ntk); return new Symbol(sym.IDE, yyline, yycolumn, yytext()) ;
             } 
             // fall through
           case 70: break;
           case 20: 
-            { System.out.println("Palabra Reservada: RESTA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_RESTA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: RESTA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_RESTA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 71: break;
           case 21: 
-            { System.out.println("Palabra Reservada: MODULO, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MODULO, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MODULO");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MODULO, yyline, yycolumn, yytext());
             } 
             // fall through
           case 72: break;
           case 22: 
-            { System.out.println("Palabra Reservada: MAX, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MAX, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MAX");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MAX, yyline, yycolumn, yytext());
             } 
             // fall through
           case 73: break;
           case 23: 
-            { System.out.println("Palabra Reservada: MULTIPLICACION, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MULTIPLICACION, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MULTIPLICACION");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MULTIPLICACION, yyline, yycolumn, yytext());
             } 
             // fall through
           case 74: break;
           case 24: 
-            { System.out.println("Palabra Reservada: MIN, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MIN, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MIN");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MIN, yyline, yycolumn, yytext());
             } 
             // fall through
           case 75: break;
           case 25: 
-            { System.out.println("Palabra Reservada: END, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_END, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: END");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_END, yyline, yycolumn, yytext());
             } 
             // fall through
           case 76: break;
           case 26: 
-            { System.out.println("Palabra Reservada: DIVISION, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_DIVISION, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: DIVISION");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_DIVISION, yyline, yycolumn, yytext());
             } 
             // fall through
           case 77: break;
           case 27: 
-            { System.out.println("Palabra Reservada: VAR, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_VAR, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: VAR");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_VAR, yyline, yycolumn, yytext());
             } 
             // fall through
           case 78: break;
           case 28: 
-            { System.out.println("Palabra Reservada: SUMA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_SUMA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: SUMA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_SUMA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 79: break;
@@ -956,112 +1000,156 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
             // fall through
           case 80: break;
           case 30: 
-            { System.out.println("Palabra Reservada: MODA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MODA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MODA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MODA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 81: break;
           case 31: 
-            { System.out.println("Palabra Reservada: EXEC, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_EXEC, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: EXEC");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_EXEC, yyline, yycolumn, yytext());
             } 
             // fall through
           case 82: break;
           case 32: 
-            { System.out.println("Palabra Reservada: EJEX_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_EJEX_GRAFICA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: EJEX_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_EJEX_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 83: break;
           case 33: 
-            { System.out.println("Palabra Reservada: EJEY_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_EJEY_GRAFICA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: EJEY_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_EJEY_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 84: break;
           case 34: 
-            { System.out.println("Palabra Reservada: CHAR, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_CHAR, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: CHAR");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_CHAR, yyline, yycolumn, yytext());
             } 
             // fall through
           case 85: break;
           case 35: 
-            { System.out.println("Palabra Reservada: LABEL_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESRVADA_LABEL_GRAFICA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: LABEL_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESRVADA_LABEL_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 86: break;
           case 36: 
-            { System.out.println("Palabra Reservada: PRINT, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_PRINT, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: PRINT");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_PRINT, yyline, yycolumn, yytext());
             } 
             // fall through
           case 87: break;
           case 37: 
-            { System.out.println("Palabra Reservada: MEDIA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MEDIA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MEDIA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MEDIA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 88: break;
           case 38: 
-            { System.out.println("Palabra Reservada: DOUBLE, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_DOUBLE, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: DOUBLE");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_DOUBLE, yyline, yycolumn, yytext());
             } 
             // fall through
           case 89: break;
           case 39: 
-            { System.out.println("Palabra Reservada: VALUES_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_VALUES_GRAFICA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: VALUES_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_VALUES_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 90: break;
           case 40: 
-            { System.out.println("Palabra Reservada: COLUMN, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_COLUMN, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: COLUMN");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_COLUMN, yyline, yycolumn, yytext());
             } 
             // fall through
           case 91: break;
           case 41: 
-            { System.out.println("Palabra Reservada: TITULO_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_TITULO_GRAFICA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: TITULO_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_TITULO_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 92: break;
           case 42: 
-            { System.out.println("Palabra Reservada: PROGRAM, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_PROGRAM, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: PROGRAM");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_PROGRAM, yyline, yycolumn, yytext());
             } 
             // fall through
           case 93: break;
           case 43: 
-            { System.out.println("Palabra Reservada: MEDIANA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MEDIANA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MEDIANA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MEDIANA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 94: break;
           case 44: 
-            { System.out.println("Palabra Reservada: CONSOLE, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_CONSOLE, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: CONSOLE");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_CONSOLE, yyline, yycolumn, yytext());
             } 
             // fall through
           case 95: break;
           case 45: 
-            { System.out.println("Palabra Reservada: TITULOX_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_TITULOX_GRAFICA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: TITULOX_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_TITULOX_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 96: break;
           case 46: 
-            { System.out.println("Palabra Reservada: TITULOY_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_TITULOY_GRAFICA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: TITULOY_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_TITULOY_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 97: break;
           case 47: 
-            { System.out.println("Palabra Reservada: GRAFICA_PIE, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_GRAFICA_PIE, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFICA_PIE");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_GRAFICA_PIE, yyline, yycolumn, yytext());
             } 
             // fall through
           case 98: break;
           case 48: 
-            { System.out.println("Palabra Reservada: GRAFICA_BARRA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_GRAFICA_BARRA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFICA_BARRA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_GRAFICA_BARRA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 99: break;
           case 49: 
-            { System.out.println("Palabra Reservada: VARIANZA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_VARIANZA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: VARIANZA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_VARIANZA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 100: break;
           case 50: 
-            { System.out.println("Palabra Reservada: GRAFIA_HISTOGRAMA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_GRAFIA_HISTOGRAMA, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFIA_HISTOGRAMA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_GRAFIA_HISTOGRAMA, yyline, yycolumn, yytext());
             } 
             // fall through
           case 101: break;
           case 51: 
-            { System.out.println("Palabra Reservada: GRAFICA_LINEA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_GRAFICA_LINE, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFICA_LINEA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_GRAFICA_LINE, yyline, yycolumn, yytext());
             } 
             // fall through
           case 102: break;

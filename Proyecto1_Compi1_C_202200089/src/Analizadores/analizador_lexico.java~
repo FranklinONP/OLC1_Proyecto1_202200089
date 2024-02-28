@@ -5,7 +5,9 @@ import java_cup.runtime.Symbol;
 import java_cup.runtime.*;
 
 import Errores.Error_;
+import Tokens.Token;
 import static GUI.gui.lista_errores;
+import static GUI.gui.listaTokens;
 
 
 
@@ -881,7 +883,7 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
             // fall through
           case 65: break;
           case 15: 
-            { System.out.println("Se encontro una cadena numerica Fila: " + yyline +  "Columna: " + yycolumn + " Texto: " + yytext()) ; return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()) ;
+            { Token ntk = new Token(yyline,yycolumn,yytext(),"Double");listaTokens.add(ntk) ; return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()) ;
             } 
             // fall through
           case 66: break;

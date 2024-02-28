@@ -3,7 +3,9 @@ import java_cup.runtime.Symbol;
 import java_cup.runtime.*;
 
 import Errores.Error_;
+import Tokens.Token;
 import static GUI.gui.lista_errores;
+import static GUI.gui.listaTokens;
 
 
 %%
@@ -92,66 +94,277 @@ RESERVADA_EXEC = "Exec"
 
 <YYINITIAL> {ESPACIO_BLANCO} { }
 
-<YYINITIAL> {DOS_PUNTOS} { System.out.println("Lexema -Dos Puntos- "+yytext()) ; return new Symbol(sym.DOS_PUNTOS, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {MENOR_QUE} { System.out.println("Lexema -Menor que- "+yytext()) ; return new Symbol(sym.MENOR_QUE, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {MAYOR_QUE} { System.out.println("Lexema -Mayor que- "+yytext()) ; return new Symbol(sym.MAYOR_QUE, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {GUION} { System.out.println("Lexema -Guion- "+yytext()) ; return new Symbol(sym.GUION, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {COMA} { System.out.println("Lexema -Coma "+yytext()) ; return new Symbol(sym.COMA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {PUNTO_Y_COMA} { System.out.println("Lexema -Punto y coma- "+yytext()) ; return new Symbol(sym.PUNTO_Y_COMA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {PARENTESIS_IZQUIERDO} { System.out.println("Lexema -Parentesis izquierdo- "+yytext()) ; return new Symbol(sym.PARENTESIS_IZQUIERDO, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {PARENTESIS_DERECHO} { System.out.println("Lexema -Parentesis derecho- "+yytext()) ; return new Symbol(sym.PARENTESIS_DERECHO, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {CORCHETE_IZQUIERDO} { System.out.println("Lexema -Corchete izquierdo- "+yytext()) ; return new Symbol(sym.CORCHETE_IZQUIERDO, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {CORCHETE_DERECHO} { System.out.println("Lexema -Corchete derecho- "+yytext()) ; return new Symbol(sym.CORCHETE_DERECHO, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {SIGNO_IGUAL} { System.out.println("Lexema -Signo igual- "+yytext()) ; return new Symbol(sym.SIGNO_IGUAL, yyline, yycolumn, yytext()) ; }
 
-<YYINITIAL> {RESERVADA_PROGRAM} { System.out.println("Palabra Reservada: PROGRAM, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_PROGRAM, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_END} { System.out.println("Palabra Reservada: END, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_END, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_VAR} { System.out.println("Palabra Reservada: VAR, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_VAR, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_DOUBLE} { System.out.println("Palabra Reservada: DOUBLE, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_DOUBLE, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_CHAR} { System.out.println("Palabra Reservada: CHAR, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_CHAR, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_ARRAY} { System.out.println("Palabra Reservada: ARRAY, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_ARRAY, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_SUMA} { System.out.println("Palabra Reservada: SUMA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_SUMA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_RESTA} { System.out.println("Palabra Reservada: RESTA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_RESTA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_MULTIPLICACION} { System.out.println("Palabra Reservada: MULTIPLICACION, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MULTIPLICACION, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_DIVISION} { System.out.println("Palabra Reservada: DIVISION, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_DIVISION, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_MODULO} { System.out.println("Palabra Reservada: MODULO, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MODULO, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_MEDIA} { System.out.println("Palabra Reservada: MEDIA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MEDIA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_MEDIANA} { System.out.println("Palabra Reservada: MEDIANA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MEDIANA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_MODA} { System.out.println("Palabra Reservada: MODA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MODA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_VARIANZA} { System.out.println("Palabra Reservada: VARIANZA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_VARIANZA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_MAX} { System.out.println("Palabra Reservada: MAX, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MAX, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_MIN} { System.out.println("Palabra Reservada: MIN, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_MIN, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_CONSOLE} { System.out.println("Palabra Reservada: CONSOLE, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_CONSOLE, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_PRINT} { System.out.println("Palabra Reservada: PRINT, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_PRINT, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_COLUMN} { System.out.println("Palabra Reservada: COLUMN, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_COLUMN, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_GRAFICA_BARRA} { System.out.println("Palabra Reservada: GRAFICA_BARRA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_GRAFICA_BARRA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_GRAFICA_PIE} { System.out.println("Palabra Reservada: GRAFICA_PIE, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_GRAFICA_PIE, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_GRAFICA_LINE} { System.out.println("Palabra Reservada: GRAFICA_LINEA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_GRAFICA_LINE, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_GRAFIA_HISTOGRAMA} { System.out.println("Palabra Reservada: GRAFIA_HISTOGRAMA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_GRAFIA_HISTOGRAMA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_TITULO_GRAFICA} { System.out.println("Palabra Reservada: TITULO_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_TITULO_GRAFICA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_EJEX_GRAFICA} { System.out.println("Palabra Reservada: EJEX_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_EJEX_GRAFICA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_EJEY_GRAFICA} { System.out.println("Palabra Reservada: EJEY_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_EJEY_GRAFICA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_TITULOX_GRAFICA} { System.out.println("Palabra Reservada: TITULOX_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_TITULOX_GRAFICA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_TITULOY_GRAFICA} { System.out.println("Palabra Reservada: TITULOY_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_TITULOY_GRAFICA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_VALUES_GRAFICA} { System.out.println("Palabra Reservada: VALUES_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_VALUES_GRAFICA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESRVADA_LABEL_GRAFICA} { System.out.println("Palabra Reservada: LABEL_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESRVADA_LABEL_GRAFICA, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {RESERVADA_EXEC} { System.out.println("Palabra Reservada: EXEC, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_EXEC, yyline, yycolumn, yytext()) ; }
-
-<YYINITIAL> {IDE} { System.out.println("Se encontro ID de array Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.IDE, yyline, yycolumn, yytext()) ; }
-
-
-//<YYINITIAL> {STRING} { System.out.println("Se encontro una cadena CHAR Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.STRING, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {
-    \"(\\.|[^\"])*\" {System.out.println("Se encontro una cadena CHAR Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()); return new Symbol(sym.STRING, yytext()); }
+<YYINITIAL> {DOS_PUNTOS} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Dos Puntos-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.DOS_PUNTOS, yyline, yycolumn, yytext());
 }
 
-//<YYINITIAL> {ID} { System.out.println("Se encontro un IDENTIFICADOR ->> Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.ID, yyline, yycolumn, yytext()) ; }
-<YYINITIAL> {
-    [a-zA-Z_][a-zA-Z0-9_]* { System.out.println("Se encontro un IDENTIFICADOR ->> Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.ID, yytext()); }
+<YYINITIAL> {MENOR_QUE} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Menor que-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.MENOR_QUE, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {MAYOR_QUE} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Mayor que-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.MAYOR_QUE, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {GUION} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Guion-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.GUION, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {COMA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Coma-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.COMA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {PUNTO_Y_COMA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Punto y coma-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.PUNTO_Y_COMA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {PARENTESIS_IZQUIERDO} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Parentesis izquierdo-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.PARENTESIS_IZQUIERDO, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {PARENTESIS_DERECHO} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Parentesis derecho-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.PARENTESIS_DERECHO, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {CORCHETE_IZQUIERDO} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Corchete izquierdo-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.CORCHETE_IZQUIERDO, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {CORCHETE_DERECHO} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Corchete derecho-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.CORCHETE_DERECHO, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {SIGNO_IGUAL} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Signo igual-");
+    listaTokens.add(ntk);
+    return new Symbol(sym.SIGNO_IGUAL, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_PROGRAM} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: PROGRAM");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_PROGRAM, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_END} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: END");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_END, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_VAR} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: VAR");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_VAR, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_DOUBLE} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: DOUBLE");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_DOUBLE, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_CHAR} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: CHAR");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_CHAR, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_ARRAY} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: ARRAY");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_ARRAY, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_SUMA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: SUMA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_SUMA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_RESTA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: RESTA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_RESTA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_MULTIPLICACION} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MULTIPLICACION");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MULTIPLICACION, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_DIVISION} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: DIVISION");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_DIVISION, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_MODULO} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MODULO");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MODULO, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_MEDIA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MEDIA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MEDIA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_MEDIANA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MEDIANA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MEDIANA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_MODA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MODA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MODA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_VARIANZA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: VARIANZA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_VARIANZA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_MAX} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MAX");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MAX, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_MIN} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MIN");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_MIN, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_CONSOLE} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: CONSOLE");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_CONSOLE, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_PRINT} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: PRINT");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_PRINT, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_COLUMN} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: COLUMN");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_COLUMN, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_GRAFICA_BARRA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFICA_BARRA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_GRAFICA_BARRA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_GRAFICA_PIE} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFICA_PIE");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_GRAFICA_PIE, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_GRAFICA_LINE} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFICA_LINEA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_GRAFICA_LINE, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_GRAFIA_HISTOGRAMA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFIA_HISTOGRAMA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_GRAFIA_HISTOGRAMA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_TITULO_GRAFICA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: TITULO_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_TITULO_GRAFICA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_EJEX_GRAFICA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: EJEX_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_EJEX_GRAFICA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_EJEY_GRAFICA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: EJEY_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_EJEY_GRAFICA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_TITULOX_GRAFICA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: TITULOX_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_TITULOX_GRAFICA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_TITULOY_GRAFICA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: TITULOY_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_TITULOY_GRAFICA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESERVADA_VALUES_GRAFICA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: VALUES_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_VALUES_GRAFICA, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {RESRVADA_LABEL_GRAFICA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: LABEL_GRAFICA");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESRVADA_LABEL_GRAFICA, yyline, yycolumn, yytext());
 }
 
 
-<YYINITIAL> {NUMEROS} { System.out.println("Se encontro una cadena numerica Fila: " + yyline +  "Columna: " + yycolumn + " Texto: " + yytext()) ; return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()) ;} 
+<YYINITIAL> {RESERVADA_EXEC} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: EXEC");
+    listaTokens.add(ntk);
+    return new Symbol(sym.RESERVADA_EXEC, yyline, yycolumn, yytext());
+}
+<YYINITIAL> {IDE} {Token ntk = new Token(yyline,yycolumn,yytext(),"ID array");listaTokens.add(ntk); return new Symbol(sym.IDE, yyline, yycolumn, yytext()) ; }
+
+<YYINITIAL> {
+    \"(\\.|[^\"])*\" {Token ntk = new Token(yyline,yycolumn,yytext(),"STRING");listaTokens.add(ntk); return new Symbol(sym.STRING, yytext()); }
+}
+
+<YYINITIAL> {
+    [a-zA-Z_][a-zA-Z0-9_]* { Token ntk = new Token(yyline,yycolumn,yytext(),"Id");listaTokens.add(ntk) ; return new Symbol(sym.ID, yytext()); }
+}
+
+
+<YYINITIAL> {NUMEROS} {  Token ntk = new Token(yyline,yycolumn,yytext(),"Double");listaTokens.add(ntk) ; return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()) ;} 
 
 
 <YYINITIAL>  . {
