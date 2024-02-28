@@ -396,18 +396,21 @@ public class gui extends javax.swing.JFrame {
         // Generar una tabla para mostrar los errores
         htmlBuilder.append("<table border=\"1\">\n");
         htmlBuilder.append("<tr>\n");
-        htmlBuilder.append("<th>Línea</th>\n");
-        htmlBuilder.append("<th>Columna</th>\n");
+        htmlBuilder.append("<th>#</th>\n");
         htmlBuilder.append("<th>Lexema</th>\n");
         htmlBuilder.append("<th>Tipo</th>\n");
+        htmlBuilder.append("<th>Linea</th>\n");
+        htmlBuilder.append("<th>Columna</th>\n");
         htmlBuilder.append("</tr>\n");
-
+        Integer i=0;
         for (Error_ error : errorList) {
+            i=i+1;
             htmlBuilder.append("<tr>\n");
-            htmlBuilder.append("<td>").append(error.getLinea()).append("</td>\n");
-            htmlBuilder.append("<td>").append(error.getColumna()).append("</td>\n");
+            htmlBuilder.append("<td>").append(i).append("</td>\n");
             htmlBuilder.append("<td>").append(error.getLexema()).append("</td>\n");
             htmlBuilder.append("<td>").append(error.isLexico() ? "Léxico" : "Sintáctico").append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getLinea()).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getColumna()).append("</td>\n");
             htmlBuilder.append("</tr>\n");
         }
 
@@ -442,20 +445,20 @@ public class gui extends javax.swing.JFrame {
         htmlBuilder.append("<table border=\"1\">\n");
         htmlBuilder.append("<tr>\n");
         htmlBuilder.append("<th>#</th>\n");
-        htmlBuilder.append("<th>Línea</th>\n");
-        htmlBuilder.append("<th>Columna</th>\n");
-        htmlBuilder.append("<th>Lexema</th>\n");
         htmlBuilder.append("<th>Tipo</th>\n");
+        htmlBuilder.append("<th>Lexema</th>\n");
+        htmlBuilder.append("<th>Linea</th>\n");
+        htmlBuilder.append("<th>Columna</th>\n");
         htmlBuilder.append("</tr>\n");
         Integer i=0;
         for (Token error : listT) {
             i=i+1;
             htmlBuilder.append("<tr>\n");
             htmlBuilder.append("<td>").append(i).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getTipo()).append("</td>\n");            
+            htmlBuilder.append("<td>").append(error.getLexema()).append("</td>\n");
             htmlBuilder.append("<td>").append(error.getLinea()).append("</td>\n");
             htmlBuilder.append("<td>").append(error.getColumna()).append("</td>\n");
-            htmlBuilder.append("<td>").append(error.getLexema()).append("</td>\n");
-            htmlBuilder.append("<td>").append(error.getTipo()).append("</td>\n");
             htmlBuilder.append("</tr>\n");
         }
 
