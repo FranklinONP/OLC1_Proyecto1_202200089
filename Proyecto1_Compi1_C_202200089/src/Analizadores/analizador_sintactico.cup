@@ -1,13 +1,17 @@
 package Analizadores;
 
 import java_cup.runtime.*;
+import Errores.Error_;
+import GUI.gui;
 
 parser code
 {:
 
     public void syntax_error(Symbol s)
     {
-        System.out.println("Error de sintaxis en la linea " + (s.left) + ", columna " + (s.right) + ". No se esperaba " + s.value);
+        //System.out.println("Error de sintaxis en la linea " + (s.left) + ", columna " + (s.right) + ". No se esperaba " + s.value);
+        Error_ nuevoError = new Error_(s.left,s.right,s.value.toString(),false);
+        gui.lista_errores.add(nuevoError);
     }
 
 
@@ -15,6 +19,8 @@ parser code
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
     {
         System.out.println("Error de sintaxis en la linea " + (s.left) + ", columna " + (s.right) + ". No se esperaba " + s.value );
+        Error_ nuevoError = new Error_(s.left,s.right,s.value.toString(),false);
+        gui.lista_errores.add(nuevoError);
     }
  
 :}
@@ -28,7 +34,7 @@ RESERVADA_MEDIANA, RESERVADA_MODA, RESERVADA_VARIANZA, RESERVADA_MAX, RESERVADA_
 RESERVADA_PRINT,RESERVADA_COLUMN, RESERVADA_GRAFICA_BARRA, RESERVADA_GRAFICA_PIE, RESERVADA_GRAFICA_LINE,
 RESERVADA_GRAFIA_HISTOGRAMA, RESERVADA_TITULO_GRAFICA, RESERVADA_EJEX_GRAFICA, RESERVADA_EJEY_GRAFICA, 
 RESERVADA_TITULOX_GRAFICA, RESERVADA_TITULOY_GRAFICA, RESERVADA_VALUES_GRAFICA, RESRVADA_LABEL_GRAFICA,
-RESERVADA_EXEC,STRING,NUMEROS;
+RESERVADA_EXEC,STRING,NUMEROS,IDE;
 
 non terminal inicio,codigo, declaraciones,textos,numericas,arreglos,acciones;
 non terminal print,aritmeticas,declaracion,accion,printSimple,valorPrint;
@@ -39,7 +45,7 @@ non terminal tipoArreglo,contenido,contenido2,ultimo;
 non terminal ultimoE,contenidoE,contenidoEE,estadisticas,media,mediana,moda,varianza,max,min;
 non terminal desicionprint,print1,print2;
 non terminal contenidoD,contenidoS,contenido2s,ultimoS;
-non terminal graficas, pie,barras,linea,histograma;
+non terminal graficas, pie,barras,linea,histograma,valorNumerico;
 
 
 //==============================================================================
@@ -76,6 +82,7 @@ textos::=   RESERVADA_VAR
 
 
 //==============================================================================
+//tanto aca como arriba en el valor numerico puede venir un numerico o una variable que tenga un valor numerico
 numericas::=RESERVADA_VAR
             DOS_PUNTOS
             RESERVADA_DOUBLE
@@ -84,15 +91,17 @@ numericas::=RESERVADA_VAR
             ID
             MENOR_QUE
             GUION
-            NUMEROS
+            valorNumerico
             RESERVADA_END
             PUNTO_Y_COMA;
+
+valorNumerico::= NUMEROS|ID|aritmeticas;
 //==============================================================================
 tipoArreglo::=RESERVADA_DOUBLE|RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO;
 
 ultimo::= ID CORCHETE_DERECHO|NUMEROS CORCHETE_DERECHO|anidacion CORCHETE_DERECHO;
 
-arreglos::=RESERVADA_ARRAY DOS_PUNTOS tipoArreglo DOS_PUNTOS DOS_PUNTOS ID MENOR_QUE GUION CORCHETE_IZQUIERDO contenidoD  RESERVADA_END PUNTO_Y_COMA;
+arreglos::=RESERVADA_ARRAY DOS_PUNTOS tipoArreglo DOS_PUNTOS DOS_PUNTOS IDE MENOR_QUE GUION CORCHETE_IZQUIERDO contenidoD  RESERVADA_END PUNTO_Y_COMA;
 
 contenidoD::=contenido|contenidoS;
 contenidoS::= STRING COMA contenidoS|STRING CORCHETE_DERECHO;
@@ -110,7 +119,7 @@ contenido2::= anidacion COMA | NUMEROS COMA|ID COMA;   //FALTAN LAS ESTADISTICAS
 //==============================================================================
 aritmeticas::= suma|resta|multiplicacion|division|modulo;
 
-suma::= RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
+suma::= RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -121,7 +130,7 @@ suma::= RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmeti
   System.out.println("\n" + "Suma es: " + r + "\n"); :};
 
 
-resta::=RESERVADA_RESTA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
+resta::=RESERVADA_RESTA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -131,7 +140,7 @@ resta::=RESERVADA_RESTA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmet
   float r = x - y;
   System.out.println("\n" + "Resta es: " + r + "\n"); :};
 
-multiplicacion::=RESERVADA_MULTIPLICACION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
+multiplicacion::=RESERVADA_MULTIPLICACION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -141,7 +150,7 @@ multiplicacion::=RESERVADA_MULTIPLICACION PARENTESIS_IZQUIERDO valorAritmetico:a
   float r = x * y;
   System.out.println("\n" + "Multiplicacion es: " + r + "\n"); :};
 
-division::=RESERVADA_DIVISION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
+division::=RESERVADA_DIVISION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -151,7 +160,7 @@ division::=RESERVADA_DIVISION PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorA
   float r = x / y;
   System.out.println("\n" + "Division es: " + r + "\n"); :};
 
-modulo::=RESERVADA_MODULO PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO PUNTO_Y_COMA {:
+modulo::=RESERVADA_MODULO PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA {:
   String strA = a.toString();
   String strB = b.toString();
 
@@ -292,4 +301,3 @@ RESERVADA_GRAFIA_HISTOGRAMA, RESERVADA_TITULO_GRAFICA, RESERVADA_EJEX_GRAFICA, R
 RESERVADA_TITULOX_GRAFICA, RESERVADA_TITULOY_GRAFICA, RESERVADA_VALUES_GRAFICA, RESRVADA_LABEL_GRAFICA,
 RESERVADA_EXEC*/
 
-//hola

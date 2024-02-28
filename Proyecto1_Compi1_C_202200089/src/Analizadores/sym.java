@@ -37,6 +37,7 @@ public class sym {
   public static final int MAYOR_QUE = 5;
   public static final int RESERVADA_MEDIA = 26;
   public static final int RESERVADA_DOUBLE = 18;
+  public static final int IDE = 49;
   public static final int RESERVADA_PRINT = 33;
   public static final int RESERVADA_VALUES_GRAFICA = 44;
   public static final int PUNTO = 7;
@@ -106,7 +107,8 @@ public class sym {
   "RESRVADA_LABEL_GRAFICA",
   "RESERVADA_EXEC",
   "STRING",
-  "NUMEROS"
+  "NUMEROS",
+  "IDE"
   };
 }
 

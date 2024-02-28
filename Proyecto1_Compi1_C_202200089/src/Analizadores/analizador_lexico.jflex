@@ -2,6 +2,9 @@ package Analizadores;
 import java_cup.runtime.Symbol;
 import java_cup.runtime.*;
 
+import Errores.Error_;
+import static GUI.gui.lista_errores;
+
 
 %%
 
@@ -44,9 +47,10 @@ NUMEROS = [0-9]+(\.[0-9]+)?
 
 ESPACIO_BLANCO = [ \t\n\r]+
 
-STRING ="\"".*?"\""
+STRING ="\"[^\"]+\" "
 
-ID = ("@"[a-zA-Z][a-zA-Z0-9,_]+)|([a-zA-Z][a-zA-Z0-9_]+ )
+ID ="hola"
+IDE = "@"[a-zA-Z][a-zA-Z0-9,_]+
 
 RESERVADA_PROGRAM = "Program"
 RESERVADA_END = "End"
@@ -83,7 +87,6 @@ RESERVADA_EXEC = "Exec"
 
 
 %%
-
 <YYINITIAL> {COMENTARIO_MULTILINEA} {System.out.println("Comentario multilinea"); }
 <YYINITIAL> {COMENTARIO_LINEA} {System.out.println("Comentario 1 linea");}
 
@@ -134,15 +137,25 @@ RESERVADA_EXEC = "Exec"
 <YYINITIAL> {RESRVADA_LABEL_GRAFICA} { System.out.println("Palabra Reservada: LABEL_GRAFICA, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESRVADA_LABEL_GRAFICA, yyline, yycolumn, yytext()) ; }
 <YYINITIAL> {RESERVADA_EXEC} { System.out.println("Palabra Reservada: EXEC, Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.RESERVADA_EXEC, yyline, yycolumn, yytext()) ; }
 
+<YYINITIAL> {IDE} { System.out.println("Se encontro ID de array Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.IDE, yyline, yycolumn, yytext()) ; }
 
-<YYINITIAL> {ID} { System.out.println("Se encontro un IDENTIFICADOR Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.ID, yyline, yycolumn, yytext()) ; }
 
-<YYINITIAL> {STRING} { System.out.println("Se encontro una cadena CHAR Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.STRING, yyline, yycolumn, yytext()) ; }
+//<YYINITIAL> {STRING} { System.out.println("Se encontro una cadena CHAR Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.STRING, yyline, yycolumn, yytext()) ; }
+<YYINITIAL> {
+    \"(\\.|[^\"])*\" {System.out.println("Se encontro una cadena CHAR Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()); return new Symbol(sym.STRING, yytext()); }
+}
+
+//<YYINITIAL> {ID} { System.out.println("Se encontro un IDENTIFICADOR ->> Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.ID, yyline, yycolumn, yytext()) ; }
+<YYINITIAL> {
+    [a-zA-Z_][a-zA-Z0-9_]* { System.out.println("Se encontro un IDENTIFICADOR ->> Fila: " + yyline + ", Columna: " + yycolumn + ", Texto: " + yytext()) ; return new Symbol(sym.ID, yytext()); }
+}
+
 
 <YYINITIAL> {NUMEROS} { System.out.println("Se encontro una cadena numerica Fila: " + yyline +  "Columna: " + yycolumn + " Texto: " + yytext()) ; return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()) ;} 
 
 
 <YYINITIAL>  . {
-    System.out.println("Este es un error lexico: "+yytext()+", en la linea: "+yyline+", en la columna: "+yycolumn);
+    Error_ nuevoError = new Error_(yyline,yycolumn,yytext(),true);
+    lista_errores.add(nuevoError);
 }
 
