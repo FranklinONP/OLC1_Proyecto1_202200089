@@ -63,7 +63,7 @@ non terminal desicionprint,print1,print2;
 non terminal contenidoD,contenidoS,contenido2s,ultimoS;
 non terminal graficas, pie,barras,linea,histograma,valorNumerico,comb,text;
 non terminal pp,ppp,ap;
-
+non terminal opide;
 //==============================================================================
 start with inicio;
 //==============================================================================
@@ -121,9 +121,12 @@ numericas::=RESERVADA_VAR
             {:
              ts news = new ts(id.toString(),vn.toString(),"Variable Double",vnleft,vnright);
              gui.listaSimbolos.add(news);
+            arregloTemporal="";
             :};
 
-valorNumerico::= NUMEROS:c {: RESULT= c; :} |ID:iddd{: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);:}|aritmeticas:c {: RESULT= c; :}|estadisticas:c {: RESULT= c; :};
+valorNumerico::= NUMEROS:c {: RESULT= c; :} |ID:iddd{: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);:}
+                |aritmeticas:c {: RESULT= c; :}
+                |estadisticas:c {: RESULT= c; :};
 //==============================================================================
 arreglos::=RESERVADA_ARRAY DOS_PUNTOS tipoArreglo:ta DOS_PUNTOS DOS_PUNTOS
            IDE:ide MENOR_QUE GUION CORCHETE_IZQUIERDO contenidoD:cont  RESERVADA_END PUNTO_Y_COMA
@@ -135,15 +138,30 @@ arreglos::=RESERVADA_ARRAY DOS_PUNTOS tipoArreglo:ta DOS_PUNTOS DOS_PUNTOS
             :};
 tipoArreglo::=RESERVADA_DOUBLE{: RESULT= "Arreglo Double"; :}|RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO{: RESULT="Arreglo Char"; :};
 
-contenidoD::=contenido :c {: RESULT= c; :} |contenidoS :c {: arregloTemporal="["+arregloTemporal;RESULT= arregloTemporal; :} ;
+contenidoD::=contenido :c {: arregloTemporal="["+arregloTemporal;RESULT= arregloTemporal; :} |contenidoS :c {: arregloTemporal="["+arregloTemporal;RESULT= arregloTemporal; :} ;
 
-contenidoS::= STRING:s COMA:c contenidoS {:arregloTemporal=s.toString()+c.toString()+arregloTemporal;:} |STRING:s CORCHETE_DERECHO {: arregloTemporal=s.toString()+arregloTemporal+"]"; :};
+contenidoS::= STRING:s COMA:c contenidoS {:arregloTemporal=s.toString()+c.toString()+arregloTemporal;:} 
+            |opide:s {:RESULT=s;:}       
+            |STRING:s CORCHETE_DERECHO {: arregloTemporal=s.toString()+arregloTemporal+"]"; :}
+            |ID:id CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+obtenerValor(gui.listaSimbolos,(String) id)+"]";:} ;
 
+opide::=  ID:id COMA:c {:arregloTemporal=arregloTemporal+obtenerValor(gui.listaSimbolos,(String) id)+",";:}  ;    
 //toca
 contenido::= contenido2 contenido|contenido2 ultimo;
-contenido2::= anidacion COMA | NUMEROS COMA|IDE COMA|estadisticas COMA|estadisticas;   //FALTAN LAS ESTADISTICAS 
+contenido2::= anidacion:an COMA:c {:arregloTemporal=arregloTemporal+an.toString()+",";:} 
 
-ultimo::= ID CORCHETE_DERECHO|NUMEROS CORCHETE_DERECHO|anidacion CORCHETE_DERECHO|CORCHETE_DERECHO;
+            | NUMEROS:n COMA {:arregloTemporal=arregloTemporal+n.toString()+",";:}
+
+            |opide:s {: RESULT=s;:}
+
+            |estadisticas:e COMA {:arregloTemporal=arregloTemporal+e.toString()+",";:} 
+            ;
+            //|estadisticas;   //FALTAN LAS ESTADISTICAS 
+
+ultimo::= ID:id CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+obtenerValor(gui.listaSimbolos,(String) id)+"]";:} 
+          |NUMEROS:n CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+n.toString()+"]";:}
+          |anidacion:a CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+a.toString()+"]";:}
+          |CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+"]";:};
 
 //==============================================================================
 //==============================================================================
@@ -241,20 +259,41 @@ anidacion::= tipoAnidada:to PARENTESIS_IZQUIERDO valorAritmetico:c COMA valorAri
    :};
 //==============================================================================
 //Todas las funciones estadisticas
-estadisticas::=media|mediana|moda|varianza|max|min;
+estadisticas::=media:c {:RESULT=c;:} |mediana:c {:RESULT=c;:} |moda:c {:RESULT=c;:} |varianza:c {:RESULT=c;:} |max:c {:RESULT=c;:} |min:c {:RESULT=c;:} ;
 
-contenidoE::= CORCHETE_IZQUIERDO contenidoEE|IDE;//De array
-contenidoEE::=NUMEROS COMA contenidoEE|anidacion COMA contenidoEE|ID contenidoEE
-            |NUMEROS CORCHETE_DERECHO|anidacion CORCHETE_DERECHO|ID CORCHETE_DERECHO;//ID double
+contenidoE::= CORCHETE_IZQUIERDO contenidoEE
+            |IDE:c {:RESULT=obtenerValor(gui.listaSimbolos,(String) c);:} ;
+
+contenidoEE::=NUMEROS:n COMA contenidoEE {:arregloTemporal=n.toString()+","+arregloTemporal;:}
+            |anidacion:n COMA contenidoEE{:arregloTemporal=n.toString()+","+arregloTemporal;:}
+            |ID:n contenidoEE {:arregloTemporal=n.toString()+","+arregloTemporal;:}
+            |NUMEROS:n CORCHETE_DERECHO {:arregloTemporal=n.toString()+arregloTemporal;:}
+            |anidacion:n CORCHETE_DERECHO{:arregloTemporal=n.toString()+arregloTemporal;:}
+            |ID:n CORCHETE_DERECHO {:arregloTemporal=n.toString()+arregloTemporal;:} ;
 
 //2 formas con un arreglo o con mezcla de numeros,artimeticas,id(double)
 
-media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
-mediana::= RESERVADA_MEDIANA PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
-moda::= RESERVADA_MODA PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
-varianza::= RESERVADA_VARIANZA PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
-max::=  RESERVADA_MAX PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
-min::= RESERVADA_MIN PARENTESIS_IZQUIERDO contenidoE PARENTESIS_DERECHO;
+media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
+        ts news = new ts("cadena",arregloTemporal,"Variable Double",1,1);
+             gui.listaSimbolos.add(news);
+        String[] numerosArray = arregloTemporal.split(",");
+        double suma = 0;
+         for (String numeroStr : numerosArray) {
+            try {
+                double numero = Double.parseDouble(numeroStr);
+                suma += numero; // Sumamos el número al total
+            } catch (NumberFormatException e) {
+                
+            }
+        }
+         double media = suma / numerosArray.length ;
+        RESULT=media;
+        :} ;
+mediana::= RESERVADA_MEDIANA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:RESULT=c;:} ;
+moda::= RESERVADA_MODA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:RESULT=c;:} ;
+varianza::= RESERVADA_VARIANZA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:RESULT=c;:} ;
+max::=  RESERVADA_MAX PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:RESULT=c;:} ;
+min::= RESERVADA_MIN PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:RESULT=c;:} ;
 
 
 

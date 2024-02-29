@@ -498,9 +498,9 @@ public class gui extends javax.swing.JFrame {
         htmlBuilder.append("<table border=\"1\">\n");
         htmlBuilder.append("<tr>\n");
         htmlBuilder.append("<th>#</th>\n");
+        htmlBuilder.append("<th>Tipo</th>\n");
         htmlBuilder.append("<th>Nombre</th>\n");
         htmlBuilder.append("<th>Valor</th>\n");
-        htmlBuilder.append("<th>Tipo</th>\n");
         htmlBuilder.append("<th>Fila</th>\n");
         htmlBuilder.append("<th>Columna</th>\n");
         htmlBuilder.append("</tr>\n");
