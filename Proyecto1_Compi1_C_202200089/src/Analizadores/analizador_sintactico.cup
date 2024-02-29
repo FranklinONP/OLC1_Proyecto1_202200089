@@ -1,13 +1,122 @@
 package Analizadores;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java_cup.runtime.*;
 import Errores.Error_;
 import GUI.gui;
 import DB.ts;
+import java.util.HashMap;
+import java.util.Map;
  
 parser code
 {:
+    public static int calcularMaximo(int[] numeros) {
+        int maximo = Integer.MIN_VALUE;
+
+        for (int numero : numeros) {
+            if (numero > maximo) {
+                maximo = numero;
+            }
+        }
+
+        return maximo;
+    }
+
+    public static int calcularMinimo(int[] numeros) {
+        int minimo = Integer.MAX_VALUE;
+
+        for (int numero : numeros) {
+            if (numero < minimo) {
+                minimo = numero;
+            }
+        }
+
+        return minimo;
+    }
+
+    
+      public static double calcularVarianza(int[] numeros) {
+        // Calcular la media
+        double media = calcularMedia(numeros);
+
+        // Calcular la suma de los cuadrados de las diferencias entre cada número y la media
+        double sumaCuadradosDiferencias = 0;
+
+        for (int numero : numeros) {
+            double diferencia = numero - media;
+            sumaCuadradosDiferencias += diferencia * diferencia;
+        }
+
+        // Calcular la varianza dividiendo la suma de los cuadrados por la cantidad de elementos
+        double varianza = sumaCuadradosDiferencias / numeros.length;
+
+        return varianza;
+    }
+
+     public static double calcularMedia(int[] numeros) {
+        int suma = 0;
+
+        for (int numero : numeros) {
+            suma += numero;
+        }
+
+        return (double) suma / numeros.length;
+    }
+
+     public static int calcularModa(int[] numeros) {
+        // Utilizamos un mapa para almacenar la frecuencia de cada número
+        Map<Integer, Integer> frecuenciaMapa = new HashMap<>();
+
+        // Calcular la frecuencia de cada número
+        for (int numero : numeros) {
+            frecuenciaMapa.put(numero, frecuenciaMapa.getOrDefault(numero, 0) + 1);
+        }
+
+        // Encontrar el número con la frecuencia máxima
+        int moda = 0;
+        int frecuenciaMaxima = 0;
+
+        for (Map.Entry<Integer, Integer> entry : frecuenciaMapa.entrySet()) {
+            int numero = entry.getKey();
+            int frecuencia = entry.getValue();
+
+            if (frecuencia > frecuenciaMaxima) {
+                moda = numero;
+                frecuenciaMaxima = frecuencia;
+            }
+        }
+
+        return moda;
+    }
+    
+    public static int[] convertirCadenaAArray(String numerosString) {
+        String[] numerosStringArray = numerosString.split(",");
+        int[] numeros = new int[numerosStringArray.length];
+
+        for (int i = 0; i < numerosStringArray.length; i++) {
+            numeros[i] = Integer.parseInt(numerosStringArray[i]);
+        }
+
+        return numeros;
+    }
+
+    public static double calcularMediana(int[] numeros) {
+        int n = numeros.length;
+        if (n % 2 == 0) {
+            // Si hay un número par de elementos, promediar los dos valores centrales
+            int indice1 = n / 2 - 1;
+            int indice2 = n / 2;
+            return (numeros[indice1] + numeros[indice2]) / 2.0;
+        } else {
+            // Si hay un número impar de elementos, devolver el valor central
+            int indiceCentral = n / 2;
+            return numeros[indiceCentral];
+        }
+    }
+
+
+    
     public static String arregloTemporal="";
    
     public static String obtenerValor(LinkedList<ts> lista, String nombreBuscado) {
@@ -119,9 +228,10 @@ numericas::=RESERVADA_VAR
             RESERVADA_END
             PUNTO_Y_COMA
             {:
+            arregloTemporal="";
              ts news = new ts(id.toString(),vn.toString(),"Variable Double",vnleft,vnright);
              gui.listaSimbolos.add(news);
-            arregloTemporal="";
+            
             :};
 
 valorNumerico::= NUMEROS:c {: RESULT= c; :} |ID:iddd{: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);:}
@@ -131,22 +241,25 @@ valorNumerico::= NUMEROS:c {: RESULT= c; :} |ID:iddd{: RESULT = obtenerValor(gui
 arreglos::=RESERVADA_ARRAY DOS_PUNTOS tipoArreglo:ta DOS_PUNTOS DOS_PUNTOS
            IDE:ide MENOR_QUE GUION CORCHETE_IZQUIERDO contenidoD:cont  RESERVADA_END PUNTO_Y_COMA
            {: 
-            
+            arregloTemporal="";
             ts news = new ts(ide.toString(),cont.toString(),ta.toString(),contleft,contright);
             gui.listaSimbolos.add(news);
-            arregloTemporal="";
+            
             :};
 tipoArreglo::=RESERVADA_DOUBLE{: RESULT= "Arreglo Double"; :}|RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO{: RESULT="Arreglo Char"; :};
 
-contenidoD::=contenido :c {: arregloTemporal="["+arregloTemporal;RESULT= arregloTemporal; :} |contenidoS :c {: arregloTemporal="["+arregloTemporal;RESULT= arregloTemporal; :} ;
+contenidoD::=contenido :c {: arregloTemporal="["+arregloTemporal;RESULT= arregloTemporal; :} 
+            |contenidoS :c {: arregloTemporal="["+arregloTemporal;RESULT= arregloTemporal; :} ;
 
+//aun con errores
 contenidoS::= STRING:s COMA:c contenidoS {:arregloTemporal=s.toString()+c.toString()+arregloTemporal;:} 
             |opide:s {:RESULT=s;:}       
             |STRING:s CORCHETE_DERECHO {: arregloTemporal=s.toString()+arregloTemporal+"]"; :}
             |ID:id CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+obtenerValor(gui.listaSimbolos,(String) id)+"]";:} ;
 
 opide::=  ID:id COMA:c {:arregloTemporal=arregloTemporal+obtenerValor(gui.listaSimbolos,(String) id)+",";:}  ;    
-//toca
+
+
 contenido::= contenido2 contenido|contenido2 ultimo;
 contenido2::= anidacion:an COMA:c {:arregloTemporal=arregloTemporal+an.toString()+",";:} 
 
@@ -156,12 +269,12 @@ contenido2::= anidacion:an COMA:c {:arregloTemporal=arregloTemporal+an.toString(
 
             |estadisticas:e COMA {:arregloTemporal=arregloTemporal+e.toString()+",";:} 
             ;
-            //|estadisticas;   //FALTAN LAS ESTADISTICAS 
 
 ultimo::= ID:id CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+obtenerValor(gui.listaSimbolos,(String) id)+"]";:} 
           |NUMEROS:n CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+n.toString()+"]";:}
           |anidacion:a CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+a.toString()+"]";:}
-          |CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+"]";:};
+          |estadisticas:e CORCHETE_DERECHO  {:  System.out.println(e.toString());
+                                                arregloTemporal=arregloTemporal+e.toString()+"]";:} ;
 
 //==============================================================================
 //==============================================================================
@@ -231,7 +344,7 @@ modulo::=RESERVADA_MODULO PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritm
 
 tipoAnidada::=RESERVADA_SUMA {:RESULT="suma";:} |RESERVADA_RESTA {:RESULT="resta";:}|RESERVADA_MULTIPLICACION {:RESULT="multiplicacion";:}|RESERVADA_DIVISION {:RESULT="division";:}|RESERVADA_MODULO {:RESULT="modulo";:};
 
-valorAritmetico::= NUMEROS:c {: RESULT= c; :}|ID:c {: RESULT=c; :}|anidacion :c {: RESULT=c; :}|estadisticas:c=1{: RESULT=c; :};//para mientras lo de estadistico===========================
+valorAritmetico::= NUMEROS:c {: RESULT= c; :}|ID:c {: RESULT = obtenerValor(gui.listaSimbolos,(String) c);:}|anidacion :c {: RESULT=c; :}|estadisticas:c=1{: RESULT=c; :};//para mientras lo de estadistico===========================
 anidacion::= tipoAnidada:to PARENTESIS_IZQUIERDO valorAritmetico:c COMA valorAritmetico:d PARENTESIS_DERECHO {: 
   String strC = c.toString();
   String strD = d.toString();
@@ -269,13 +382,13 @@ contenidoEE::=NUMEROS:n COMA contenidoEE {:arregloTemporal=n.toString()+","+arre
             |ID:n contenidoEE {:arregloTemporal=n.toString()+","+arregloTemporal;:}
             |NUMEROS:n CORCHETE_DERECHO {:arregloTemporal=n.toString()+arregloTemporal;:}
             |anidacion:n CORCHETE_DERECHO{:arregloTemporal=n.toString()+arregloTemporal;:}
-            |ID:n CORCHETE_DERECHO {:arregloTemporal=n.toString()+arregloTemporal;:} ;
+            |ID:n CORCHETE_DERECHO {:arregloTemporal=obtenerValor(gui.listaSimbolos,(String) n)+arregloTemporal;:} ;
 
 //2 formas con un arreglo o con mezcla de numeros,artimeticas,id(double)
 
 media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
         ts news = new ts("cadena",arregloTemporal,"Variable Double",1,1);
-             gui.listaSimbolos.add(news);
+            gui.listaSimbolos.add(news);
         String[] numerosArray = arregloTemporal.split(",");
         double suma = 0;
          for (String numeroStr : numerosArray) {
@@ -289,16 +402,27 @@ media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
          double media = suma / numerosArray.length ;
         RESULT=media;
         :} ;
-mediana::= RESERVADA_MEDIANA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:RESULT=c;:} ;
-moda::= RESERVADA_MODA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:RESULT=c;:} ;
-varianza::= RESERVADA_VARIANZA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:RESULT=c;:} ;
-max::=  RESERVADA_MAX PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:RESULT=c;:} ;
-min::= RESERVADA_MIN PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:RESULT=c;:} ;
-
-
-
-
-
+mediana::= RESERVADA_MEDIANA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
+        int[] numeros = convertirCadenaAArray(arregloTemporal);
+        Arrays.sort(numeros);
+        double mediana = calcularMediana(numeros);
+        RESULT=mediana;:} ;
+moda::= RESERVADA_MODA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
+        int[] numeros = convertirCadenaAArray(arregloTemporal);
+        int moda = calcularModa(numeros);
+        RESULT=moda;:} ;
+varianza::= RESERVADA_VARIANZA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
+        int[] numeros = convertirCadenaAArray(arregloTemporal);
+        double varianza = calcularVarianza(numeros);
+        RESULT=varianza;:} ;
+max::=  RESERVADA_MAX PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
+        int[] numeros = convertirCadenaAArray(arregloTemporal);
+        int maximo = calcularMaximo(numeros);
+        RESULT=maximo;:} ;
+min::= RESERVADA_MIN PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
+       int[] numeros = convertirCadenaAArray(arregloTemporal);
+       int minimo = calcularMinimo(numeros);
+       RESULT=minimo;:} ;
 
 //==============================================================================
 //hasta el momento solo combina numeros y string
