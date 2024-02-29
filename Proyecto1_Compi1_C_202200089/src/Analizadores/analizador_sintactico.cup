@@ -1,11 +1,27 @@
 package Analizadores;
 
+import java.util.LinkedList;
 import java_cup.runtime.*;
 import Errores.Error_;
 import GUI.gui;
-
+import DB.ts;
+ 
 parser code
 {:
+    public static String arregloTemporal="";
+   
+    public static String obtenerValor(LinkedList<ts> lista, String nombreBuscado) {
+        for (ts item : lista) {
+            if (item.getNombre().equals(nombreBuscado)) {
+                return item.getValor();
+            }
+        }
+        return null; // Retorna null si no se encuentra el nodo
+    }
+
+
+
+
 
     public void syntax_error(Symbol s)
     {
@@ -46,7 +62,7 @@ non terminal ultimoE,contenidoE,contenidoEE,estadisticas,media,mediana,moda,vari
 non terminal desicionprint,print1,print2;
 non terminal contenidoD,contenidoS,contenido2s,ultimoS;
 non terminal graficas, pie,barras,linea,histograma,valorNumerico,comb,text;
-non terminal pp,ppp;
+non terminal pp,ppp,ap;
 
 //==============================================================================
 start with inicio;
@@ -73,13 +89,19 @@ textos::=   RESERVADA_VAR
             CORCHETE_IZQUIERDO  
             CORCHETE_DERECHO    
             DOS_PUNTOS DOS_PUNTOS 
-            text
+            ID:id 
             MENOR_QUE 
             GUION 
-            STRING 
+            text:vs 
             RESERVADA_END 
-            PUNTO_Y_COMA;
-text::=ID|RESERVADA_TITULO_GRAFICA;
+            PUNTO_Y_COMA
+            
+            {:
+             ts news = new ts(id.toString(),vs.toString(),"Variable Char",vsleft,vsright);
+             gui.listaSimbolos.add(news);
+
+            :};
+text::=ID:iddd {: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);:}|STRING:c {: RESULT= c; :};
 //==============================================================================
 
 
@@ -90,27 +112,39 @@ numericas::=RESERVADA_VAR
             RESERVADA_DOUBLE
             DOS_PUNTOS
             DOS_PUNTOS
-            ID
+            ID:id
             MENOR_QUE
             GUION
-            valorNumerico
+            valorNumerico:vn
             RESERVADA_END
-            PUNTO_Y_COMA;
+            PUNTO_Y_COMA
+            {:
+             ts news = new ts(id.toString(),vn.toString(),"Variable Double",vnleft,vnright);
+             gui.listaSimbolos.add(news);
+            :};
 
-valorNumerico::= NUMEROS|ID|aritmeticas|estadisticas;
+valorNumerico::= NUMEROS:c {: RESULT= c; :} |ID:iddd{: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);:}|aritmeticas:c {: RESULT= c; :}|estadisticas:c {: RESULT= c; :};
 //==============================================================================
-tipoArreglo::=RESERVADA_DOUBLE|RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO;
+arreglos::=RESERVADA_ARRAY DOS_PUNTOS tipoArreglo:ta DOS_PUNTOS DOS_PUNTOS
+           IDE:ide MENOR_QUE GUION CORCHETE_IZQUIERDO contenidoD:cont  RESERVADA_END PUNTO_Y_COMA
+           {: 
+            
+            ts news = new ts(ide.toString(),cont.toString(),ta.toString(),contleft,contright);
+            gui.listaSimbolos.add(news);
+            arregloTemporal="";
+            :};
+tipoArreglo::=RESERVADA_DOUBLE{: RESULT= "Arreglo Double"; :}|RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO{: RESULT="Arreglo Char"; :};
+
+contenidoD::=contenido :c {: RESULT= c; :} |contenidoS :c {: arregloTemporal="["+arregloTemporal;RESULT= arregloTemporal; :} ;
+
+contenidoS::= STRING:s COMA:c contenidoS {:arregloTemporal=s.toString()+c.toString()+arregloTemporal;:} |STRING:s CORCHETE_DERECHO {: arregloTemporal=s.toString()+arregloTemporal+"]"; :};
+
+//toca
+contenido::= contenido2 contenido|contenido2 ultimo;
+contenido2::= anidacion COMA | NUMEROS COMA|IDE COMA|estadisticas COMA|estadisticas;   //FALTAN LAS ESTADISTICAS 
 
 ultimo::= ID CORCHETE_DERECHO|NUMEROS CORCHETE_DERECHO|anidacion CORCHETE_DERECHO|CORCHETE_DERECHO;
 
-arreglos::=RESERVADA_ARRAY DOS_PUNTOS tipoArreglo DOS_PUNTOS DOS_PUNTOS IDE MENOR_QUE GUION CORCHETE_IZQUIERDO contenidoD  RESERVADA_END PUNTO_Y_COMA;
-
-contenidoD::=contenido|contenidoS;
-contenidoS::= STRING COMA contenidoS|STRING CORCHETE_DERECHO;
-
-
-contenido::= contenido2 contenido|contenido2 ultimo;
-contenido2::= anidacion COMA | NUMEROS COMA|IDE COMA|estadisticas COMA|estadisticas;   //FALTAN LAS ESTADISTICAS 
 //==============================================================================
 //==============================================================================
 
@@ -245,13 +279,14 @@ print1::=
     PUNTO_Y_COMA:e7
     {: 
         System.out.println("\n"+"Print desde el cup de la cadena: " + s+"\n");
+        gui.listaPrint.add((String) s);
     :};
 
 
 
 valorPrint ::= STRING:s {: RESULT = s; :}
             | NUMEROS:n {: RESULT = n; :}
-            | ID:iddd {: RESULT = iddd; :}
+            | ID:iddd {: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);  :}
             | aritmeticas:ar {: RESULT = ar; :}
             | estadisticas:st {: RESULT = st; :}
             | combinado:c {: RESULT = c; :};

@@ -4,6 +4,7 @@
  */
 package GUI;
 //Importacion de los analizadores
+
 import Analizadores.analizador_lexico;
 import Analizadores.analizador_sintactico;
 
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import Tokens.Token;
 import java.util.LinkedList;
 import java.util.Map;
+import DB.ts;
 
 /**
  *
@@ -36,16 +38,20 @@ public class gui extends javax.swing.JFrame {
 
     //Variables Globales
     public static LinkedList<Error_> lista_errores = new LinkedList<Error_>();
-    
+
     //Para tabla de tokens
     public static LinkedList<Token> listaTokens = new LinkedList<Token>();
-    
+
+    //Para tabla de Simbolos
+    public static LinkedList<ts> listaSimbolos = new LinkedList<ts>();
+
     //Para guardar todo lo que voy a imprimir
-    public static LinkedList<String> listaPrint=new LinkedList<String>();
-    
+    public static LinkedList<String> listaPrint = new LinkedList<String>();
+
+    //Aun no lo utilizo :D
     //Para guardar variables y sus atributos tipo double
     public static Map<String, Map> mapaDouble = new HashMap<>();
-    
+
     private static int contadorPestanas = 1;
     HashMap<JPanel, File> tabFileMap = new HashMap<>();
 
@@ -378,10 +384,7 @@ public class gui extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    
-
-    
-      public static void generateHtmlFileFromErrors(LinkedList<Error_> errorList, String filePath) {
+    public static void generateHtmlFileFromErrors(LinkedList<Error_> errorList, String filePath) {
         StringBuilder htmlBuilder = new StringBuilder();
 
         // Crear la estructura básica del documento HTML
@@ -402,9 +405,9 @@ public class gui extends javax.swing.JFrame {
         htmlBuilder.append("<th>Linea</th>\n");
         htmlBuilder.append("<th>Columna</th>\n");
         htmlBuilder.append("</tr>\n");
-        Integer i=0;
+        Integer i = 0;
         for (Error_ error : errorList) {
-            i=i+1;
+            i = i + 1;
             htmlBuilder.append("<tr>\n");
             htmlBuilder.append("<td>").append(i).append("</td>\n");
             htmlBuilder.append("<td>").append(error.getLexema()).append("</td>\n");
@@ -421,7 +424,7 @@ public class gui extends javax.swing.JFrame {
         htmlBuilder.append("</html>\n");
 
         // Guardar el contenido HTML en un archivo
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write(htmlBuilder.toString());
             System.out.println("Archivo HTML guardado en: " + filePath);
         } catch (IOException e) {
@@ -429,7 +432,8 @@ public class gui extends javax.swing.JFrame {
             e.printStackTrace(); // Imprimir detalles del error
         }
     }
-     public static void tablaTokens(LinkedList<Token> listT, String filePath) {
+
+    public static void tablaTokens(LinkedList<Token> listT, String filePath) {
         StringBuilder htmlBuilder = new StringBuilder();
 
         // Crear la estructura básica del documento HTML
@@ -450,12 +454,12 @@ public class gui extends javax.swing.JFrame {
         htmlBuilder.append("<th>Linea</th>\n");
         htmlBuilder.append("<th>Columna</th>\n");
         htmlBuilder.append("</tr>\n");
-        Integer i=0;
+        Integer i = 0;
         for (Token error : listT) {
-            i=i+1;
+            i = i + 1;
             htmlBuilder.append("<tr>\n");
             htmlBuilder.append("<td>").append(i).append("</td>\n");
-            htmlBuilder.append("<td>").append(error.getTipo()).append("</td>\n");            
+            htmlBuilder.append("<td>").append(error.getTipo()).append("</td>\n");
             htmlBuilder.append("<td>").append(error.getLexema()).append("</td>\n");
             htmlBuilder.append("<td>").append(error.getLinea()).append("</td>\n");
             htmlBuilder.append("<td>").append(error.getColumna()).append("</td>\n");
@@ -469,7 +473,7 @@ public class gui extends javax.swing.JFrame {
         htmlBuilder.append("</html>\n");
 
         // Guardar el contenido HTML en un archivo
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write(htmlBuilder.toString());
             System.out.println("Archivo HTML guardado en: " + filePath);
         } catch (IOException e) {
@@ -478,7 +482,57 @@ public class gui extends javax.swing.JFrame {
         }
     }
 
-    
+    public static void tablaSimbolos(LinkedList<ts> listT, String filePath) {
+        StringBuilder htmlBuilder = new StringBuilder();
+
+        // Crear la estructura básica del documento HTML
+        htmlBuilder.append("<!DOCTYPE html>\n");
+        htmlBuilder.append("<html lang=\"en\">\n");
+        htmlBuilder.append("<head>\n");
+        htmlBuilder.append("<meta charset=\"UTF-8\">\n");
+        htmlBuilder.append("<title>Tabla de Simbolos</title>\n");
+        htmlBuilder.append("</head>\n");
+        htmlBuilder.append("<body>\n");
+
+        // Generar una tabla para mostrar los errores
+        htmlBuilder.append("<table border=\"1\">\n");
+        htmlBuilder.append("<tr>\n");
+        htmlBuilder.append("<th>#</th>\n");
+        htmlBuilder.append("<th>Nombre</th>\n");
+        htmlBuilder.append("<th>Valor</th>\n");
+        htmlBuilder.append("<th>Tipo</th>\n");
+        htmlBuilder.append("<th>Fila</th>\n");
+        htmlBuilder.append("<th>Columna</th>\n");
+        htmlBuilder.append("</tr>\n");
+        Integer i = 0;
+        for (ts error : listT) {
+            i = i + 1;
+            htmlBuilder.append("<tr>\n");
+            htmlBuilder.append("<td>").append(i).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getTipo()).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getNombre()).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getValor()).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getLinea()).append("</td>\n");
+            htmlBuilder.append("<td>").append(error.getColumna()).append("</td>\n");
+            htmlBuilder.append("</tr>\n");
+        }
+
+        htmlBuilder.append("</table>\n");
+
+        // Cerrar el documento HTML
+        htmlBuilder.append("</body>\n");
+        htmlBuilder.append("</html>\n");
+
+        // Guardar el contenido HTML en un archivo
+        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(htmlBuilder.toString());
+            System.out.println("Archivo HTML guardado en: " + filePath);
+        } catch (IOException e) {
+            System.err.println("Error al guardar el archivo HTML: " + e.getMessage());
+            e.printStackTrace(); // Imprimir detalles del error
+        }
+    }
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         int selectedIndex = jTabbedPane1.getSelectedIndex();
@@ -486,30 +540,47 @@ public class gui extends javax.swing.JFrame {
         JScrollPane scrollPane = (JScrollPane) selectedPanel.getComponent(0);
         JTextArea textArea = (JTextArea) scrollPane.getViewport().getView();
         String codigo = textArea.getText();
-                
-    try {
-        analizador_lexico scanner = new analizador_lexico(new java.io.StringReader(codigo));
-        analizador_sintactico analizador = new analizador_sintactico(scanner);
-        analizador.parse();
-        System.out.println("Análisis finalizado");
-        for (Error_ arg : lista_errores) {
+        
+        jTextArea2.setText("");
+
+        try {
+            analizador_lexico scanner = new analizador_lexico(new java.io.StringReader(codigo));
+            analizador_sintactico analizador = new analizador_sintactico(scanner);
+            analizador.parse();
+            System.out.println("Análisis finalizado");
+            for (Error_ arg : lista_errores) {
                 System.out.println(arg.toString());
             }
-        //////////////////////////////////
-        String filePath = "errores.html";
-        generateHtmlFileFromErrors(lista_errores, filePath);
-        
-        String filePathh = "ttokens.html";
-        tablaTokens(listaTokens, filePathh); 
-        
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-         {
-        
-        
-    }
-        
+            ///////////////////////////////////////////////   REPORTES //////////////////////////////////////////////////////
+            String filePath = "errores.html";
+            generateHtmlFileFromErrors(lista_errores, filePath);
+
+            String filePathh = "ttokens.html";
+            tablaTokens(listaTokens, filePathh);
+
+            String file = "Tabla de Simbolos.html";
+            tablaSimbolos(listaSimbolos, file);
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            //Mando a la consola los que haya capturado
+            for (String elemento : listaPrint) {
+                jTextArea2.append(elemento + "\n"); // Agrega un salto de línea después de cada elemento
+            }
+            
+            
+            //Limpio las linkedList
+            lista_errores.clear();
+            listaTokens.clear();
+            listaSimbolos.clear();
+            listaPrint.clear();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        {
+
+        }
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

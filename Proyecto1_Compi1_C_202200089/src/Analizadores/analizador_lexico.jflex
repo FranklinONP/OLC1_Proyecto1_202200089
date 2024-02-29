@@ -356,11 +356,11 @@ RESERVADA_EXEC = "Exec"
 <YYINITIAL> {IDE} {Token ntk = new Token(yyline,yycolumn,yytext(),"ID array");listaTokens.add(ntk); return new Symbol(sym.IDE, yyline, yycolumn, yytext()) ; }
 
 <YYINITIAL> {
-    \"(\\.|[^\"])*\" {Token ntk = new Token(yyline,yycolumn,yytext(),"STRING");listaTokens.add(ntk); return new Symbol(sym.STRING, yytext()); }
+    \"(\\.|[^\"])*\" {Token ntk = new Token(yyline,yycolumn,yytext(),"STRING");listaTokens.add(ntk); return new Symbol(sym.STRING, yyline, yycolumn, yytext()); }
 }
 
 <YYINITIAL> {
-    [a-zA-Z_][a-zA-Z0-9_]* { Token ntk = new Token(yyline,yycolumn,yytext(),"Id");listaTokens.add(ntk) ; return new Symbol(sym.ID, yytext()); }
+    [a-zA-Z_][a-zA-Z0-9_]* { Token ntk = new Token(yyline,yycolumn,yytext(),"Id");listaTokens.add(ntk) ; return new Symbol(sym.ID,yyline, yycolumn, yytext()); }
 }
 
 

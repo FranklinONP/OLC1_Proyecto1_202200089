@@ -910,12 +910,12 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
             // fall through
           case 66: break;
           case 16: 
-            { Token ntk = new Token(yyline,yycolumn,yytext(),"Id");listaTokens.add(ntk) ; return new Symbol(sym.ID, yytext());
+            { Token ntk = new Token(yyline,yycolumn,yytext(),"Id");listaTokens.add(ntk) ; return new Symbol(sym.ID,yyline, yycolumn, yytext());
             } 
             // fall through
           case 67: break;
           case 17: 
-            { Token ntk = new Token(yyline,yycolumn,yytext(),"STRING");listaTokens.add(ntk); return new Symbol(sym.STRING, yytext());
+            { Token ntk = new Token(yyline,yycolumn,yytext(),"STRING");listaTokens.add(ntk); return new Symbol(sym.STRING, yyline, yycolumn, yytext());
             } 
             // fall through
           case 68: break;
