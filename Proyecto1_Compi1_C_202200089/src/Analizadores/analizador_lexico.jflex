@@ -3,7 +3,7 @@ import java_cup.runtime.Symbol;
 import java_cup.runtime.*;
 
 import Errores.Error_;
-import Tokens.Token;
+import Errores.Token;
 import static GUI.gui.lista_errores;
 import static GUI.gui.listaTokens;
 
@@ -28,7 +28,7 @@ import static GUI.gui.listaTokens;
 %init}
 
 
-COMENTARIO_MULTILINEA = "<" "!" .*? "!" ">"
+COMENTARIO_MULTILINEA = "<!" [^/]~ "!>"
 COMENTARIO_LINEA = "!" .*
 
 

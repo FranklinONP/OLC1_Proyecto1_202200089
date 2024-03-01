@@ -25,7 +25,7 @@ import Errores.Error_;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import Tokens.Token;
+import Errores.Token;
 import java.util.LinkedList;
 import java.util.Map;
 import DB.ts;
@@ -34,7 +34,11 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 /**
  *
  * @author 50232
@@ -81,6 +85,7 @@ public class gui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
@@ -93,6 +98,9 @@ public class gui extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         labelimg = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
         Guadar = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -103,6 +111,8 @@ public class gui extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+
+        jLabel6.setText("....");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -170,13 +180,24 @@ public class gui extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelimg, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(labelimg, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, 320, 310));
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 500, 310));
+
+        jLabel4.setText("....");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 200, -1, -1));
+
+        jLabel5.setText("....");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
+
+        jLabel7.setText("....");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 620, -1, -1));
 
         Guadar.setText("Archivo");
         Guadar.addActionListener(new java.awt.event.ActionListener() {
@@ -222,12 +243,27 @@ public class gui extends javax.swing.JFrame {
         jMenu10.setText("Reportes");
 
         jMenuItem7.setText("Reporte de Tokens");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu10.add(jMenuItem7);
 
         jMenuItem8.setText("Reporte de errores");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu10.add(jMenuItem8);
 
         jMenuItem9.setText("Reporte de Tabla de Simbolos");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu10.add(jMenuItem9);
 
         jMenuBar2.add(jMenu10);
@@ -654,6 +690,41 @@ public class gui extends javax.swing.JFrame {
         
         mostrarImagenEnLabel(contImagenes);
     }//GEN-LAST:event_jButton2ActionPerformed
+public static void abrirHTML(String rutaArchivoHTML) {
+        try {
+            File archivoHTML = new File(rutaArchivoHTML);
+
+            // Verifica que Desktop sea compatible con la plataforma actual
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+
+                // Verifica que el archivo exista antes de intentar abrirlo
+                if (archivoHTML.exists()) {
+                    desktop.open(archivoHTML);
+                } else {
+                    System.out.println("El archivo HTML no existe en la ruta especificada.");
+                }
+            } else {
+                System.out.println("La apertura del archivo no es compatible con este entorno.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        abrirHTML("ttokens.html");
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        abrirHTML("errores.html");
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        abrirHTML("Tabla de Simbolos.html");
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -669,6 +740,10 @@ public class gui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem3;
