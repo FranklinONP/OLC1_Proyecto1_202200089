@@ -29,6 +29,11 @@ import Tokens.Token;
 import java.util.LinkedList;
 import java.util.Map;
 import DB.ts;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -48,11 +53,15 @@ public class gui extends javax.swing.JFrame {
     //Para guardar todo lo que voy a imprimir
     public static LinkedList<String> listaPrint = new LinkedList<String>();
 
+    //rutas de imagenes
+    public static LinkedList<String> listaRutas =new LinkedList<String>();
+    
     //Aun no lo utilizo :D
     //Para guardar variables y sus atributos tipo double
     public static Map<String, Map> mapaDouble = new HashMap<>();
 
     private static int contadorPestanas = 1;
+    private static int contImagenes=0;
     HashMap<JPanel, File> tabFileMap = new HashMap<>();
 
     /**
@@ -82,6 +91,7 @@ public class gui extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        labelimg = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jMenuBar2 = new javax.swing.JMenuBar();
         Guadar = new javax.swing.JMenu();
@@ -106,10 +116,20 @@ public class gui extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setText("Anterior");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 380, -1, -1));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setText("Siguiente");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 380, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -146,11 +166,11 @@ public class gui extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 318, Short.MAX_VALUE)
+            .addComponent(labelimg, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
+            .addComponent(labelimg, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, 320, 310));
@@ -533,8 +553,45 @@ public class gui extends javax.swing.JFrame {
         }
     }
 
+
+    
+    private void mostrarImagenEnLabel(int indice) {
+    if (indice >= 0 && indice < listaRutas.size()) {
+        // Obtener la ruta de la imagen desde la lista
+        String ruta = listaRutas.get(indice);
+
+        try {
+            // Cargar la imagen desde el archivo
+            BufferedImage imagen = ImageIO.read(new File(ruta));
+            ImageIcon miIcono = new ImageIcon(imagen);
+
+            // Redimensionar la imagen para que se ajuste al tamaño del JLabel
+            int anchoLabel = labelimg.getWidth();
+            int altoLabel = labelimg.getHeight();
+            Image imagenOriginal = miIcono.getImage();
+            Image imagenRedimensionada = imagenOriginal.getScaledInstance(anchoLabel, altoLabel, Image.SCALE_SMOOTH);
+            ImageIcon miIconoRedimensionado = new ImageIcon(imagenRedimensionada);
+
+            // Establecer el nuevo icono en el JLabel
+            labelimg.setIcon(miIconoRedimensionado);
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Archivo no encontrado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar la imagen: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        labelimg.setText("Índice fuera de rango (debe estar entre 0 y " + (listaRutas.size() - 1) + ")");
+        labelimg.setIcon(null);
+    }
+}
+
+
+    
+    
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        listaRutas.clear();
         int selectedIndex = jTabbedPane1.getSelectedIndex();
         JPanel selectedPanel = (JPanel) jTabbedPane1.getComponentAt(selectedIndex);
         JScrollPane scrollPane = (JScrollPane) selectedPanel.getComponent(0);
@@ -573,7 +630,7 @@ public class gui extends javax.swing.JFrame {
             listaTokens.clear();
             listaSimbolos.clear();
             listaPrint.clear();
-
+            mostrarImagenEnLabel(contImagenes);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -582,6 +639,18 @@ public class gui extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        contImagenes=+1;
+        mostrarImagenEnLabel(contImagenes);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        contImagenes=-1;
+        mostrarImagenEnLabel(contImagenes);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -609,5 +678,6 @@ public class gui extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JLabel labelimg;
     // End of variables declaration//GEN-END:variables
 }

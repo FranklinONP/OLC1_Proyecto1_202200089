@@ -8,49 +8,13 @@ import GUI.gui;
 import DB.ts;
 import java.util.HashMap;
 import java.util.Map;
-import DB.ImageCreator;
-
-import Graficas.HistogramExample;
-import Graficas.BarChartExample;
-import Graficas.LineChartExample;
-import Graficas.LineChartExample;
-import java.io.File;
-import java.io.IOException;
-
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.plot.PlotOrientation;
-
-
+ 
 parser code
 {:
+    public static int calcularMaximo(int[] numeros) {
+        int maximo = Integer.MIN_VALUE;
 
-public static String[] dividirStringPorComillas(String cadena) {
-    String[] resultado = new String[2];
-
-    // Encuentra la posición de la primera comilla doble
-    int indiceComilla = cadena.indexOf("\"");
-
-    // Verifica si se encontró una comilla doble
-    if (indiceComilla != -1) {
-        // Divide la cadena en dos partes
-        resultado[0] = cadena.substring(0, indiceComilla);
-        resultado[1] = cadena.substring(indiceComilla);
-    } else {
-        // Si no se encontró una comilla doble, asigna la cadena completa a la primera parte
-        resultado[0] = cadena;
-        resultado[1] = "";
-    }
-
-    return resultado;
-}
-
-    public static float calcularMaximo(float[] numeros) {
-        float maximo = Integer.MIN_VALUE;
-
-        for (float numero : numeros) {
+        for (int numero : numeros) {
             if (numero > maximo) {
                 maximo = numero;
             }
@@ -59,10 +23,10 @@ public static String[] dividirStringPorComillas(String cadena) {
         return maximo;
     }
 
-    public static float calcularMinimo(float[] numeros) {
-        float minimo = Integer.MAX_VALUE;
+    public static int calcularMinimo(int[] numeros) {
+        int minimo = Integer.MAX_VALUE;
 
-        for (float numero : numeros) {
+        for (int numero : numeros) {
             if (numero < minimo) {
                 minimo = numero;
             }
@@ -72,14 +36,14 @@ public static String[] dividirStringPorComillas(String cadena) {
     }
 
     
-      public static double calcularVarianza(float[] numeros) {
+      public static double calcularVarianza(int[] numeros) {
         // Calcular la media
         double media = calcularMedia(numeros);
 
         // Calcular la suma de los cuadrados de las diferencias entre cada número y la media
         double sumaCuadradosDiferencias = 0;
 
-        for (float numero : numeros) {
+        for (int numero : numeros) {
             double diferencia = numero - media;
             sumaCuadradosDiferencias += diferencia * diferencia;
         }
@@ -90,81 +54,70 @@ public static String[] dividirStringPorComillas(String cadena) {
         return varianza;
     }
 
-     public static double calcularMedia(float[] numeros) {
-        float suma = 0;
+     public static double calcularMedia(int[] numeros) {
+        int suma = 0;
 
-        for (float numero : numeros) {
+        for (int numero : numeros) {
             suma += numero;
         }
 
         return (double) suma / numeros.length;
     }
 
-     public static double calcularModa(float[] numeros) {
-    // Utilizamos un mapa para almacenar la frecuencia de cada número
-    Map<Float, Integer> frecuenciaMapa = new HashMap<>();
+     public static int calcularModa(int[] numeros) {
+        // Utilizamos un mapa para almacenar la frecuencia de cada número
+        Map<Integer, Integer> frecuenciaMapa = new HashMap<>();
 
-    // Calcular la frecuencia de cada número
-    for (float numero : numeros) {
-        frecuenciaMapa.put(numero, frecuenciaMapa.getOrDefault(numero, 0) + 1);
+        // Calcular la frecuencia de cada número
+        for (int numero : numeros) {
+            frecuenciaMapa.put(numero, frecuenciaMapa.getOrDefault(numero, 0) + 1);
+        }
+
+        // Encontrar el número con la frecuencia máxima
+        int moda = 0;
+        int frecuenciaMaxima = 0;
+
+        for (Map.Entry<Integer, Integer> entry : frecuenciaMapa.entrySet()) {
+            int numero = entry.getKey();
+            int frecuencia = entry.getValue();
+
+            if (frecuencia > frecuenciaMaxima) {
+                moda = numero;
+                frecuenciaMaxima = frecuencia;
+            }
+        }
+
+        return moda;
+    }
+    
+    public static int[] convertirCadenaAArray(String numerosString) {
+        String[] numerosStringArray = numerosString.split(",");
+        int[] numeros = new int[numerosStringArray.length];
+
+        for (int i = 0; i < numerosStringArray.length; i++) {
+            numeros[i] = Integer.parseInt(numerosStringArray[i]);
+        }
+
+        return numeros;
     }
 
-    // Encontrar el número con la frecuencia máxima
-    double moda = 0;
-    int frecuenciaMaxima = 0;
-
-    for (Map.Entry<Float, Integer> entry : frecuenciaMapa.entrySet()) {
-        float numero = entry.getKey();
-        int frecuencia = entry.getValue();
-
-        if (frecuencia > frecuenciaMaxima) {
-            moda = numero;
-            frecuenciaMaxima = frecuencia;
+    public static double calcularMediana(int[] numeros) {
+        int n = numeros.length;
+        if (n % 2 == 0) {
+            // Si hay un número par de elementos, promediar los dos valores centrales
+            int indice1 = n / 2 - 1;
+            int indice2 = n / 2;
+            return (numeros[indice1] + numeros[indice2]) / 2.0;
+        } else {
+            // Si hay un número impar de elementos, devolver el valor central
+            int indiceCentral = n / 2;
+            return numeros[indiceCentral];
         }
     }
 
-    return moda;
-}
-    
-    public static float[] convertirCadenaAArray(String numerosString) {
-    String[] numerosStringArray = numerosString.split(",");
-    float[] numeros = new float[numerosStringArray.length];
-
-    for (int i = 0; i < numerosStringArray.length; i++) {
-        numeros[i] = Float.parseFloat(numerosStringArray[i]);
-    }
-
-    return numeros;
-}
-public static double[] convertirStringADoubleArray(String cadena) {
-    // Divide la cadena por comas y convierte cada elemento a double
-    String[] numerosString = cadena.split(",");
-    double[] numeros = new double[numerosString.length];
-
-    for (int i = 0; i < numerosString.length; i++) {
-        numeros[i] = Double.parseDouble(numerosString[i]);
-    }
-
-    return numeros;
-}
-
-   public static double calcularMediana(float[] numeros) {
-    int n = numeros.length;
-    if (n % 2 == 0) {
-        // Si hay un número par de elementos, promediar los dos valores centrales
-        int indice1 = n / 2 - 1;
-        int indice2 = n / 2;
-        return (numeros[indice1] + numeros[indice2]) / 2.0;
-    } else {
-        // Si hay un número impar de elementos, devolver el valor central
-        int indiceCentral = n / 2;
-        return numeros[indiceCentral];
-    }
-}
 
     
     public static String arregloTemporal="";
-    public static String arregloNumeros="";
    
     public static String obtenerValor(LinkedList<ts> lista, String nombreBuscado) {
         for (ts item : lista) {
@@ -208,89 +161,130 @@ RESERVADA_GRAFIA_HISTOGRAMA, RESERVADA_TITULO_GRAFICA, RESERVADA_EJEX_GRAFICA, R
 RESERVADA_TITULOX_GRAFICA, RESERVADA_TITULOY_GRAFICA, RESERVADA_VALUES_GRAFICA, RESRVADA_LABEL_GRAFICA,
 RESERVADA_EXEC,STRING,NUMEROS,IDE;
 
-//Inicia
-non terminal inicio;
-non terminal codigo,cod; 
-non terminal primitivas,arreglos,print, graficas;
-non terminal tipo,dospuntos,contenidoVariable,aritmeticas,estadisticas;
-non terminal cuerpoLista,listaValores;
-non terminal media, mediana, moda,varianza,max,min,contenidoE;
-non terminal suma,resta,multiplicacion,division, modulo,valorAritmetico,tipoAnidada,anidacion;
-non terminal desicionprint,print1,valorPrint,combinado,combinacion,comb,print2,pp,ppp;
-non terminal pie,barras,linea,histograma;
-
-
+non terminal inicio,codigo, declaraciones,textos,numericas,arreglos,acciones;
+non terminal print,aritmeticas,declaracion,accion,printSimple,valorPrint;
+non terminal combinacion, combinado,cod;
+non terminal  suma,resta,multiplicacion,division,modulo;
+non terminal valorAritmetico,anidacion,tipoAnidada;
+non terminal tipoArreglo,contenido,contenido2,ultimo;
+non terminal ultimoE,contenidoE,contenidoEE,estadisticas,media,mediana,moda,varianza,max,min;
+non terminal desicionprint,print1,print2;
+non terminal contenidoD,contenidoS,contenido2s,ultimoS;
+non terminal graficas, pie,barras,linea,histograma,valorNumerico,comb,text;
+non terminal pp,ppp,ap;
+non terminal opide;
+//==============================================================================
 start with inicio;
+//==============================================================================
 
+
+
+//==============================================================================
 inicio::= RESERVADA_PROGRAM codigo RESERVADA_END RESERVADA_PROGRAM;
+//==============================================================================
 
+
+
+//==============================================================================
 codigo::= cod|cod codigo;
-cod::=primitivas|arreglos|print|graficas;
-
-//==============================================================================
-tipo::= RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO {:RESULT="CHAR[]";:}|RESERVADA_DOUBLE{:RESULT="DOUBLE";:};
-dospuntos::=DOS_PUNTOS DOS_PUNTOS;
-//Variables
-contenidoVariable::= NUMEROS:n{:RESULT=n.toString();:}
-                    |ID:id {: RESULT = obtenerValor(gui.listaSimbolos,(String) id);:}
-                    |STRING:s {:RESULT=s.toString();:}
-                    |aritmeticas:a {:RESULT=a.toString();:}
-                    |estadisticas:e {:RESULT=e.toString();:};
-
-//Arreglos
-//============================ Lista Valores ===================================
-//llevara arreglo tanto double como char, no importa ya que solo evaluara sintaxis no sentido
-listaValores::= CORCHETE_IZQUIERDO cuerpoLista:cl CORCHETE_DERECHO {:arregloNumeros=arregloTemporal;
-                System.out.println(" arrS:"+arregloTemporal+" arrN:"+arregloNumeros);:};
-
-cuerpoLista::=STRING:c COMA cuerpoLista {:arregloTemporal=c.toString()+","+arregloTemporal;:}
-              |NUMEROS:c COMA cuerpoLista {:arregloTemporal=c.toString()+","+arregloTemporal;:}
-              |ID:c COMA cuerpoLista {:arregloTemporal=obtenerValor(gui.listaSimbolos,(String) c)+","+arregloTemporal;:}
-              |aritmeticas:c COMA cuerpoLista {:arregloTemporal=c.toString()+","+arregloTemporal;:}
-              |estadisticas:c COMA cuerpoLista {:arregloTemporal=c.toString()+","+arregloTemporal;:}
-
-              |STRING:c {:arregloTemporal=c.toString()+arregloTemporal;:}
-              |NUMEROS:c {:arregloTemporal=c.toString()+arregloTemporal;:}
-              |ID:c      {:arregloTemporal=obtenerValor(gui.listaSimbolos,(String) c)+arregloTemporal;:}
-              |aritmeticas:c {:arregloTemporal=c.toString()+arregloTemporal;:}
-              |estadisticas:c {:arregloTemporal=c.toString()+arregloTemporal;:};
-
+cod::=textos | numericas | arreglos|print|graficas;
 //==============================================================================
 
-//======================== EMPIEZO CON LAS DECLARACIONES =======================
-// char y double
-primitivas::= RESERVADA_VAR
-                DOS_PUNTOS 
-                tipo:t
-                dospuntos
-                ID:id
-                MENOR_QUE GUION
-                contenidoVariable:c
-                RESERVADA_END PUNTO_Y_COMA
-                {:
-                ts news = new ts(id.toString(),c.toString(),"Variable tipo "+t.toString(),cleft,cright);
-                gui.listaSimbolos.add(news);
-                :};
-
-arreglos::= RESERVADA_ARRAY
-            DOS_PUNTOS
-            tipo:t
-            dospuntos
-            IDE:ide
-            MENOR_QUE GUION
-            listaValores:lv
-            RESERVADA_END PUNTO_Y_COMA
+//Declaraciones de variables
+//==============================================================================
+textos::=   RESERVADA_VAR 
+            DOS_PUNTOS 
+            RESERVADA_CHAR
+            CORCHETE_IZQUIERDO  
+            CORCHETE_DERECHO    
+            DOS_PUNTOS DOS_PUNTOS 
+            ID:id 
+            MENOR_QUE 
+            GUION 
+            text:vs 
+            RESERVADA_END 
+            PUNTO_Y_COMA
+            
             {:
-                //arregloTemporal="["+arregloTemporal+"]";
-                //arregloNumeros=arregloTemporal;
-                ts news = new ts(ide.toString(),arregloTemporal,"Array tipo "+t.toString(),lvleft,lvright);
-                gui.listaSimbolos.add(news);
-                arregloTemporal="";
+             ts news = new ts(id.toString(),vs.toString(),"Variable Char",vsleft,vsright);
+             gui.listaSimbolos.add(news);
+
             :};
+text::=ID:iddd {: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);:}|STRING:c {: RESULT= c; :};
 //==============================================================================
 
-//================================= aritmeticas ================================ Funciona nice :D
-aritmeticas ::= suma:r {:RESULT=r;:}|resta:r{:RESULT=r;:}|multiplicacion:r{:RESULT=r;:}|division:r{:RESULT=r;:}|modulo:r {:RESULT=r;:};
+
+//==============================================================================
+//tanto aca como arriba en el valor numerico puede venir un numerico o una variable que tenga un valor numerico
+numericas::=RESERVADA_VAR
+            DOS_PUNTOS
+            RESERVADA_DOUBLE
+            DOS_PUNTOS
+            DOS_PUNTOS
+            ID:id
+            MENOR_QUE
+            GUION
+            valorNumerico:vn
+            RESERVADA_END
+            PUNTO_Y_COMA
+            {:
+            arregloTemporal="";
+             ts news = new ts(id.toString(),vn.toString(),"Variable Double",vnleft,vnright);
+             gui.listaSimbolos.add(news);
+            
+            :};
+
+valorNumerico::= NUMEROS:c {: RESULT= c; :} |ID:iddd{: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);:}
+                |aritmeticas:c {: RESULT= c; :}
+                |estadisticas:c {: RESULT= c; :};
+//==============================================================================
+arreglos::=RESERVADA_ARRAY DOS_PUNTOS tipoArreglo:ta DOS_PUNTOS DOS_PUNTOS
+           IDE:ide MENOR_QUE GUION CORCHETE_IZQUIERDO contenidoD:cont  RESERVADA_END PUNTO_Y_COMA
+           {: 
+            arregloTemporal="";
+            ts news = new ts(ide.toString(),cont.toString(),ta.toString(),contleft,contright);
+            gui.listaSimbolos.add(news);
+            
+            :};
+tipoArreglo::=RESERVADA_DOUBLE{: RESULT= "Arreglo Double"; :}|RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO{: RESULT="Arreglo Char"; :};
+
+contenidoD::=contenido :c {: arregloTemporal="["+arregloTemporal;RESULT= arregloTemporal; :} 
+            |contenidoS :c {: arregloTemporal="["+arregloTemporal;RESULT= arregloTemporal; :} ;
+
+//aun con errores
+contenidoS::= STRING:s COMA:c contenidoS {:arregloTemporal=s.toString()+c.toString()+arregloTemporal;:} 
+            |opide:s {:RESULT=s;:}       
+            |STRING:s CORCHETE_DERECHO {: arregloTemporal=s.toString()+arregloTemporal+"]"; :}
+            |ID:id CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+obtenerValor(gui.listaSimbolos,(String) id)+"]";:} ;
+
+opide::=  ID:id COMA:c {:arregloTemporal=arregloTemporal+obtenerValor(gui.listaSimbolos,(String) id)+",";:}  ;    
+
+
+contenido::= contenido2 contenido|contenido2 ultimo;
+contenido2::= anidacion:an COMA:c {:arregloTemporal=arregloTemporal+an.toString()+",";:} 
+
+            | NUMEROS:n COMA {:arregloTemporal=arregloTemporal+n.toString()+",";:}
+
+            |opide:s {: RESULT=s;:}
+
+            |estadisticas:e COMA {:arregloTemporal=arregloTemporal+e.toString()+",";:} 
+            ;
+
+ultimo::= ID:id CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+obtenerValor(gui.listaSimbolos,(String) id)+"]";:} 
+          |NUMEROS:n CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+n.toString()+"]";:}
+          |anidacion:a CORCHETE_DERECHO {:arregloTemporal=arregloTemporal+a.toString()+"]";:}
+          |estadisticas:e CORCHETE_DERECHO  {:  System.out.println(e.toString());
+                                                arregloTemporal=arregloTemporal+e.toString()+"]";:} ;
+
+//==============================================================================
+//==============================================================================
+
+
+//==============================================================================
+
+
+//==============================================================================
+aritmeticas ::= suma:r{:RESULT=r;:}|resta:r{:RESULT=r;:}|multiplicacion:r{:RESULT=r;:}|division:r{:RESULT=r;:}|modulo:r {:RESULT=r;:};
 
 suma::= RESERVADA_SUMA PARENTESIS_IZQUIERDO valorAritmetico:a COMA valorAritmetico:b PARENTESIS_DERECHO  {:
   String strA = a.toString();
@@ -373,53 +367,65 @@ anidacion::= tipoAnidada:to PARENTESIS_IZQUIERDO valorAritmetico:c COMA valorAri
 } else if (to.equals("modulo")) {
     float r = x % y;
     RESULT = r;
-}:};
+}
 
+   :};
 //==============================================================================
-
-//=========================estadisticas=========================================
+//Todas las funciones estadisticas
 estadisticas::=media:c {:RESULT=c;:} |mediana:c {:RESULT=c;:} |moda:c {:RESULT=c;:} |varianza:c {:RESULT=c;:} |max:c {:RESULT=c;:} |min:c {:RESULT=c;:} ;
 
-//lista valores es un arreglo double, donde incluye id, numeros, o aritmeticas
-contenidoE::=listaValores|IDE:c {:RESULT=obtenerValor(gui.listaSimbolos,(String) c);:};
+contenidoE::= CORCHETE_IZQUIERDO contenidoEE
+            |IDE:c {:RESULT=obtenerValor(gui.listaSimbolos,(String) c);:} ;
 
-media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO 
-        {:
-            
-        if(arregloTemporal.length()==0){
-            float[] numeros=convertirCadenaAArray(c.toString());
-            double media =calcularMedia(numeros);
-            RESULT=media;
-        }else{
-            float[] numeros=convertirCadenaAArray(arregloTemporal);
-            double media =calcularMedia(numeros);
-            RESULT=media;
-            arregloTemporal="";
-        }:} ;
+contenidoEE::=NUMEROS:n COMA contenidoEE {:arregloTemporal=n.toString()+","+arregloTemporal;:}
+            |anidacion:n COMA contenidoEE{:arregloTemporal=n.toString()+","+arregloTemporal;:}
+            |ID:n contenidoEE {:arregloTemporal=n.toString()+","+arregloTemporal;:}
+            |NUMEROS:n CORCHETE_DERECHO {:arregloTemporal=n.toString()+arregloTemporal;:}
+            |anidacion:n CORCHETE_DERECHO{:arregloTemporal=n.toString()+arregloTemporal;:}
+            |ID:n CORCHETE_DERECHO {:arregloTemporal=obtenerValor(gui.listaSimbolos,(String) n)+arregloTemporal;:} ;
+
+//2 formas con un arreglo o con mezcla de numeros,artimeticas,id(double)
+
+media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
+        ts news = new ts("cadena",arregloTemporal,"Variable Double",1,1);
+            gui.listaSimbolos.add(news);
+        String[] numerosArray = arregloTemporal.split(",");
+        double suma = 0;
+         for (String numeroStr : numerosArray) {
+            try {
+                double numero = Double.parseDouble(numeroStr);
+                suma += numero; // Sumamos el número al total
+            } catch (NumberFormatException e) {
+                
+            }
+        }
+         double media = suma / numerosArray.length ;
+        RESULT=media;
+        :} ;
 mediana::= RESERVADA_MEDIANA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
+        int[] numeros = convertirCadenaAArray(arregloTemporal);
         Arrays.sort(numeros);
         double mediana = calcularMediana(numeros);
         RESULT=mediana;:} ;
 moda::= RESERVADA_MODA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        double moda = calcularModa(numeros);
+        int[] numeros = convertirCadenaAArray(arregloTemporal);
+        int moda = calcularModa(numeros);
         RESULT=moda;:} ;
 varianza::= RESERVADA_VARIANZA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
+        int[] numeros = convertirCadenaAArray(arregloTemporal);
         double varianza = calcularVarianza(numeros);
         RESULT=varianza;:} ;
 max::=  RESERVADA_MAX PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        float maximo = calcularMaximo(numeros);
+        int[] numeros = convertirCadenaAArray(arregloTemporal);
+        int maximo = calcularMaximo(numeros);
         RESULT=maximo;:} ;
 min::= RESERVADA_MIN PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
-       float[] numeros = convertirCadenaAArray(arregloTemporal);
-       float minimo = calcularMinimo(numeros);
+       int[] numeros = convertirCadenaAArray(arregloTemporal);
+       int minimo = calcularMinimo(numeros);
        RESULT=minimo;:} ;
-//==============================================================================
 
-//============================= PRINT =======================================
+//==============================================================================
+//hasta el momento solo combina numeros y string
 print::= 
     RESERVADA_CONSOLE:e1
     DOS_PUNTOS:e2 
@@ -456,10 +462,10 @@ combinacion ::= STRING:s COMA {: RESULT = s; :}
              | NUMEROS:n COMA {: RESULT = n.toString(); :}
              | aritmeticas:ar COMA {: RESULT = ar; :}
              | estadisticas:st COMA {: RESULT = st; :}
-             | ID:iddd COMA {: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);  :};
+             | ID:iddd COMA {: RESULT = iddd; :};
 
 comb ::= STRING:s {: RESULT = s; :}
-        | ID:iddd {: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);  :}
+        | ID:iddd {: RESULT = iddd; :}
         | aritmeticas:ar {: RESULT = ar; :}
         | estadisticas:st {: RESULT = st; :}
         | NUMEROS:n {: RESULT = n.toString(); :};
@@ -476,8 +482,7 @@ print2::=RESERVADA_COLUMN
         PUNTO_Y_COMA;
 
 pp::=STRING|ID;
-ppp::=IDE|listaValores;//CORCHETE_IZQUIERDO contenidoD ;
-//==============================================================================
+ppp::=IDE|CORCHETE_IZQUIERDO contenidoD ;
 
 //====================================================== GRAFICAS =========================================
 graficas::=pie|barras|linea|histograma;
@@ -487,12 +492,12 @@ pie::=  RESERVADA_GRAFICA_PIE
 
         RESRVADA_LABEL_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoS RESERVADA_END PUNTO_Y_COMA
         
         
         RESERVADA_VALUES_GRAFICA 
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_DOUBLE SIGNO_IGUAL  listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_DOUBLE SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoD RESERVADA_END PUNTO_Y_COMA
        
 
         RESERVADA_TITULO_GRAFICA
@@ -510,44 +515,31 @@ barras::=RESERVADA_GRAFICA_BARRA
 
         RESERVADA_TITULO_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:t RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
         
         
         RESERVADA_EJEX_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL  listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoS RESERVADA_END PUNTO_Y_COMA
        
         RESERVADA_EJEY_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_DOUBLE SIGNO_IGUAL  listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_DOUBLE SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoD RESERVADA_END PUNTO_Y_COMA
        
 
         RESERVADA_TITULOX_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:x RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
 
 
         RESERVADA_TITULOY_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:y RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
        
 
         RESERVADA_EXEC   RESERVADA_GRAFICA_BARRA  RESERVADA_END PUNTO_Y_COMA
      
-        PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
-
-        {:
-        String[] partes = dividirStringPorComillas(arregloTemporal);
-        arregloTemporal=partes[1];
-        arregloNumeros=partes[0];
-        System.out.println(arregloTemporal);
-        System.out.println(arregloNumeros);
-        String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
-        double[] valores = convertirStringADoubleArray(arregloNumeros);
-
-        ImageCreator.createBarChartImage(categorias,valores,t.toString(),x.toString(),y.toString());
-        :};
-
+        PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA;
 
 linea::= RESERVADA_GRAFICA_LINE
         PARENTESIS_IZQUIERDO
@@ -559,11 +551,11 @@ linea::= RESERVADA_GRAFICA_LINE
         
         RESERVADA_EJEX_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoS RESERVADA_END PUNTO_Y_COMA
        
         RESERVADA_EJEY_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_DOUBLE SIGNO_IGUAL  listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_DOUBLE SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoD RESERVADA_END PUNTO_Y_COMA
        
 
         RESERVADA_TITULOX_GRAFICA
@@ -588,11 +580,9 @@ histograma::= RESERVADA_GRAFIA_HISTOGRAMA
 
         RESERVADA_VALUES_GRAFICA 
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL CORCHETE_IZQUIERDO contenidoD RESERVADA_END PUNTO_Y_COMA
 
         RESERVADA_EXEC RESERVADA_GRAFIA_HISTOGRAMA  RESERVADA_END PUNTO_Y_COMA
      
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA;
-
-
 
