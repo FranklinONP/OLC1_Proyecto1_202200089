@@ -556,7 +556,7 @@ public class gui extends javax.swing.JFrame {
 
     
     private void mostrarImagenEnLabel(int indice) {
-    if (indice >= 0 && indice < listaRutas.size()) {
+   
         // Obtener la ruta de la imagen desde la lista
         String ruta = listaRutas.get(indice);
 
@@ -579,10 +579,7 @@ public class gui extends javax.swing.JFrame {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error al cargar la imagen: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } else {
-        labelimg.setText("Índice fuera de rango (debe estar entre 0 y " + (listaRutas.size() - 1) + ")");
-        labelimg.setIcon(null);
-    }
+
 }
 
 
@@ -637,18 +634,24 @@ public class gui extends javax.swing.JFrame {
         {
 
         }
-
+        System.out.println("Tamano de rutas");
+        System.out.println(listaRutas.size());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        contImagenes=+1;
+        contImagenes=contImagenes+1;
+        System.out.println("Tamano aumentando"+contImagenes);
         mostrarImagenEnLabel(contImagenes);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        contImagenes=-1;
+        System.out.println(contImagenes);
+        contImagenes=contImagenes-1;
+        System.out.println(contImagenes);
+        System.out.println("================================================");
+        
         mostrarImagenEnLabel(contImagenes);
     }//GEN-LAST:event_jButton2ActionPerformed
 

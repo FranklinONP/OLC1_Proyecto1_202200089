@@ -14,10 +14,6 @@ import DB.ts;
 import java.util.HashMap;
 import java.util.Map;
 import DB.ImageCreator;
-import Graficas.HistogramExample;
-import Graficas.BarChartExample;
-import Graficas.LineChartExample;
-import Graficas.LineChartExample;
 import java.io.File;
 import java.io.IOException;
 import org.jfree.chart.ChartUtilities;
@@ -1977,7 +1973,22 @@ class CUP$analizador_sintactico$actions {
           case 95: // pie ::= RESERVADA_GRAFICA_PIE PARENTESIS_IZQUIERDO RESRVADA_LABEL_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA RESERVADA_VALUES_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_DOUBLE SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EXEC RESERVADA_GRAFICA_PIE RESERVADA_END PUNTO_Y_COMA PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA 
             {
               Object RESULT =null;
+		int sleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-9)).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-9)).right;
+		Object s = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-9)).value;
+		
+        String[] partes = dividirStringPorComillas(arregloTemporal);
+        arregloTemporal=partes[1];
+        arregloNumeros=partes[0];
+        System.out.println(arregloTemporal);
+        System.out.println(arregloNumeros);
+        String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
+        double[] valores = convertirStringADoubleArray(arregloNumeros);
 
+        ImageCreator.createPieChartImage(categorias,valores,s.toString());
+        arregloTemporal="";
+        arregloNumeros="";
+        
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("pie",38, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-36)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -2003,8 +2014,10 @@ class CUP$analizador_sintactico$actions {
         System.out.println(arregloNumeros);
         String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
         double[] valores = convertirStringADoubleArray(arregloNumeros);
-
+        
         ImageCreator.createBarChartImage(categorias,valores,t.toString(),x.toString(),y.toString());
+        arregloTemporal="";
+        arregloNumeros="";
         
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("barras",39, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-56)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
@@ -2014,7 +2027,28 @@ class CUP$analizador_sintactico$actions {
           case 97: // linea ::= RESERVADA_GRAFICA_LINE PARENTESIS_IZQUIERDO RESERVADA_TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EJEX_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA RESERVADA_EJEY_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_DOUBLE SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULOX_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULOY_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EXEC RESERVADA_GRAFICA_LINE RESERVADA_END PUNTO_Y_COMA PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA 
             {
               Object RESULT =null;
-
+		int tleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-47)).left;
+		int tright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-47)).right;
+		Object t = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-47)).value;
+		int xleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-19)).left;
+		int xright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-19)).right;
+		Object x = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-19)).value;
+		int yleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-9)).left;
+		int yright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-9)).right;
+		Object y = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-9)).value;
+		
+        String[] partes = dividirStringPorComillas(arregloTemporal);
+        arregloTemporal=partes[1];
+        arregloNumeros=partes[0];
+        System.out.println(arregloTemporal);
+        System.out.println(arregloNumeros);
+        String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
+        double[] valores = convertirStringADoubleArray(arregloNumeros);
+        
+        ImageCreator.createLineChartImage(categorias,valores,t.toString(),x.toString(),y.toString());
+        arregloTemporal="";
+        arregloNumeros="";
+        
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("linea",40, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-56)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -2023,7 +2057,28 @@ class CUP$analizador_sintactico$actions {
           case 98: // histograma ::= RESERVADA_GRAFIA_HISTOGRAMA PARENTESIS_IZQUIERDO RESERVADA_TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_VALUES_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA RESERVADA_EXEC RESERVADA_GRAFIA_HISTOGRAMA RESERVADA_END PUNTO_Y_COMA PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA 
             {
               Object RESULT =null;
+		int tleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-19)).left;
+		int tright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-19)).right;
+		Object t = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-19)).value;
+		
+        String[] partes = dividirStringPorComillas(arregloTemporal);
+        arregloTemporal=partes[1];
+        arregloNumeros=partes[0];
+        System.out.println(arregloTemporal);
+        System.out.println(arregloNumeros);
+        double[] valores = convertirStringADoubleArray(arregloNumeros);
+  
+        int[] arregloInt = new int[valores.length];
 
+        for (int i = 0; i < valores.length; i++) {
+            String valorComoCadena = Double.toString(valores[i]).replace(".", "");
+            arregloInt[i] = Integer.parseInt(valorComoCadena);
+        }
+        
+        ImageCreator.createHistogramImage(arregloInt,t.toString());
+        arregloTemporal="";
+        arregloNumeros="";
+        
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("histograma",41, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-28)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;

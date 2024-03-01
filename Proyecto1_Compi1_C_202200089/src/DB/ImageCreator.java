@@ -32,7 +32,7 @@ public class ImageCreator {
     
     public static void createHistogramImage(int[] arreglo,String t) {
         
-        DefaultCategoryDataset dataset = HistogramExample.createDataset(arreglo,t);
+        DefaultCategoryDataset dataset = HistogramExample.createDataset(arreglo);
         JFreeChart chart = HistogramExample.createChart(dataset, t);
 
         // Guardar la gráfica como imagen PNG
@@ -40,42 +40,41 @@ public class ImageCreator {
             File file = new File("histograma.png");
             ChartUtilities.saveChartAsPNG(file, chart, 560, 370);
             System.out.println("Gráfica guardada como 'histograma.png'");
+            gui.listaRutas.add("histograma.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-      public static void createLineChartImage() {
+      public static void createLineChartImage(String[] categorias,double[] valores,String t, String x, String y) {
         // Datos proporcionados por arreglos
-        String[] categorias = {"Enero", "Febrero", "Marzo", "Abril", "Mayo"};
-        double[] valores = {10, 15, 20, 18, 25};
-
+   
         DefaultCategoryDataset dataset = LineChartExample.createDataset(valores, categorias);
-        JFreeChart chart = LineChartExample.createChart(dataset);
+        JFreeChart chart = LineChartExample.createChart(dataset,t,x,y);
 
         // Guardar la gráfica como imagen PNG
         try {
             File file = new File("grafica_linea.png");
             ChartUtilities.saveChartAsPNG(file, chart, 560, 370);
             System.out.println("Gráfica guardada como 'grafica_linea.png'");
+            gui.listaRutas.add("grafica_linea.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
       
-       public static void createPieChartImage() {
+       public static void createPieChartImage(String[] categorias,double[] valores,String t) {
         // Datos proporcionados por un arreglo
-        double[] valores = {30, 20, 15, 25, 10};
-        String[] categorias = {"Manzanas", "Plátanos", "Uvas", "Naranjas", "Peras"};
 
         DefaultPieDataset dataset = PieChartExample.createDataset(valores, categorias);
-        JFreeChart chart = PieChartExample.createChart(dataset);
+        JFreeChart chart = PieChartExample.createChart(dataset,t);
 
         // Guardar la gráfica como imagen PNG
         try {
             File file = new File("grafica_pie.png");
             ChartUtilities.saveChartAsPNG(file, chart, 560, 370);
             System.out.println("Gráfica guardada como 'grafica_pie.png'");
+            gui.listaRutas.add("grafica_pie.png");
         } catch (IOException e) {
             e.printStackTrace();
         }

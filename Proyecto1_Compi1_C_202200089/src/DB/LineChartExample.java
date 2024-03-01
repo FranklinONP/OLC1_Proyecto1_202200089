@@ -16,20 +16,7 @@ public class LineChartExample {
 
     public static void main(String[] args) {
         // Datos proporcionados por arreglos
-        String[] categorias = {"Enero", "Febrero", "Marzo", "Abril", "Mayo"};
-        double[] valores = {10, 15, 20, 18, 25};
 
-        DefaultCategoryDataset dataset = createDataset(valores, categorias);
-        JFreeChart chart = createChart(dataset);
-
-        // Guardar la gráfica como imagen PNG
-        try {
-            File file = new File("grafica_linea.png");
-            ChartUtilities.saveChartAsPNG(file, chart, 560, 370);
-            System.out.println("Gráfica guardada como 'grafica_linea.png'");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     static DefaultCategoryDataset createDataset(double[] valores, String[] categorias) {
@@ -40,11 +27,11 @@ public class LineChartExample {
         return dataset;
     }
 
-    static JFreeChart createChart(DefaultCategoryDataset dataset) {
+    static JFreeChart createChart(DefaultCategoryDataset dataset,String t,String x,String y ) {
         JFreeChart chart = ChartFactory.createLineChart(
-                "Gráfica de Línea",  // Título
-                "Meses",  // Etiqueta del eje X
-                "Cantidad",  // Etiqueta del eje Y
+                t,//"Gráfica de Línea",  // Título
+                x,//"Meses",  // Etiqueta del eje X
+                y,//"Cantidad",  // Etiqueta del eje Y
                 dataset,
                 PlotOrientation.VERTICAL,
                 true,

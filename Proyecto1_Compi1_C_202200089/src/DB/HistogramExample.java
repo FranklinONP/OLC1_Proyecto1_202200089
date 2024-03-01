@@ -38,7 +38,7 @@ public class HistogramExample {
         
     }
 
-    public static DefaultCategoryDataset createDataset(int[] arreglo,String t) {
+    public static DefaultCategoryDataset createDataset(int[] arreglo) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         Map<Integer, Integer> frecuencias = new HashMap<>();
 

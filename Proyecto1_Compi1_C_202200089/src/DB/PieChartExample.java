@@ -15,12 +15,9 @@ import java.io.IOException;
 public class PieChartExample {
 
     public static void main(String[] args) {
-        // Datos proporcionados por un arreglo
-        double[] valores = {30, 20, 15, 25, 10};
-        String[] categorias = {"Manzanas", "Plátanos", "Uvas", "Naranjas", "Peras"};
 
-        DefaultPieDataset dataset = createDataset(valores, categorias);
-        JFreeChart chart = createChart(dataset);
+        /*  DefaultPieDataset dataset = createDataset(valores, categorias);
+        JFreeChart chart = createChart(dataset, t);
 
         // Guardar la gráfica como imagen PNG
         try {
@@ -30,6 +27,9 @@ public class PieChartExample {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
+            
+      
     }
 
     static DefaultPieDataset createDataset(double[] valores, String[] categorias) {
@@ -40,9 +40,9 @@ public class PieChartExample {
         return dataset;
     }
 
-    static JFreeChart createChart(DefaultPieDataset dataset) {
+    static JFreeChart createChart(DefaultPieDataset dataset,String t) {
         JFreeChart chart = ChartFactory.createPieChart(
-                "Gráfica de Pie",  // Título
+                t,//"Gráfica de Pie",  // Título
                 dataset,
                 true,
                 true,
