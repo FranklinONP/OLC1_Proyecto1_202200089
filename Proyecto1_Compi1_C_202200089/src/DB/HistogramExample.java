@@ -51,7 +51,7 @@ public class HistogramExample {
         for (Map.Entry<Integer, Integer> entry : frecuencias.entrySet()) {
             int numero = entry.getKey();
             int frecuencia = entry.getValue();
-            dataset.addValue(frecuencia, "Frecuencia", String.valueOf(numero));
+            dataset.addValue(frecuencia, "Frecuencia", String.valueOf(numero/ 10.0));
         }
 
         return dataset;

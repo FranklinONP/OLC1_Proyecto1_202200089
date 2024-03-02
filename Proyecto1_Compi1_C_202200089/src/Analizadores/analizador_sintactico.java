@@ -14,6 +14,8 @@ import DB.ts;
 import java.util.HashMap;
 import java.util.Map;
 import DB.ImageCreator;
+import java.util.HashSet;
+import java.util.Set;
 import java.io.File;
 import java.io.IOException;
 import org.jfree.chart.ChartUtilities;
@@ -551,6 +553,79 @@ public class analizador_sintactico extends java_cup.runtime.lr_parser {
 
 
 
+    public static String concatenarArreglos(double[] sinR, int[] frec, int[] frecA, double[] frecR) {
+        StringBuilder resultado = new StringBuilder();
+
+        for (int i = 0; i < sinR.length; i++) {
+            // Concatenar valores de cada arreglo, separados por tabuladores
+            resultado.append(sinR[i]).append("\t").append(frec[i]).append("\t").append(frecA[i]).append("\t").append(frecR[i]);
+
+            // Agregar un salto de línea después de cada conjunto de valores
+            resultado.append("\n");
+        }
+
+        return resultado.toString();
+    }
+
+    public static double[] obtenerArregloSinRepetidos(double[] arreglo) {
+        Set<Double> valoresUnicos = new HashSet<>();
+
+        // Agregar valores únicos al conjunto
+        for (double valor : arreglo) {
+            valoresUnicos.add(valor);
+        }
+
+        // Convertir el conjunto a un arreglo
+        double[] resultado = new double[valoresUnicos.size()];
+        int index = 0;
+        for (double valor : valoresUnicos) {
+            resultado[index++] = valor;
+        }
+
+        return resultado;
+    }
+
+    public static int[] obtenerFrecuencia(double[] arreglo) {
+        Map<Double, Integer> mapaFrecuencia = new HashMap<>();
+
+        // Contar frecuencia de cada valor
+        for (double valor : arreglo) {
+            mapaFrecuencia.put(valor, mapaFrecuencia.getOrDefault(valor, 0) + 1);
+        }
+
+        // Convertir el mapa a un arreglo de frecuencia
+        int[] frecuencia = new int[mapaFrecuencia.size()];
+        int index = 0;
+        for (double valor : mapaFrecuencia.keySet()) {
+            frecuencia[index++] = mapaFrecuencia.get(valor);
+        }
+
+        return frecuencia;
+    }
+
+    public static int[] obtenerFrecuenciaAcumulada(int[] frecuencia) {
+        int[] frecuenciaAcumulada = new int[frecuencia.length];
+        int acumulada = 0;
+
+        for (int i = 0; i < frecuencia.length; i++) {
+            acumulada += frecuencia[i];
+            frecuenciaAcumulada[i] = acumulada;
+        }
+
+        return frecuenciaAcumulada;
+    }
+
+    public static double[] obtenerFrecuenciaRelativa(int[] frecuencia, int totalElementos) {
+        double[] frecuenciaRelativa = new double[frecuencia.length];
+
+        for (int i = 0; i < frecuencia.length; i++) {
+            frecuenciaRelativa[i] = (double) frecuencia[i] / totalElementos;
+        }
+
+        return frecuenciaRelativa;
+    }
+
+
 
 public static String[] dividirStringPorComillas(String cadena) {
     String[] resultado = new String[2];
@@ -583,7 +658,16 @@ public static String[] dividirStringPorComillas(String cadena) {
 
         return maximo;
     }
+private static int[] convertirDoubleAInt(double[] arregloDouble) {
+        int[] arregloInt = new int[arregloDouble.length];
 
+        for (int i = 0; i < arregloDouble.length; i++) {
+            // Convertir cada elemento de double a int
+            arregloInt[i] = (int) arregloDouble[i];
+        }
+
+        return arregloInt;
+    }
     public static float calcularMinimo(float[] numeros) {
         float minimo = Integer.MAX_VALUE;
 
@@ -1936,7 +2020,33 @@ class CUP$analizador_sintactico$actions {
           case 86: // print2 ::= RESERVADA_COLUMN SIGNO_IGUAL pp GUION MAYOR_QUE ppp RESERVADA_END PUNTO_Y_COMA 
             {
               Object RESULT =null;
-
+		int tleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-5)).left;
+		int tright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-5)).right;
+		Object t = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-5)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-2)).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-2)).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-2)).value;
+		
+        String cuerpo;
+        if(c==null){
+            if (arregloTemporal.startsWith("\"")) {         //Char
+               cuerpo = arregloTemporal.replaceAll("[\",]", "").replace(",", "\n");
+            } else {                                        //Double
+               cuerpo =arregloTemporal.replaceAll(",", "\n");
+            }
+        }else{
+            if (c.toString().startsWith("\"")) {         //Char
+               cuerpo = c.toString().replaceAll("\"", "").replace(",", "\n");
+            } else {                                        //Double
+               cuerpo =c.toString().replaceAll(",", "\n");
+            }
+        }
+        cuerpo=t+"\n"+cuerpo;
+        System.out.println("\n"+"Print desde el cup de la cadena: " + cuerpo+"\n");
+        gui.listaPrint.add((String) cuerpo); 
+        arregloTemporal="";
+        arregloNumeros="";
+        
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("print2",35, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-7)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -1945,7 +2055,10 @@ class CUP$analizador_sintactico$actions {
           case 87: // pp ::= STRING 
             {
               Object RESULT =null;
-
+		int sleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()).right;
+		Object s = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.peek()).value;
+		RESULT=s;
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("pp",36, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -1954,7 +2067,10 @@ class CUP$analizador_sintactico$actions {
           case 88: // pp ::= ID 
             {
               Object RESULT =null;
-
+		int idleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()).right;
+		Object id = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.peek()).value;
+		 RESULT = obtenerValor(gui.listaSimbolos,(String) id);
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("pp",36, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -1963,7 +2079,10 @@ class CUP$analizador_sintactico$actions {
           case 89: // ppp ::= IDE 
             {
               Object RESULT =null;
-
+		int idleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()).right;
+		Object id = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.peek()).value;
+		 RESULT = obtenerValor(gui.listaSimbolos,(String) id);
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("ppp",37, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -2153,14 +2272,15 @@ class CUP$analizador_sintactico$actions {
 		int eyleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-9)).left;
 		int eyright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-9)).right;
 		Object ey = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-9)).value;
-		
+		  
+         double[] valores;
         if(ey==null) {//eje y, arreglo de numeros
             String[] partes = dividirStringPorComillas(arregloNumeros);
             arregloNumeros=partes[0];
         }else{
             arregloNumeros=ey.toString();
 }
-        double[] valores = convertirStringADoubleArray(arregloNumeros);
+       valores = convertirStringADoubleArray(arregloNumeros);
   
         int[] arregloInt = new int[valores.length];
 
@@ -2170,6 +2290,18 @@ class CUP$analizador_sintactico$actions {
         }
         
         ImageCreator.createHistogramImage(arregloInt,t.toString());
+
+        String r=t+"\n";
+        double[] sinR = obtenerArregloSinRepetidos(valores);
+        int[] frec = obtenerFrecuencia(valores);
+        int[] arreg = convertirDoubleAInt(valores);
+        int[] frecA = obtenerFrecuenciaAcumulada(arreg);
+        double[] frecR = obtenerFrecuenciaRelativa(frec, valores.length);
+        r =r+concatenarArreglos(sinR, frec, frecA, frecR);
+
+        System.out.println("\n"+"Print desde el cup de la cadena: " + r+"\n");
+        gui.listaPrint.add((String) r); 
+
         arregloTemporal="";
         arregloNumeros="";
         

@@ -9,7 +9,8 @@ import DB.ts;
 import java.util.HashMap;
 import java.util.Map;
 import DB.ImageCreator;
-
+import java.util.HashSet;
+import java.util.Set;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,6 +23,79 @@ import org.jfree.chart.plot.PlotOrientation;
 
 parser code
 {:
+    public static String concatenarArreglos(double[] sinR, int[] frec, int[] frecA, double[] frecR) {
+        StringBuilder resultado = new StringBuilder();
+
+        for (int i = 0; i < sinR.length; i++) {
+            // Concatenar valores de cada arreglo, separados por tabuladores
+            resultado.append(sinR[i]).append("\t").append(frec[i]).append("\t").append(frecA[i]).append("\t").append(frecR[i]);
+
+            // Agregar un salto de línea después de cada conjunto de valores
+            resultado.append("\n");
+        }
+
+        return resultado.toString();
+    }
+
+    public static double[] obtenerArregloSinRepetidos(double[] arreglo) {
+        Set<Double> valoresUnicos = new HashSet<>();
+
+        // Agregar valores únicos al conjunto
+        for (double valor : arreglo) {
+            valoresUnicos.add(valor);
+        }
+
+        // Convertir el conjunto a un arreglo
+        double[] resultado = new double[valoresUnicos.size()];
+        int index = 0;
+        for (double valor : valoresUnicos) {
+            resultado[index++] = valor;
+        }
+
+        return resultado;
+    }
+
+    public static int[] obtenerFrecuencia(double[] arreglo) {
+        Map<Double, Integer> mapaFrecuencia = new HashMap<>();
+
+        // Contar frecuencia de cada valor
+        for (double valor : arreglo) {
+            mapaFrecuencia.put(valor, mapaFrecuencia.getOrDefault(valor, 0) + 1);
+        }
+
+        // Convertir el mapa a un arreglo de frecuencia
+        int[] frecuencia = new int[mapaFrecuencia.size()];
+        int index = 0;
+        for (double valor : mapaFrecuencia.keySet()) {
+            frecuencia[index++] = mapaFrecuencia.get(valor);
+        }
+
+        return frecuencia;
+    }
+
+    public static int[] obtenerFrecuenciaAcumulada(int[] frecuencia) {
+        int[] frecuenciaAcumulada = new int[frecuencia.length];
+        int acumulada = 0;
+
+        for (int i = 0; i < frecuencia.length; i++) {
+            acumulada += frecuencia[i];
+            frecuenciaAcumulada[i] = acumulada;
+        }
+
+        return frecuenciaAcumulada;
+    }
+
+    public static double[] obtenerFrecuenciaRelativa(int[] frecuencia, int totalElementos) {
+        double[] frecuenciaRelativa = new double[frecuencia.length];
+
+        for (int i = 0; i < frecuencia.length; i++) {
+            frecuenciaRelativa[i] = (double) frecuencia[i] / totalElementos;
+        }
+
+        return frecuenciaRelativa;
+    }
+
+
 
 public static String[] dividirStringPorComillas(String cadena) {
     String[] resultado = new String[2];
@@ -54,7 +128,16 @@ public static String[] dividirStringPorComillas(String cadena) {
 
         return maximo;
     }
+private static int[] convertirDoubleAInt(double[] arregloDouble) {
+        int[] arregloInt = new int[arregloDouble.length];
 
+        for (int i = 0; i < arregloDouble.length; i++) {
+            // Convertir cada elemento de double a int
+            arregloInt[i] = (int) arregloDouble[i];
+        }
+
+        return arregloInt;
+    }
     public static float calcularMinimo(float[] numeros) {
         float minimo = Integer.MAX_VALUE;
 
@@ -506,15 +589,37 @@ comb ::= STRING:s {: RESULT = s; :}
 
 print2::=RESERVADA_COLUMN 
         SIGNO_IGUAL
-        pp
+        pp:t
         GUION
         MAYOR_QUE
-        ppp
+        ppp:c
         RESERVADA_END
-        PUNTO_Y_COMA;
+        PUNTO_Y_COMA
+        {:
+        String cuerpo;
+        if(c==null){
+            if (arregloTemporal.startsWith("\"")) {         //Char
+               cuerpo = arregloTemporal.replaceAll("[\",]", "").replace(",", "\n");
+            } else {                                        //Double
+               cuerpo =arregloTemporal.replaceAll(",", "\n");
+            }
+        }else{
+            if (c.toString().startsWith("\"")) {         //Char
+               cuerpo = c.toString().replaceAll("\"", "").replace(",", "\n");
+            } else {                                        //Double
+               cuerpo =c.toString().replaceAll(",", "\n");
+            }
+        }
+        cuerpo=t+"\n"+cuerpo;
+        System.out.println("\n"+"Print desde el cup de la cadena: " + cuerpo+"\n");
+        gui.listaPrint.add((String) cuerpo); 
+        arregloTemporal="";
+        arregloNumeros="";
+        :};
 
-pp::=STRING|ID;
-ppp::=IDE|listaValores;//CORCHETE_IZQUIERDO contenidoD ;
+pp::=STRING:s {:RESULT=s;:}|ID:id {: RESULT = obtenerValor(gui.listaSimbolos,(String) id);:};
+ppp::=IDE:id {: RESULT = obtenerValor(gui.listaSimbolos,(String) id);:}
+        |listaValores;//CORCHETE_IZQUIERDO contenidoD ;
 //==============================================================================
 
 //====================================================== GRAFICAS =========================================
@@ -689,14 +794,15 @@ histograma::= RESERVADA_GRAFIA_HISTOGRAMA
         RESERVADA_EXEC RESERVADA_GRAFIA_HISTOGRAMA  RESERVADA_END PUNTO_Y_COMA
      
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
-{:
+{:  
+         double[] valores;
         if(ey==null) {//eje y, arreglo de numeros
             String[] partes = dividirStringPorComillas(arregloNumeros);
             arregloNumeros=partes[0];
         }else{
             arregloNumeros=ey.toString();
 }
-        double[] valores = convertirStringADoubleArray(arregloNumeros);
+       valores = convertirStringADoubleArray(arregloNumeros);
   
         int[] arregloInt = new int[valores.length];
 
@@ -706,6 +812,18 @@ histograma::= RESERVADA_GRAFIA_HISTOGRAMA
         }
         
         ImageCreator.createHistogramImage(arregloInt,t.toString());
+
+        String r=t+"\n";
+        double[] sinR = obtenerArregloSinRepetidos(valores);
+        int[] frec = obtenerFrecuencia(valores);
+        int[] arreg = convertirDoubleAInt(valores);
+        int[] frecA = obtenerFrecuenciaAcumulada(arreg);
+        double[] frecR = obtenerFrecuenciaRelativa(frec, valores.length);
+        r =r+concatenarArreglos(sinR, frec, frecA, frecR);
+
+        System.out.println("\n"+"Print desde el cup de la cadena: " + r+"\n");
+        gui.listaPrint.add((String) r); 
+
         arregloTemporal="";
         arregloNumeros="";
         :};

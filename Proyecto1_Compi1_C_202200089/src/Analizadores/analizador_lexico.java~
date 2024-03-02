@@ -75,16 +75,17 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
     "\1\20\1\33\3\20\2\34\1\0\1\20\2\0\3\20"+
     "\1\0\2\20\1\35\1\0\1\20\1\36\1\37\1\40"+
     "\2\20\1\0\1\20\1\41\1\20\1\0\1\20\1\0"+
-    "\1\20\1\42\1\0\1\20\1\43\1\20\2\44\1\20"+
+    "\1\20\1\42\1\0\1\20\1\43\1\20\2\44\4\20"+
     "\2\45\2\20\1\0\2\20\1\0\1\20\1\0\1\20"+
-    "\1\0\5\20\1\0\1\20\1\46\2\47\1\0\1\20"+
-    "\1\50\1\0\1\20\2\51\1\0\1\20\1\52\1\0"+
-    "\1\20\1\0\2\20\2\53\1\0\1\20\2\54\1\55"+
-    "\1\56\1\55\1\56\1\0\1\20\1\0\1\20\2\57"+
-    "\1\60\2\61\2\62\2\63";
+    "\1\0\5\20\1\0\1\20\1\0\2\20\1\0\1\20"+
+    "\1\46\2\47\1\0\1\20\1\50\1\0\1\20\2\51"+
+    "\1\0\1\20\1\52\1\0\1\20\1\0\2\20\1\0"+
+    "\1\20\2\53\1\54\2\55\1\0\1\20\2\56\1\57"+
+    "\1\60\1\57\1\60\1\0\1\20\1\0\1\20\2\61"+
+    "\1\62\2\63\2\64\2\65\2\66";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[192];
+    int [] result = new int[207];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -127,15 +128,17 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
     "\0\u1080\0\u10b0\0\u10e0\0\u1110\0\60\0\u1140\0\u1170\0\u0180"+
     "\0\u11a0\0\60\0\u0180\0\u11d0\0\u1200\0\u1230\0\u1260\0\u1290"+
     "\0\u12c0\0\u12f0\0\u1320\0\u1350\0\u1380\0\u13b0\0\u13e0\0\u1410"+
-    "\0\u1440\0\u1470\0\u14a0\0\u14d0\0\u1500\0\u1530\0\u1560\0\u0180"+
-    "\0\60\0\u0180\0\u1590\0\u15c0\0\u0180\0\u15f0\0\u1620\0\u1650"+
-    "\0\u1680\0\u16b0\0\u16e0\0\u0180\0\u1710\0\u1740\0\u1770\0\u17a0"+
-    "\0\u17d0\0\60\0\u0180\0\u1800\0\u1830\0\60\0\u0180\0\60"+
-    "\0\60\0\u0180\0\u0180\0\u1860\0\u1890\0\u18c0\0\u18f0\0\60"+
-    "\0\u0180\0\u0180\0\60\0\u0180\0\60\0\u0180\0\60\0\u0180";
+    "\0\u1440\0\u1470\0\u14a0\0\u14d0\0\u1500\0\u1530\0\u1560\0\u1590"+
+    "\0\u15c0\0\u15f0\0\u1620\0\u1650\0\u1680\0\u16b0\0\u16e0\0\u0180"+
+    "\0\60\0\u0180\0\u1710\0\u1740\0\u0180\0\u1770\0\u17a0\0\u17d0"+
+    "\0\u1800\0\u1830\0\u1860\0\u0180\0\u1890\0\u18c0\0\u18f0\0\u1920"+
+    "\0\u1950\0\u1980\0\u19b0\0\60\0\u0180\0\u0180\0\60\0\u0180"+
+    "\0\u19e0\0\u1a10\0\60\0\u0180\0\60\0\60\0\u0180\0\u0180"+
+    "\0\u1a40\0\u1a70\0\u1aa0\0\u1ad0\0\60\0\u0180\0\u0180\0\60"+
+    "\0\u0180\0\60\0\u0180\0\60\0\u0180\0\60\0\u0180";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[192];
+    int [] result = new int[207];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -256,65 +259,77 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
     "\1\23\3\0\4\23\1\0\3\23\1\201\11\23\1\0"+
     "\1\23\1\0\6\23\55\0\1\202\23\0\1\23\3\0"+
     "\4\23\1\0\15\23\1\0\1\23\1\0\3\23\1\203"+
-    "\2\23\21\0\1\23\3\0\1\204\3\23\1\0\15\23"+
-    "\1\0\1\23\1\0\6\23\30\0\1\205\50\0\1\23"+
-    "\3\0\3\23\1\206\1\0\15\23\1\0\1\23\1\0"+
-    "\6\23\21\0\1\23\3\0\2\23\1\207\1\23\1\0"+
-    "\15\23\1\0\1\23\1\0\6\23\21\0\1\23\3\0"+
-    "\4\23\1\0\6\23\1\210\6\23\1\0\1\23\1\0"+
-    "\6\23\30\0\1\211\50\0\1\23\3\0\3\23\1\212"+
-    "\1\0\15\23\1\0\1\23\1\0\6\23\21\0\1\23"+
-    "\3\0\4\23\1\0\5\23\1\213\7\23\1\0\1\23"+
-    "\1\0\6\23\26\0\1\214\52\0\1\23\3\0\1\23"+
-    "\1\215\2\23\1\0\15\23\1\0\1\23\1\0\6\23"+
-    "\27\0\1\216\51\0\1\23\3\0\2\23\1\217\1\23"+
-    "\1\0\15\23\1\0\1\23\1\0\6\23\36\0\1\220"+
-    "\42\0\1\23\3\0\4\23\1\0\4\23\1\221\10\23"+
-    "\1\0\1\23\1\0\6\23\21\0\1\23\3\0\3\23"+
-    "\1\222\1\0\15\23\1\0\1\23\1\0\6\23\21\0"+
-    "\1\23\3\0\2\23\1\223\1\23\1\0\2\23\1\224"+
-    "\10\23\1\225\1\23\1\0\1\23\1\0\6\23\41\0"+
-    "\1\226\37\0\1\23\3\0\4\23\1\0\7\23\1\227"+
-    "\5\23\1\0\1\23\1\0\6\23\21\0\1\23\3\0"+
-    "\4\23\1\0\6\23\1\230\6\23\1\0\1\23\1\0"+
-    "\6\23\21\0\1\23\3\0\4\23\1\0\15\23\1\231"+
-    "\1\232\1\0\6\23\41\0\1\233\37\0\1\23\3\0"+
-    "\4\23\1\0\7\23\1\234\5\23\1\0\1\23\1\0"+
-    "\6\23\21\0\1\23\3\0\4\23\1\0\7\23\1\235"+
-    "\5\23\1\0\1\23\1\0\6\23\27\0\1\236\51\0"+
-    "\1\23\3\0\2\23\1\237\1\23\1\0\15\23\1\0"+
-    "\1\23\1\0\6\23\26\0\1\240\52\0\1\23\3\0"+
-    "\1\23\1\241\2\23\1\0\15\23\1\0\1\23\1\0"+
-    "\6\23\35\0\1\242\43\0\1\23\3\0\4\23\1\0"+
-    "\3\23\1\243\11\23\1\0\1\23\1\0\6\23\21\0"+
-    "\1\23\3\0\4\23\1\0\5\23\1\244\7\23\1\0"+
+    "\2\23\21\0\1\23\3\0\1\204\1\23\1\205\1\23"+
+    "\1\0\2\23\1\206\10\23\1\207\1\23\1\0\1\23"+
+    "\1\0\6\23\30\0\1\210\50\0\1\23\3\0\3\23"+
+    "\1\211\1\0\15\23\1\0\1\23\1\0\6\23\21\0"+
+    "\1\23\3\0\2\23\1\212\1\23\1\0\15\23\1\0"+
     "\1\23\1\0\6\23\21\0\1\23\3\0\4\23\1\0"+
-    "\15\23\1\0\1\23\1\245\1\246\5\23\21\0\1\23"+
-    "\3\0\4\23\1\0\15\23\1\0\1\23\1\247\1\250"+
-    "\5\23\21\0\1\23\3\0\3\23\1\251\1\0\15\23"+
-    "\1\0\1\23\1\0\6\23\30\0\1\252\50\0\1\23"+
-    "\3\0\3\23\1\253\1\0\15\23\1\0\1\23\1\0"+
-    "\6\23\53\0\1\254\25\0\1\23\3\0\4\23\1\0"+
-    "\15\23\1\0\1\23\1\0\1\23\1\255\4\23\40\0"+
-    "\1\256\40\0\1\23\3\0\4\23\1\0\6\23\1\257"+
-    "\6\23\1\0\1\23\1\0\6\23\54\0\1\260\2\0"+
-    "\1\261\21\0\1\23\3\0\4\23\1\0\15\23\1\0"+
-    "\1\23\1\0\2\23\1\262\2\23\1\263\30\0\1\264"+
-    "\50\0\1\23\3\0\3\23\1\265\1\0\15\23\1\0"+
-    "\1\23\1\0\6\23\41\0\1\266\37\0\1\23\3\0"+
-    "\4\23\1\0\7\23\1\267\5\23\1\0\1\23\1\0"+
-    "\6\23\40\0\1\270\40\0\1\23\3\0\4\23\1\0"+
-    "\6\23\1\271\6\23\1\0\1\23\1\0\6\23\21\0"+
-    "\1\23\3\0\4\23\1\0\3\23\1\272\11\23\1\0"+
-    "\1\23\1\0\6\23\30\0\1\273\50\0\1\23\3\0"+
-    "\3\23\1\274\1\0\15\23\1\0\1\23\1\0\6\23"+
-    "\37\0\1\275\41\0\1\23\3\0\4\23\1\0\5\23"+
-    "\1\276\7\23\1\0\1\23\1\0\6\23\40\0\1\277"+
-    "\40\0\1\23\3\0\4\23\1\0\6\23\1\300\6\23"+
-    "\1\0\1\23\1\0\6\23\1\0";
+    "\6\23\1\213\6\23\1\0\1\23\1\0\6\23\30\0"+
+    "\1\214\50\0\1\23\3\0\3\23\1\215\1\0\15\23"+
+    "\1\0\1\23\1\0\6\23\21\0\1\23\3\0\4\23"+
+    "\1\0\5\23\1\216\7\23\1\0\1\23\1\0\6\23"+
+    "\26\0\1\217\52\0\1\23\3\0\1\23\1\220\2\23"+
+    "\1\0\15\23\1\0\1\23\1\0\6\23\27\0\1\221"+
+    "\51\0\1\23\3\0\2\23\1\222\1\23\1\0\15\23"+
+    "\1\0\1\23\1\0\6\23\36\0\1\223\42\0\1\23"+
+    "\3\0\4\23\1\0\4\23\1\224\10\23\1\0\1\23"+
+    "\1\0\6\23\21\0\1\23\3\0\3\23\1\225\1\0"+
+    "\15\23\1\0\1\23\1\0\6\23\21\0\1\23\3\0"+
+    "\2\23\1\226\1\23\1\0\2\23\1\227\10\23\1\230"+
+    "\1\23\1\0\1\23\1\0\6\23\21\0\1\23\3\0"+
+    "\4\23\1\0\15\23\1\0\1\23\1\231\1\232\5\23"+
+    "\21\0\1\23\3\0\4\23\1\0\15\23\1\0\1\23"+
+    "\1\233\1\234\5\23\21\0\1\23\3\0\3\23\1\235"+
+    "\1\0\15\23\1\0\1\23\1\0\6\23\41\0\1\236"+
+    "\37\0\1\23\3\0\4\23\1\0\7\23\1\237\5\23"+
+    "\1\0\1\23\1\0\6\23\21\0\1\23\3\0\4\23"+
+    "\1\0\6\23\1\240\6\23\1\0\1\23\1\0\6\23"+
+    "\21\0\1\23\3\0\4\23\1\0\15\23\1\241\1\242"+
+    "\1\0\6\23\41\0\1\243\37\0\1\23\3\0\4\23"+
+    "\1\0\7\23\1\244\5\23\1\0\1\23\1\0\6\23"+
+    "\21\0\1\23\3\0\4\23\1\0\7\23\1\245\5\23"+
+    "\1\0\1\23\1\0\6\23\27\0\1\246\51\0\1\23"+
+    "\3\0\2\23\1\247\1\23\1\0\15\23\1\0\1\23"+
+    "\1\0\6\23\26\0\1\250\52\0\1\23\3\0\1\23"+
+    "\1\251\2\23\1\0\15\23\1\0\1\23\1\0\6\23"+
+    "\35\0\1\252\43\0\1\23\3\0\4\23\1\0\3\23"+
+    "\1\253\11\23\1\0\1\23\1\0\6\23\21\0\1\23"+
+    "\3\0\4\23\1\0\5\23\1\254\7\23\1\0\1\23"+
+    "\1\0\6\23\21\0\1\23\3\0\4\23\1\0\15\23"+
+    "\1\0\1\23\1\255\1\256\5\23\21\0\1\23\3\0"+
+    "\4\23\1\0\15\23\1\0\1\23\1\257\1\260\5\23"+
+    "\21\0\1\23\3\0\3\23\1\261\1\0\15\23\1\0"+
+    "\1\23\1\0\6\23\41\0\1\262\37\0\1\23\3\0"+
+    "\4\23\1\0\7\23\1\263\5\23\1\0\1\23\1\0"+
+    "\6\23\40\0\1\264\40\0\1\23\3\0\4\23\1\0"+
+    "\6\23\1\265\6\23\1\0\1\23\1\0\6\23\21\0"+
+    "\1\23\3\0\4\23\1\0\3\23\1\266\11\23\1\0"+
+    "\1\23\1\0\6\23\30\0\1\267\50\0\1\23\3\0"+
+    "\3\23\1\270\1\0\15\23\1\0\1\23\1\0\6\23"+
+    "\53\0\1\271\25\0\1\23\3\0\4\23\1\0\15\23"+
+    "\1\0\1\23\1\0\1\23\1\272\4\23\40\0\1\273"+
+    "\40\0\1\23\3\0\4\23\1\0\6\23\1\274\6\23"+
+    "\1\0\1\23\1\0\6\23\54\0\1\275\2\0\1\276"+
+    "\21\0\1\23\3\0\4\23\1\0\15\23\1\0\1\23"+
+    "\1\0\2\23\1\277\2\23\1\300\30\0\1\301\50\0"+
+    "\1\23\3\0\3\23\1\302\1\0\15\23\1\0\1\23"+
+    "\1\0\6\23\41\0\1\303\37\0\1\23\3\0\4\23"+
+    "\1\0\7\23\1\304\5\23\1\0\1\23\1\0\6\23"+
+    "\40\0\1\305\40\0\1\23\3\0\4\23\1\0\6\23"+
+    "\1\306\6\23\1\0\1\23\1\0\6\23\21\0\1\23"+
+    "\3\0\4\23\1\0\3\23\1\307\11\23\1\0\1\23"+
+    "\1\0\6\23\40\0\1\310\40\0\1\23\3\0\4\23"+
+    "\1\0\6\23\1\311\6\23\1\0\1\23\1\0\6\23"+
+    "\30\0\1\312\50\0\1\23\3\0\3\23\1\313\1\0"+
+    "\15\23\1\0\1\23\1\0\6\23\37\0\1\314\41\0"+
+    "\1\23\3\0\4\23\1\0\5\23\1\315\7\23\1\0"+
+    "\1\23\1\0\6\23\40\0\1\316\40\0\1\23\3\0"+
+    "\4\23\1\0\6\23\1\317\6\23\1\0\1\23\1\0"+
+    "\6\23\1\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[6432];
+    int [] result = new int[6912];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -358,15 +373,17 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
     "\5\1\1\0\1\1\1\11\6\1\1\11\5\1\1\11"+
     "\6\1\1\11\1\1\1\0\1\1\2\0\3\1\1\0"+
     "\3\1\1\0\6\1\1\0\3\1\1\0\1\1\1\0"+
-    "\1\1\1\11\1\0\3\1\1\11\6\1\1\0\2\1"+
-    "\1\0\1\1\1\0\1\1\1\0\5\1\1\0\2\1"+
-    "\1\11\1\1\1\0\2\1\1\0\3\1\1\0\2\1"+
-    "\1\0\1\1\1\0\2\1\1\11\1\1\1\0\1\1"+
+    "\1\1\1\11\1\0\3\1\1\11\11\1\1\0\2\1"+
+    "\1\0\1\1\1\0\1\1\1\0\5\1\1\0\1\1"+
+    "\1\0\2\1\1\0\2\1\1\11\1\1\1\0\2\1"+
+    "\1\0\3\1\1\0\2\1\1\0\1\1\1\0\2\1"+
+    "\1\0\1\1\1\11\2\1\1\11\1\1\1\0\1\1"+
     "\1\11\1\1\2\11\2\1\1\0\1\1\1\0\1\1"+
-    "\1\11\2\1\1\11\1\1\1\11\1\1\1\11\1\1";
+    "\1\11\2\1\1\11\1\1\1\11\1\1\1\11\1\1"+
+    "\1\11\1\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[192];
+    int [] result = new int[207];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -816,343 +833,364 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
     lista_errores.add(nuevoError);
             } 
             // fall through
-          case 52: break;
+          case 55: break;
           case 2: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Menor que-");
     listaTokens.add(ntk);
     return new Symbol(sym.MENOR_QUE, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 53: break;
+          case 56: break;
           case 3: 
             { System.out.println("Comentario 1 linea");
             } 
             // fall through
-          case 54: break;
+          case 57: break;
           case 4: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Mayor que-");
     listaTokens.add(ntk);
     return new Symbol(sym.MAYOR_QUE, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 55: break;
+          case 58: break;
           case 5: 
             { 
             } 
             // fall through
-          case 56: break;
+          case 59: break;
           case 6: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Dos Puntos-");
     listaTokens.add(ntk);
     return new Symbol(sym.DOS_PUNTOS, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 57: break;
+          case 60: break;
           case 7: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Guion-");
     listaTokens.add(ntk);
     return new Symbol(sym.GUION, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 58: break;
+          case 61: break;
           case 8: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Coma-");
     listaTokens.add(ntk);
     return new Symbol(sym.COMA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 59: break;
+          case 62: break;
           case 9: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Punto y coma-");
     listaTokens.add(ntk);
     return new Symbol(sym.PUNTO_Y_COMA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 60: break;
+          case 63: break;
           case 10: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Parentesis izquierdo-");
     listaTokens.add(ntk);
     return new Symbol(sym.PARENTESIS_IZQUIERDO, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 61: break;
+          case 64: break;
           case 11: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Parentesis derecho-");
     listaTokens.add(ntk);
     return new Symbol(sym.PARENTESIS_DERECHO, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 62: break;
+          case 65: break;
           case 12: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Corchete izquierdo-");
     listaTokens.add(ntk);
     return new Symbol(sym.CORCHETE_IZQUIERDO, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 63: break;
+          case 66: break;
           case 13: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Corchete derecho-");
     listaTokens.add(ntk);
     return new Symbol(sym.CORCHETE_DERECHO, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 64: break;
+          case 67: break;
           case 14: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Lexema -Signo igual-");
     listaTokens.add(ntk);
     return new Symbol(sym.SIGNO_IGUAL, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 65: break;
+          case 68: break;
           case 15: 
             { Token ntk = new Token(yyline,yycolumn,yytext(),"Double");listaTokens.add(ntk) ; return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()) ;
             } 
             // fall through
-          case 66: break;
+          case 69: break;
           case 16: 
             { Token ntk = new Token(yyline,yycolumn,yytext(),"Id");listaTokens.add(ntk) ; return new Symbol(sym.ID,yyline, yycolumn, yytext());
             } 
             // fall through
-          case 67: break;
+          case 70: break;
           case 17: 
             { Token ntk = new Token(yyline,yycolumn,yytext(),"STRING");listaTokens.add(ntk); return new Symbol(sym.STRING, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 68: break;
+          case 71: break;
           case 18: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: ARRAY");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_ARRAY, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 69: break;
+          case 72: break;
           case 19: 
             { Token ntk = new Token(yyline,yycolumn,yytext(),"ID array");listaTokens.add(ntk); return new Symbol(sym.IDE, yyline, yycolumn, yytext()) ;
             } 
             // fall through
-          case 70: break;
+          case 73: break;
           case 20: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: RESTA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_RESTA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 71: break;
+          case 74: break;
           case 21: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MODULO");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_MODULO, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 72: break;
+          case 75: break;
           case 22: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MAX");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_MAX, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 73: break;
+          case 76: break;
           case 23: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MULTIPLICACION");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_MULTIPLICACION, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 74: break;
+          case 77: break;
           case 24: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MIN");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_MIN, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 75: break;
+          case 78: break;
           case 25: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: END");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_END, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 76: break;
+          case 79: break;
           case 26: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: DIVISION");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_DIVISION, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 77: break;
+          case 80: break;
           case 27: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: VAR");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_VAR, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 78: break;
+          case 81: break;
           case 28: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: SUMA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_SUMA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 79: break;
+          case 82: break;
           case 29: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MODA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_MODA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 80: break;
+          case 83: break;
           case 30: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: EXEC");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_EXEC, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 81: break;
+          case 84: break;
           case 31: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: EJEX_GRAFICA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_EJEX_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 82: break;
+          case 85: break;
           case 32: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: EJEY_GRAFICA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_EJEY_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 83: break;
+          case 86: break;
           case 33: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: CHAR");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_CHAR, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 84: break;
+          case 87: break;
           case 34: 
             { System.out.println("Comentario multilinea");
             } 
             // fall through
-          case 85: break;
+          case 88: break;
           case 35: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: LABEL_GRAFICA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESRVADA_LABEL_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 86: break;
+          case 89: break;
           case 36: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: PRINT");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_PRINT, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 87: break;
+          case 90: break;
           case 37: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MEDIA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_MEDIA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 88: break;
+          case 91: break;
           case 38: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: DOUBLE");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_DOUBLE, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 89: break;
+          case 92: break;
           case 39: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: VALUES_GRAFICA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_VALUES_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 90: break;
+          case 93: break;
           case 40: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: COLUMN");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_COLUMN, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 91: break;
+          case 94: break;
           case 41: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: TITULO_GRAFICA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_TITULO_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 92: break;
+          case 95: break;
           case 42: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: PROGRAM");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_PROGRAM, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 93: break;
+          case 96: break;
           case 43: 
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GrapPie");
+    listaTokens.add(ntk);
+    return new Symbol(sym.CERRADURA_PIE, yyline, yycolumn, yytext());
+            } 
+            // fall through
+          case 97: break;
+          case 44: 
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GrapBar");
+    listaTokens.add(ntk);
+    return new Symbol(sym.CERRADURA_BARRAS, yyline, yycolumn, yytext());
+            } 
+            // fall through
+          case 98: break;
+          case 45: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: MEDIANA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_MEDIANA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 94: break;
-          case 44: 
+          case 99: break;
+          case 46: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: CONSOLE");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_CONSOLE, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 95: break;
-          case 45: 
+          case 100: break;
+          case 47: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: TITULOX_GRAFICA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_TITULOX_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 96: break;
-          case 46: 
+          case 101: break;
+          case 48: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: TITULOY_GRAFICA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_TITULOY_GRAFICA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 97: break;
-          case 47: 
+          case 102: break;
+          case 49: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFICA_PIE");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_GRAFICA_PIE, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 98: break;
-          case 48: 
+          case 103: break;
+          case 50: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFICA_BARRA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_GRAFICA_BARRA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 99: break;
-          case 49: 
+          case 104: break;
+          case 51: 
+            { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GrapLine");
+    listaTokens.add(ntk);
+    return new Symbol(sym.CERRADURA_LINEA, yyline, yycolumn, yytext());
+            } 
+            // fall through
+          case 105: break;
+          case 52: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: VARIANZA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_VARIANZA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 100: break;
-          case 50: 
+          case 106: break;
+          case 53: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFIA_HISTOGRAMA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_GRAFIA_HISTOGRAMA, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 101: break;
-          case 51: 
+          case 107: break;
+          case 54: 
             { Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GRAFICA_LINEA");
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_GRAFICA_LINE, yyline, yycolumn, yytext());
             } 
             // fall through
-          case 102: break;
+          case 108: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
