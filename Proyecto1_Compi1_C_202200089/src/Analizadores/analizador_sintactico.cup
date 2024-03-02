@@ -202,7 +202,7 @@ RESERVADA_MEDIANA, RESERVADA_MODA, RESERVADA_VARIANZA, RESERVADA_MAX, RESERVADA_
 RESERVADA_PRINT,RESERVADA_COLUMN, RESERVADA_GRAFICA_BARRA, RESERVADA_GRAFICA_PIE, RESERVADA_GRAFICA_LINE,
 RESERVADA_GRAFIA_HISTOGRAMA, RESERVADA_TITULO_GRAFICA, RESERVADA_EJEX_GRAFICA, RESERVADA_EJEY_GRAFICA, 
 RESERVADA_TITULOX_GRAFICA, RESERVADA_TITULOY_GRAFICA, RESERVADA_VALUES_GRAFICA, RESRVADA_LABEL_GRAFICA,
-RESERVADA_EXEC,STRING,NUMEROS,IDE;
+RESERVADA_EXEC,STRING,NUMEROS,IDE,CERRADURA_LINEA,CERRADURA_PIE,CERRADURA_BARRAS;
 
 //Inicia
 non terminal inicio;
@@ -393,26 +393,68 @@ media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO
             arregloTemporal="";
         }:} ;
 mediana::= RESERVADA_MEDIANA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        Arrays.sort(numeros);
-        double mediana = calcularMediana(numeros);
-        RESULT=mediana;:} ;
+        
+        if(arregloTemporal.length()==0){
+            float[] numeros = convertirCadenaAArray(c.toString());
+            Arrays.sort(numeros);
+            double mediana = calcularMediana(numeros);
+            RESULT=mediana;
+        } else {
+            float[] numeros = convertirCadenaAArray(arregloTemporal);
+            Arrays.sort(numeros);
+            double mediana = calcularMediana(numeros);
+            RESULT=mediana;
+            arregloTemporal="";
+        }
+:} ;
 moda::= RESERVADA_MODA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
+ 
+        if(arregloTemporal.length()==0){
+        float[] numeros = convertirCadenaAArray(c.toString());
+        double moda = calcularModa(numeros);
+        RESULT=moda;
+        } else{
         float[] numeros = convertirCadenaAArray(arregloTemporal);
         double moda = calcularModa(numeros);
-        RESULT=moda;:} ;
+        RESULT=moda;
+        arregloTemporal="";
+        }
+:} ;
 varianza::= RESERVADA_VARIANZA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
+    
+        if(arregloTemporal.length()==0){
+        float[] numeros = convertirCadenaAArray(c.toString());
+        double varianza = calcularVarianza(numeros);
+        RESULT=varianza;
+        } else{
         float[] numeros = convertirCadenaAArray(arregloTemporal);
         double varianza = calcularVarianza(numeros);
-        RESULT=varianza;:} ;
+        RESULT=varianza;
+        arregloTemporal="";
+        }
+:} ;
 max::=  RESERVADA_MAX PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
+
+        if(arregloTemporal.length()==0){
+        float[] numeros = convertirCadenaAArray(c.toString());
+        float maximo = calcularMaximo(numeros);
+        }else{
         float[] numeros = convertirCadenaAArray(arregloTemporal);
         float maximo = calcularMaximo(numeros);
-        RESULT=maximo;:} ;
+        RESULT=maximo;
+        }
+:} ;
 min::= RESERVADA_MIN PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
-       float[] numeros = convertirCadenaAArray(arregloTemporal);
-       float minimo = calcularMinimo(numeros);
-       RESULT=minimo;:} ;
+        
+        if(arregloTemporal.length()==0){
+        float[] numeros = convertirCadenaAArray(arregloTemporal);
+        float minimo = calcularMinimo(numeros);
+        }else{
+        float[] numeros = convertirCadenaAArray(arregloTemporal);
+        float minimo = calcularMinimo(numeros);
+        RESULT=minimo;
+        }      
+:} ;
 //==============================================================================
 
 //============================= PRINT =======================================
@@ -478,42 +520,6 @@ ppp::=IDE|listaValores;//CORCHETE_IZQUIERDO contenidoD ;
 //====================================================== GRAFICAS =========================================
 graficas::=pie|barras|linea|histograma;
 
-pie::=  RESERVADA_GRAFICA_PIE
-        PARENTESIS_IZQUIERDO
-
-        RESRVADA_LABEL_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA
-        
-        
-        RESERVADA_VALUES_GRAFICA 
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_DOUBLE SIGNO_IGUAL  listaValores RESERVADA_END PUNTO_Y_COMA
-       
-
-        RESERVADA_TITULO_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:s RESERVADA_END PUNTO_Y_COMA
-       
-
-        RESERVADA_EXEC   RESERVADA_GRAFICA_PIE  RESERVADA_END PUNTO_Y_COMA
-     
-
-        PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
-        {:
-        String[] partes = dividirStringPorComillas(arregloTemporal);
-        arregloTemporal=partes[1];
-        arregloNumeros=partes[0];
-        System.out.println(arregloTemporal);
-        System.out.println(arregloNumeros);
-        String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
-        double[] valores = convertirStringADoubleArray(arregloNumeros);
-
-        ImageCreator.createPieChartImage(categorias,valores,s.toString());
-        arregloTemporal="";
-        arregloNumeros="";
-        :};
-
 barras::=RESERVADA_GRAFICA_BARRA
         PARENTESIS_IZQUIERDO
 
@@ -524,11 +530,11 @@ barras::=RESERVADA_GRAFICA_BARRA
         
         RESERVADA_EJEX_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL  listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL  contenidoE:ex RESERVADA_END PUNTO_Y_COMA
        
         RESERVADA_EJEY_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_DOUBLE SIGNO_IGUAL  listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_DOUBLE SIGNO_IGUAL  contenidoE:ey RESERVADA_END PUNTO_Y_COMA
        
 
         RESERVADA_TITULOX_GRAFICA
@@ -541,16 +547,26 @@ barras::=RESERVADA_GRAFICA_BARRA
         RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:y RESERVADA_END PUNTO_Y_COMA
        
 
-        RESERVADA_EXEC   RESERVADA_GRAFICA_BARRA  RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_EXEC CERRADURA_BARRAS  RESERVADA_END PUNTO_Y_COMA
      
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
 
         {:
-        String[] partes = dividirStringPorComillas(arregloTemporal);
-        arregloTemporal=partes[1];
-        arregloNumeros=partes[0];
-        System.out.println(arregloTemporal);
-        System.out.println(arregloNumeros);
+        if(ex==null){ //eje x, arreglo char
+            // si ex esta vacio es porque usare un arreglo, aca estoy seguro que no usare un IDE de arreglo
+            String[] partes = dividirStringPorComillas(arregloTemporal);
+            arregloTemporal=partes[1];
+        }else{
+            arregloTemporal=ex.toString();
+        }
+        if(ey==null) {//eje y, arreglo de numeros
+            String[] partes = dividirStringPorComillas(arregloNumeros);
+            arregloNumeros=partes[0];
+        }else{
+            arregloNumeros=ey.toString();
+}
+
+
         String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
         double[] valores = convertirStringADoubleArray(arregloNumeros);
         
@@ -559,6 +575,51 @@ barras::=RESERVADA_GRAFICA_BARRA
         arregloNumeros="";
         :};
 
+
+pie::=  RESERVADA_GRAFICA_PIE
+        PARENTESIS_IZQUIERDO
+
+        RESRVADA_LABEL_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE:ex RESERVADA_END PUNTO_Y_COMA
+        
+        
+        RESERVADA_VALUES_GRAFICA 
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_DOUBLE SIGNO_IGUAL  contenidoE:ey RESERVADA_END PUNTO_Y_COMA
+       
+
+        RESERVADA_TITULO_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:s RESERVADA_END PUNTO_Y_COMA
+       
+
+        RESERVADA_EXEC  CERRADURA_PIE  RESERVADA_END PUNTO_Y_COMA
+     
+
+        PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
+        {:
+        if(ex==null){ //eje x, arreglo char
+            // si ex esta vacio es porque usare un arreglo, aca estoy seguro que no usare un IDE de arreglo
+            String[] partes = dividirStringPorComillas(arregloTemporal);
+            arregloTemporal=partes[1];
+        }else{
+            arregloTemporal=ex.toString();
+        }
+        if(ey==null) {//eje y, arreglo de numeros
+            String[] partes = dividirStringPorComillas(arregloNumeros);
+            arregloNumeros=partes[0];
+        }else{
+            arregloNumeros=ey.toString();
+}
+
+        String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
+        double[] valores = convertirStringADoubleArray(arregloNumeros);
+
+        ImageCreator.createPieChartImage(categorias,valores,s.toString());
+        arregloTemporal="";
+        arregloNumeros="";
+        :};
 
 linea::= RESERVADA_GRAFICA_LINE
         PARENTESIS_IZQUIERDO
@@ -570,11 +631,11 @@ linea::= RESERVADA_GRAFICA_LINE
         
         RESERVADA_EJEX_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE:ex RESERVADA_END PUNTO_Y_COMA
        
         RESERVADA_EJEY_GRAFICA
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_DOUBLE SIGNO_IGUAL  listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_DOUBLE SIGNO_IGUAL  contenidoE:ey RESERVADA_END PUNTO_Y_COMA
        
 
         RESERVADA_TITULOX_GRAFICA
@@ -587,16 +648,25 @@ linea::= RESERVADA_GRAFICA_LINE
         RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:y RESERVADA_END PUNTO_Y_COMA
        
 
-        RESERVADA_EXEC RESERVADA_GRAFICA_LINE  RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_EXEC CERRADURA_LINEA  RESERVADA_END PUNTO_Y_COMA
      
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
 
 {:
-        String[] partes = dividirStringPorComillas(arregloTemporal);
-        arregloTemporal=partes[1];
-        arregloNumeros=partes[0];
-        System.out.println(arregloTemporal);
-        System.out.println(arregloNumeros);
+        if(ex==null){ //eje x, arreglo char
+            // si ex esta vacio es porque usare un arreglo, aca estoy seguro que no usare un IDE de arreglo
+            String[] partes = dividirStringPorComillas(arregloTemporal);
+            arregloTemporal=partes[1];
+        }else{
+            arregloTemporal=ex.toString();
+        }
+        if(ey==null) {//eje y, arreglo de numeros
+            String[] partes = dividirStringPorComillas(arregloNumeros);
+            arregloNumeros=partes[0];
+        }else{
+            arregloNumeros=ey.toString();
+}
+
         String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
         double[] valores = convertirStringADoubleArray(arregloNumeros);
         
@@ -614,17 +684,18 @@ histograma::= RESERVADA_GRAFIA_HISTOGRAMA
 
         RESERVADA_VALUES_GRAFICA 
         DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL listaValores RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE:ey RESERVADA_END PUNTO_Y_COMA
 
         RESERVADA_EXEC RESERVADA_GRAFIA_HISTOGRAMA  RESERVADA_END PUNTO_Y_COMA
      
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
 {:
-        String[] partes = dividirStringPorComillas(arregloTemporal);
-        arregloTemporal=partes[1];
-        arregloNumeros=partes[0];
-        System.out.println(arregloTemporal);
-        System.out.println(arregloNumeros);
+        if(ey==null) {//eje y, arreglo de numeros
+            String[] partes = dividirStringPorComillas(arregloNumeros);
+            arregloNumeros=partes[0];
+        }else{
+            arregloNumeros=ey.toString();
+}
         double[] valores = convertirStringADoubleArray(arregloNumeros);
   
         int[] arregloInt = new int[valores.length];

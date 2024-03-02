@@ -86,7 +86,9 @@ RESERVADA_TITULOY_GRAFICA = "TituloY"
 RESERVADA_VALUES_GRAFICA = "Values"
 RESRVADA_LABEL_GRAFICA = "Label"
 RESERVADA_EXEC = "Exec"
-
+CERRADURA_BARRAS="GrapBar"
+CERRADURA_PIE="GrapPie"
+CERRADURA_LINEA="GrapLine"
 
 %%
 <YYINITIAL> {COMENTARIO_MULTILINEA} {System.out.println("Comentario multilinea"); }
@@ -353,6 +355,25 @@ RESERVADA_EXEC = "Exec"
     listaTokens.add(ntk);
     return new Symbol(sym.RESERVADA_EXEC, yyline, yycolumn, yytext());
 }
+
+<YYINITIAL> {CERRADURA_BARRAS} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GrapBar");
+    listaTokens.add(ntk);
+    return new Symbol(sym.CERRADURA_BARRAS, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {CERRADURA_PIE} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GrapPie");
+    listaTokens.add(ntk);
+    return new Symbol(sym.CERRADURA_PIE, yyline, yycolumn, yytext());
+}
+
+<YYINITIAL> {CERRADURA_LINEA} { 
+    Token ntk = new Token(yyline, yycolumn, yytext(), "Palabra Reservada: GrapLine");
+    listaTokens.add(ntk);
+    return new Symbol(sym.CERRADURA_LINEA, yyline, yycolumn, yytext());
+}
+
 <YYINITIAL> {IDE} {Token ntk = new Token(yyline,yycolumn,yytext(),"ID array");listaTokens.add(ntk); return new Symbol(sym.IDE, yyline, yycolumn, yytext()) ; }
 
 <YYINITIAL> {

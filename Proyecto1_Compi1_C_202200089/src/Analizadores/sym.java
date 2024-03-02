@@ -16,6 +16,7 @@ public class sym {
   public static final int NUMEROS = 48;
   public static final int RESERVADA_END = 16;
   public static final int DOS_PUNTOS = 3;
+  public static final int CERRADURA_LINEA = 50;
   public static final int RESERVADA_EJEY_GRAFICA = 41;
   public static final int CORCHETE_DERECHO = 13;
   public static final int RESERVADA_MAX = 30;
@@ -47,10 +48,12 @@ public class sym {
   public static final int RESERVADA_MULTIPLICACION = 23;
   public static final int RESERVADA_EJEX_GRAFICA = 40;
   public static final int RESERVADA_GRAFICA_BARRA = 35;
+  public static final int CERRADURA_BARRAS = 52;
   public static final int STRING = 47;
   public static final int RESERVADA_VARIANZA = 29;
   public static final int MENOR_QUE = 4;
   public static final int RESERVADA_RESTA = 22;
+  public static final int CERRADURA_PIE = 51;
   public static final int RESERVADA_SUMA = 21;
   public static final int RESERVADA_TITULO_GRAFICA = 39;
   public static final int RESERVADA_ARRAY = 20;
@@ -108,7 +111,10 @@ public class sym {
   "RESERVADA_EXEC",
   "STRING",
   "NUMEROS",
-  "IDE"
+  "IDE",
+  "CERRADURA_LINEA",
+  "CERRADURA_PIE",
+  "CERRADURA_BARRAS"
   };
 }
 
