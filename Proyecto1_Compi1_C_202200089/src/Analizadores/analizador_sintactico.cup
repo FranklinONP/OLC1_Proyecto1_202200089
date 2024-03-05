@@ -462,9 +462,8 @@ estadisticas::=media:c {:RESULT=c;:} |mediana:c {:RESULT=c;:} |moda:c {:RESULT=c
 //lista valores es un arreglo double, donde incluye id, numeros, o aritmeticas
 contenidoE::=listaValores|IDE:c {:RESULT=obtenerValor(gui.listaSimbolos,(String) c);:};
 
-media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO 
-        {:
-            
+media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {: 
+       
         if(arregloTemporal.length()==0){
             float[] numeros=convertirCadenaAArray(c.toString());
             double media =calcularMedia(numeros);
@@ -474,6 +473,7 @@ media::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO
             double media =calcularMedia(numeros);
             RESULT=media;
             arregloTemporal="";
+            arregloNumeros="";
         }:} ;
 mediana::= RESERVADA_MEDIANA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
         
@@ -488,54 +488,63 @@ mediana::= RESERVADA_MEDIANA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECH
             double mediana = calcularMediana(numeros);
             RESULT=mediana;
             arregloTemporal="";
+            arregloNumeros="";
         }
 :} ;
 moda::= RESERVADA_MODA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
  
         if(arregloTemporal.length()==0){
-        float[] numeros = convertirCadenaAArray(c.toString());
-        double moda = calcularModa(numeros);
-        RESULT=moda;
+            float[] numeros = convertirCadenaAArray(c.toString());
+            double moda = calcularModa(numeros);
+            RESULT=moda;
         } else{
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        double moda = calcularModa(numeros);
-        RESULT=moda;
-        arregloTemporal="";
+            float[] numeros = convertirCadenaAArray(arregloTemporal);
+            double moda = calcularModa(numeros);
+            RESULT=moda;
+            arregloTemporal="";
+            arregloNumeros="";
         }
 :} ;
 varianza::= RESERVADA_VARIANZA PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
     
         if(arregloTemporal.length()==0){
-        float[] numeros = convertirCadenaAArray(c.toString());
-        double varianza = calcularVarianza(numeros);
-        RESULT=varianza;
+            float[] numeros = convertirCadenaAArray(c.toString());
+            double varianza = calcularVarianza(numeros);
+            RESULT=varianza;
         } else{
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        double varianza = calcularVarianza(numeros);
-        RESULT=varianza;
-        arregloTemporal="";
+            float[] numeros = convertirCadenaAArray(arregloTemporal);
+            double varianza = calcularVarianza(numeros);
+            RESULT=varianza;
+            arregloTemporal="";
+            arregloNumeros="";
         }
 :} ;
 max::=  RESERVADA_MAX PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
 
         if(arregloTemporal.length()==0){
-        float[] numeros = convertirCadenaAArray(c.toString());
-        float maximo = calcularMaximo(numeros);
+            float[] numeros = convertirCadenaAArray(c.toString());
+            float maximo = calcularMaximo(numeros);
+            RESULT=maximo;
         }else{
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        float maximo = calcularMaximo(numeros);
-        RESULT=maximo;
+            float[] numeros = convertirCadenaAArray(arregloTemporal);
+            float maximo = calcularMaximo(numeros);
+            RESULT=maximo;
+            arregloTemporal="";
+            arregloNumeros="";
         }
 :} ;
 min::= RESERVADA_MIN PARENTESIS_IZQUIERDO contenidoE:c PARENTESIS_DERECHO {:
         
         if(arregloTemporal.length()==0){
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        float minimo = calcularMinimo(numeros);
+            float[] numeros = convertirCadenaAArray(c.toString());
+            float minimo = calcularMinimo(numeros);
+            RESULT=minimo;
         }else{
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        float minimo = calcularMinimo(numeros);
-        RESULT=minimo;
+            float[] numeros = convertirCadenaAArray(arregloTemporal);
+            float minimo = calcularMinimo(numeros);
+            RESULT=minimo;
+            arregloTemporal="";
+            arregloNumeros="";
         }      
 :} ;
 //==============================================================================
@@ -582,7 +591,7 @@ combinacion ::= STRING:s COMA {: RESULT = s; :}
 comb ::= STRING:s {: RESULT = s; :}
         | ID:iddd {: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);  :}
         | aritmeticas:ar {: RESULT = ar; :}
-        | estadisticas:st {: RESULT = st; :}
+        | estadisticas:st {: RESULT = st.toString(); :}
         | NUMEROS:n {: RESULT = n.toString(); :};
 
 
@@ -652,7 +661,7 @@ barras::=RESERVADA_GRAFICA_BARRA
         RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:y RESERVADA_END PUNTO_Y_COMA
        
 
-        RESERVADA_EXEC CERRADURA_BARRAS  RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_EXEC RESERVADA_GRAFICA_BARRA  RESERVADA_END PUNTO_Y_COMA
      
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
 
@@ -699,7 +708,7 @@ pie::=  RESERVADA_GRAFICA_PIE
         RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:s RESERVADA_END PUNTO_Y_COMA
        
 
-        RESERVADA_EXEC  CERRADURA_PIE  RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_EXEC  RESERVADA_GRAFICA_PIE  RESERVADA_END PUNTO_Y_COMA
      
 
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
@@ -753,7 +762,7 @@ linea::= RESERVADA_GRAFICA_LINE
         RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:y RESERVADA_END PUNTO_Y_COMA
        
 
-        RESERVADA_EXEC CERRADURA_LINEA  RESERVADA_END PUNTO_Y_COMA
+        RESERVADA_EXEC RESERVADA_GRAFICA_LINE RESERVADA_END PUNTO_Y_COMA
      
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
 

@@ -91,7 +91,7 @@ CERRADURA_PIE="GrapPie"
 CERRADURA_LINEA="GrapLine"
 
 %%
-<YYINITIAL> {COMENTARIO_MULTILINEA} {System.out.println("Comentario multilinea"); }
+<YYINITIAL> {COMENTARIO_MULTILINEA} {System.out.println("Comentario multilinea"+yytext()); }
 <YYINITIAL> {COMENTARIO_LINEA} {System.out.println("Comentario 1 linea");}
 
 <YYINITIAL> {ESPACIO_BLANCO} { }

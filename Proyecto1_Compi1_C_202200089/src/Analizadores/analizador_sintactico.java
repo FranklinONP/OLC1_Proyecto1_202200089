@@ -227,7 +227,7 @@ public class analizador_sintactico extends java_cup.runtime.lr_parser {
     "\016\261\001\002\000\004\017\262\001\002\000\004\020" +
     "\263\001\002\000\004\061\264\001\002\000\004\022\265" +
     "\001\002\000\004\013\266\001\002\000\004\060\267\001" +
-    "\002\000\004\065\270\001\002\000\004\022\271\001\002" +
+    "\002\000\004\046\270\001\002\000\004\022\271\001\002" +
     "\000\004\013\272\001\002\000\004\015\273\001\002\000" +
     "\004\022\274\001\002\000\004\013\275\001\002\000\022" +
     "\022\uffa1\023\uffa1\026\uffa1\042\uffa1\045\uffa1\046\uffa1\047" +
@@ -314,7 +314,7 @@ public class analizador_sintactico extends java_cup.runtime.lr_parser {
     "\u0130\001\002\000\004\017\u0131\001\002\000\004\020\u0132" +
     "\001\002\000\004\061\u0133\001\002\000\004\022\u0134\001" +
     "\002\000\004\013\u0135\001\002\000\004\060\u0136\001\002" +
-    "\000\004\066\u0137\001\002\000\004\022\u0138\001\002\000" +
+    "\000\004\045\u0137\001\002\000\004\022\u0138\001\002\000" +
     "\004\013\u0139\001\002\000\004\015\u013a\001\002\000\004" +
     "\022\u013b\001\002\000\004\013\u013c\001\002\000\022\022" +
     "\uffa2\023\uffa2\026\uffa2\042\uffa2\045\uffa2\046\uffa2\047\uffa2" +
@@ -341,7 +341,7 @@ public class analizador_sintactico extends java_cup.runtime.lr_parser {
     "\000\004\016\u0168\001\002\000\004\017\u0169\001\002\000" +
     "\004\020\u016a\001\002\000\004\061\u016b\001\002\000\004" +
     "\022\u016c\001\002\000\004\013\u016d\001\002\000\004\060" +
-    "\u016e\001\002\000\004\064\u016f\001\002\000\004\022\u0170" +
+    "\u016e\001\002\000\004\047\u016f\001\002\000\004\022\u0170" +
     "\001\002\000\004\013\u0171\001\002\000\004\015\u0172\001" +
     "\002\000\004\022\u0173\001\002\000\004\013\u0174\001\002" +
     "\000\022\022\uffa0\023\uffa0\026\uffa0\042\uffa0\045\uffa0\046" +
@@ -1585,8 +1585,8 @@ class CUP$analizador_sintactico$actions {
 		int cleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).right;
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).value;
-		
-            
+		 
+       
         if(arregloTemporal.length()==0){
             float[] numeros=convertirCadenaAArray(c.toString());
             double media =calcularMedia(numeros);
@@ -1596,6 +1596,7 @@ class CUP$analizador_sintactico$actions {
             double media =calcularMedia(numeros);
             RESULT=media;
             arregloTemporal="";
+            arregloNumeros="";
         }
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("media",14, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
@@ -1621,6 +1622,7 @@ class CUP$analizador_sintactico$actions {
             double mediana = calcularMediana(numeros);
             RESULT=mediana;
             arregloTemporal="";
+            arregloNumeros="";
         }
 
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("mediana",15, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
@@ -1637,14 +1639,15 @@ class CUP$analizador_sintactico$actions {
 		
  
         if(arregloTemporal.length()==0){
-        float[] numeros = convertirCadenaAArray(c.toString());
-        double moda = calcularModa(numeros);
-        RESULT=moda;
+            float[] numeros = convertirCadenaAArray(c.toString());
+            double moda = calcularModa(numeros);
+            RESULT=moda;
         } else{
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        double moda = calcularModa(numeros);
-        RESULT=moda;
-        arregloTemporal="";
+            float[] numeros = convertirCadenaAArray(arregloTemporal);
+            double moda = calcularModa(numeros);
+            RESULT=moda;
+            arregloTemporal="";
+            arregloNumeros="";
         }
 
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("moda",16, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
@@ -1661,14 +1664,15 @@ class CUP$analizador_sintactico$actions {
 		
     
         if(arregloTemporal.length()==0){
-        float[] numeros = convertirCadenaAArray(c.toString());
-        double varianza = calcularVarianza(numeros);
-        RESULT=varianza;
+            float[] numeros = convertirCadenaAArray(c.toString());
+            double varianza = calcularVarianza(numeros);
+            RESULT=varianza;
         } else{
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        double varianza = calcularVarianza(numeros);
-        RESULT=varianza;
-        arregloTemporal="";
+            float[] numeros = convertirCadenaAArray(arregloTemporal);
+            double varianza = calcularVarianza(numeros);
+            RESULT=varianza;
+            arregloTemporal="";
+            arregloNumeros="";
         }
 
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("varianza",17, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
@@ -1685,12 +1689,15 @@ class CUP$analizador_sintactico$actions {
 		
 
         if(arregloTemporal.length()==0){
-        float[] numeros = convertirCadenaAArray(c.toString());
-        float maximo = calcularMaximo(numeros);
+            float[] numeros = convertirCadenaAArray(c.toString());
+            float maximo = calcularMaximo(numeros);
+            RESULT=maximo;
         }else{
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        float maximo = calcularMaximo(numeros);
-        RESULT=maximo;
+            float[] numeros = convertirCadenaAArray(arregloTemporal);
+            float maximo = calcularMaximo(numeros);
+            RESULT=maximo;
+            arregloTemporal="";
+            arregloNumeros="";
         }
 
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("max",18, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
@@ -1707,12 +1714,15 @@ class CUP$analizador_sintactico$actions {
 		
         
         if(arregloTemporal.length()==0){
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        float minimo = calcularMinimo(numeros);
+            float[] numeros = convertirCadenaAArray(c.toString());
+            float minimo = calcularMinimo(numeros);
+            RESULT=minimo;
         }else{
-        float[] numeros = convertirCadenaAArray(arregloTemporal);
-        float minimo = calcularMinimo(numeros);
-        RESULT=minimo;
+            float[] numeros = convertirCadenaAArray(arregloTemporal);
+            float minimo = calcularMinimo(numeros);
+            RESULT=minimo;
+            arregloTemporal="";
+            arregloNumeros="";
         }      
 
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("min",19, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
@@ -1999,7 +2009,7 @@ class CUP$analizador_sintactico$actions {
 		int stleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()).left;
 		int stright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()).right;
 		Object st = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.peek()).value;
-		 RESULT = st; 
+		 RESULT = st.toString(); 
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("comb",34, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -2133,7 +2143,7 @@ class CUP$analizador_sintactico$actions {
           return CUP$analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 95: // barras ::= RESERVADA_GRAFICA_BARRA PARENTESIS_IZQUIERDO RESERVADA_TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EJEX_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_EJEY_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_DOUBLE SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULOX_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULOY_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EXEC CERRADURA_BARRAS RESERVADA_END PUNTO_Y_COMA PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA 
+          case 95: // barras ::= RESERVADA_GRAFICA_BARRA PARENTESIS_IZQUIERDO RESERVADA_TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EJEX_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_EJEY_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_DOUBLE SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULOX_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULOY_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EXEC RESERVADA_GRAFICA_BARRA RESERVADA_END PUNTO_Y_COMA PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA 
             {
               Object RESULT =null;
 		int tleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-47)).left;
@@ -2179,7 +2189,7 @@ class CUP$analizador_sintactico$actions {
           return CUP$analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 96: // pie ::= RESERVADA_GRAFICA_PIE PARENTESIS_IZQUIERDO RESRVADA_LABEL_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_VALUES_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_DOUBLE SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EXEC CERRADURA_PIE RESERVADA_END PUNTO_Y_COMA PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA 
+          case 96: // pie ::= RESERVADA_GRAFICA_PIE PARENTESIS_IZQUIERDO RESRVADA_LABEL_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_VALUES_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_DOUBLE SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EXEC RESERVADA_GRAFICA_PIE RESERVADA_END PUNTO_Y_COMA PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA 
             {
               Object RESULT =null;
 		int exleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-27)).left;
@@ -2218,7 +2228,7 @@ class CUP$analizador_sintactico$actions {
           return CUP$analizador_sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 97: // linea ::= RESERVADA_GRAFICA_LINE PARENTESIS_IZQUIERDO RESERVADA_TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EJEX_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_EJEY_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_DOUBLE SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULOX_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULOY_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EXEC CERRADURA_LINEA RESERVADA_END PUNTO_Y_COMA PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA 
+          case 97: // linea ::= RESERVADA_GRAFICA_LINE PARENTESIS_IZQUIERDO RESERVADA_TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EJEX_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_EJEY_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_DOUBLE SIGNO_IGUAL contenidoE RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULOX_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_TITULOY_GRAFICA DOS_PUNTOS DOS_PUNTOS RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA RESERVADA_EXEC RESERVADA_GRAFICA_LINE RESERVADA_END PUNTO_Y_COMA PARENTESIS_DERECHO RESERVADA_END PUNTO_Y_COMA 
             {
               Object RESULT =null;
 		int tleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-47)).left;

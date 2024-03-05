@@ -1047,7 +1047,7 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
             // fall through
           case 87: break;
           case 34: 
-            { System.out.println("Comentario multilinea");
+            { System.out.println("Comentario multilinea"+yytext());
             } 
             // fall through
           case 88: break;
