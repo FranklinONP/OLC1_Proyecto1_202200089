@@ -52,7 +52,7 @@ ESPACIO_BLANCO = [ \t\n\r]+
 STRING ="\"[^\"]+\" "
 
 ID ="hola"
-IDE = "@"[a-zA-Z][a-zA-Z0-9,_]+
+IDE = "@"[a-zA-Z][a-zA-Z0-9,_]*
 
 RESERVADA_PROGRAM = "Program"
 RESERVADA_END = "End"

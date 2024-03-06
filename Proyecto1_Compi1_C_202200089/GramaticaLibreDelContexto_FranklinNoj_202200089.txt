@@ -1,0 +1,247 @@
+GRAMATICA LIBRE DEL CONTEXTO EN NOTACION BNF
+FRANKLIN ORLANDO NOJ PEREZ     202200089
+LABORATORIO DE ORGANIZACION DE LENGUAJES Y COMPILADORES 1
+
+Terminales={ 	ID,DOS_PUNTOS,MENOR_QUE,MAYOR_QUE,GUION,PUNTO,COMA,PUNTO_Y_COMA,PARENTESIS_IZQUIERDO,
+		PARENTESIS_DERECHO, CORCHETE_IZQUIERDO, CORCHETE_DERECHO, SIGNO_IGUAL,RESERVADA_PROGRAM,
+		RESERVADA_END, RESERVADA_VAR, RESERVADA_DOUBLE, RESERVADA_CHAR, RESERVADA_ARRAY, RESERVADA_SUMA,
+		RESERVADA_RESTA, RESERVADA_MULTIPLICACION, RESERVADA_DIVISION, RESERVADA_MODULO, RESERVADA_MEDIA, 
+		RESERVADA_MEDIANA, RESERVADA_MODA, RESERVADA_VARIANZA, RESERVADA_MAX, RESERVADA_MIN, RESERVADA_CONSOLE,
+		RESERVADA_PRINT,RESERVADA_COLUMN, RESERVADA_GRAFICA_BARRA, RESERVADA_GRAFICA_PIE, RESERVADA_GRAFICA_LINE,
+		RESERVADA_GRAFIA_HISTOGRAMA, RESERVADA_TITULO_GRAFICA, RESERVADA_EJEX_GRAFICA, RESERVADA_EJEY_GRAFICA, 
+		RESERVADA_TITULOX_GRAFICA, RESERVADA_TITULOY_GRAFICA, RESERVADA_VALUES_GRAFICA, RESRVADA_LABEL_GRAFICA,
+		RESERVADA_EXEC,STRING,NUMEROS,IDE,CERRADURA_LINEA,CERRADURA_PIE,CERRADURA_BARRAS
+		}
+
+No terminales={	inicio,codigo,cod,primitivas,arreglos,print, graficas,
+		tipo,dospuntos,contenidoVariable,aritmeticas,estadisticas,
+		cuerpoLista,listaValores,
+		media, mediana, moda,varianza,max,min,contenidoE,
+		suma,resta,multiplicacion,division, modulo,valorAritmetico,tipoAnidada,anidacion,
+		desicionprint,print1,valorPrint,combinado,combinacion,comb,print2,pp,ppp,
+		pie,barras,linea,histograma}
+
+
+Inicio= <inicio>
+
+==================================================================Producciones=============================================================
+===========================================================================================================================================
+
+<inicio>::= RESERVADA_PROGRAM <codigo> RESERVADA_END RESERVADA_PROGRAM
+
+<codigo>::= <cod>|<cod> <codigo>
+
+<cod>::=<primitivas>|<arreglos>|<print>|<graficas>
+
+<tipo>::= RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO|RESERVADA_DOUBLE
+
+<dospuntos>::=DOS_PUNTOS DOS_PUNTOS
+
+<contenidoVariable>::= NUMEROS
+                    |ID
+                    |STRING
+                    |<aritmeticas>
+                    |<estadisticas>
+
+<listaValores>::= CORCHETE_IZQUIERDO <cuerpoLista> CORCHETE_DERECHO 
+
+<cuerpoLista>::=STRING COMA <cuerpoLista> 
+              	|NUMEROS COMA <cuerpoLista>
+              	|ID COMA <cuerpoLista> 
+              	|aritmeticas COMA <cuerpoLista> 
+              	|estadisticas COMA <cuerpoLista>
+
+              	|STRING
+              	|NUMEROS
+              	|ID
+              	|<aritmeticas>
+              	|<estadisticas>
+
+<primitivas>::= RESERVADA_VAR
+                DOS_PUNTOS 
+                <tipo>
+                <dospuntos>
+                ID
+                MENOR_QUE GUION
+                <contenidoVariable>
+                RESERVADA_END PUNTO_Y_COMA
+
+<arreglos>::= 	RESERVADA_ARRAY
+            	DOS_PUNTOS
+           	<tipo>
+            	<dospuntos>
+            	IDE
+            	MENOR_QUE GUION
+            	<listaValores>
+            	RESERVADA_END PUNTO_Y_COMA
+
+<aritmeticas>::= <suma>|<resta>|<multiplicacion>|<division>|<modulo>
+
+<suma>::= RESERVADA_SUMA PARENTESIS_IZQUIERDO <valorAritmetico> COMA <valorAritmetico> PARENTESIS_DERECHO  
+<resta>::=RESERVADA_RESTA PARENTESIS_IZQUIERDO <valorAritmetico> COMA <valorAritmetico> PARENTESIS_DERECHO 
+<multiplicacion>::=RESERVADA_MULTIPLICACION PARENTESIS_IZQUIERDO <valorAritmetico> COMA <valorAritmetico> PARENTESIS_DERECHO  
+<division>::=RESERVADA_DIVISION PARENTESIS_IZQUIERDO <valorAritmetico> COMA <valorAritmetico> PARENTESIS_DERECHO 
+<modulo>::=RESERVADA_MODULO PARENTESIS_IZQUIERDO <valorAritmetico> COMA <valorAritmetico> PARENTESIS_DERECHO 
+
+<tipoAnidada>::= RESERVADA_SUMA  
+		|RESERVADA_RESTA
+		|RESERVADA_MULTIPLICACION
+		|RESERVADA_DIVISION 
+		|RESERVADA_MODULO 
+
+<valorAritmetico>::= NUMEROS|ID|<anidacion>|<estadisticas>
+
+<anidacion>::= <tipoAnidada> PARENTESIS_IZQUIERDO <valorAritmetico> COMA <valorAritmetico> PARENTESIS_DERECHO
+
+<estadisticas>::=<media>|<mediana>|<moda>|<varianza>|<max>|<min>
+
+<contenidoE>::=<listaValores>|IDE
+
+<media>::=RESERVADA_MEDIA PARENTESIS_IZQUIERDO <contenidoE> PARENTESIS_DERECHO 
+<mediana>::=RESERVADA_MEDIANA PARENTESIS_IZQUIERDO <contenidoE> PARENTESIS_DERECHO 
+<moda>::= RESERVADA_MODA PARENTESIS_IZQUIERDO <contenidoE> PARENTESIS_DERECHO 
+<varianza>::= RESERVADA_VARIANZA PARENTESIS_IZQUIERDO <contenidoE> PARENTESIS_DERECHO 
+<max>::=  RESERVADA_MAX PARENTESIS_IZQUIERDO <contenidoE> PARENTESIS_DERECHO
+<min>::= RESERVADA_MIN PARENTESIS_IZQUIERDO <contenidoE> PARENTESIS_DERECHO 
+
+<print>::= RESERVADA_CONSOLE
+    	   DOS_PUNTOS
+    	   DOS_PUNTOS
+    	   <desicionprint>
+
+<desicionprint>::=<print1>|<print2>
+
+<print1>::=	RESERVADA_PRINT  
+    		SIGNO_IGUAL
+    		<valorPrint>
+    		RESERVADA_END
+    		PUNTO_Y_COMA
+
+<valorPrint>::= STRING
+            	| NUMEROS
+           	| ID
+            	| <aritmeticas>
+            	| <estadisticas>
+            	| <combinado>
+
+<combinado>::= 	<combinacion> <combinado>
+            	| <combinacion>
+            	| <combinacion>
+
+<combinacion>::=STRING
+             	| NUMEROS
+             	| <aritmeticas>
+             	| <estadisticas>
+             	| ID COMA 
+
+<comb>::= STRING
+          | ID
+          | <aritmeticas>
+          | <estadisticas>
+          | NUMEROS
+
+<print2>::=  RESERVADA_COLUMN 
+             SIGNO_IGUAL
+             <pp>
+             GUION
+             MAYOR_QUE
+             <ppp>
+             RESERVADA_END
+             PUNTO_Y_COMA
+
+<pp>::=STRING|ID
+<ppp>::=IDE|<listaValores>
+
+<graficas>::=<pie>|<barras>|<linea>|<histograma>
+
+<barras>::=	RESERVADA_GRAFICA_BARRA
+        	PARENTESIS_IZQUIERDO
+
+	        RESERVADA_TITULO_GRAFICA
+        	DOS_PUNTOS DOS_PUNTOS
+        	RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+         
+        	RESERVADA_EJEX_GRAFICA
+        	DOS_PUNTOS DOS_PUNTOS
+        	RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL  <contenidoE> RESERVADA_END PUNTO_Y_COMA
+       
+        	RESERVADA_EJEY_GRAFICA
+        	DOS_PUNTOS DOS_PUNTOS
+        	RESERVADA_DOUBLE SIGNO_IGUAL  <contenidoE> RESERVADA_END PUNTO_Y_COMA
+       
+        	RESERVADA_TITULOX_GRAFICA
+        	DOS_PUNTOS DOS_PUNTOS
+        	RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+
+        	RESERVADA_TITULOY_GRAFICA
+        	DOS_PUNTOS DOS_PUNTOS
+        	RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+       
+        	RESERVADA_EXEC RESERVADA_GRAFICA_BARRA  RESERVADA_END PUNTO_Y_COMA
+     
+        	PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
+
+
+<pie>::=RESERVADA_GRAFICA_PIE
+        PARENTESIS_IZQUIERDO
+
+        RESRVADA_LABEL_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL <contenidoE> RESERVADA_END PUNTO_Y_COMA
+              
+        RESERVADA_VALUES_GRAFICA 
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_DOUBLE SIGNO_IGUAL <contenidoE> RESERVADA_END PUNTO_Y_COMA
+       
+        RESERVADA_TITULO_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+       
+        RESERVADA_EXEC  RESERVADA_GRAFICA_PIE  RESERVADA_END PUNTO_Y_COMA
+     
+        PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
+       
+
+<linea>::= RESERVADA_GRAFICA_LINE
+           PARENTESIS_IZQUIERDO
+
+           RESERVADA_TITULO_GRAFICA
+           DOS_PUNTOS DOS_PUNTOS
+           RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA     
+        
+           RESERVADA_EJEX_GRAFICA
+           DOS_PUNTOS DOS_PUNTOS
+           RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL <contenidoE> RESERVADA_END PUNTO_Y_COMA
+       
+           RESERVADA_EJEY_GRAFICA
+           DOS_PUNTOS DOS_PUNTOS
+           RESERVADA_DOUBLE SIGNO_IGUAL  <contenidoE> RESERVADA_END PUNTO_Y_COMA
+       
+           RESERVADA_TITULOX_GRAFICA
+           DOS_PUNTOS DOS_PUNTOS
+           RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+
+           RESERVADA_TITULOY_GRAFICA
+           DOS_PUNTOS DOS_PUNTOS
+           RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+
+           RESERVADA_EXEC RESERVADA_GRAFICA_LINE RESERVADA_END PUNTO_Y_COMA
+     
+           PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
+
+
+<histograma>::= RESERVADA_GRAFIA_HISTOGRAMA
+        	PARENTESIS_IZQUIERDO
+        	RESERVADA_TITULO_GRAFICA
+        	DOS_PUNTOS DOS_PUNTOS
+        	RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING RESERVADA_END PUNTO_Y_COMA
+
+	        RESERVADA_VALUES_GRAFICA 
+        	DOS_PUNTOS DOS_PUNTOS
+        	RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL <contenidoE>s RESERVADA_END PUNTO_Y_COMA
+
+	        RESERVADA_EXEC RESERVADA_GRAFIA_HISTOGRAMA  RESERVADA_END PUNTO_Y_COMA
+    	 
+       		PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
+
+
