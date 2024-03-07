@@ -31,7 +31,7 @@ parser code
             resultado.append(sinR[i]).append("\t").append(frec[i]).append("\t").append(frecA[i]).append("\t").append(frecR[i]);
 
             // Agregar un salto de línea después de cada conjunto de valores
-            resultado.append("\n");
+            resultado.append("%"+"\n");
         }
 
         return resultado.toString();
@@ -87,9 +87,13 @@ parser code
 
     public static double[] obtenerFrecuenciaRelativa(int[] frecuencia, int totalElementos) {
         double[] frecuenciaRelativa = new double[frecuencia.length];
+        double num=0;
 
         for (int i = 0; i < frecuencia.length; i++) {
-            frecuenciaRelativa[i] = (double) frecuencia[i] / totalElementos;
+            num=(double) frecuencia[i] / totalElementos;
+            num=num*100;
+            int numR = (int) Math.round(num);
+            frecuenciaRelativa[i] = numR;
         }
 
         return frecuenciaRelativa;
@@ -244,6 +248,14 @@ public static double[] convertirStringADoubleArray(String cadena) {
     
     public static String arregloTemporal="";
     public static String arregloNumeros="";
+
+    public static String tituloGG="";
+    public static String ejexGG="";
+    public static String ejeyGG="";
+    public static String tituloxGG="";
+    public static String tituloyGG="";
+    public static String labelGG="";
+    public static String valuesGG="";
    
     public static String obtenerValor(LinkedList<ts> lista, String nombreBuscado) {
         for (ts item : lista) {
@@ -297,7 +309,7 @@ non terminal media, mediana, moda,varianza,max,min,contenidoE;
 non terminal suma,resta,multiplicacion,division, modulo,valorAritmetico,tipoAnidada,anidacion;
 non terminal desicionprint,print1,valorPrint,combinado,combinacion,comb,print2,pp,ppp;
 non terminal pie,barras,linea,histograma;
-
+non terminal sentencias,sentencias2,sentencias3,ejexG,ejeyG,tituloxG,tituloyG,tituloG,labelG,valuesG;
 
 start with inicio;
 
@@ -634,207 +646,215 @@ ppp::=IDE:id {: RESULT = obtenerValor(gui.listaSimbolos,(String) id);:}
 //====================================================== GRAFICAS =========================================
 graficas::=pie|barras|linea|histograma;
 
+sentencias::=tituloG|ejexG|ejeyG|tituloxG|tituloyG;
+sentencias2::=labelG|valuesG|tituloG;
+sentencias3::=tituloG|valuesG;
+
+tituloG::=RESERVADA_TITULO_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:t RESERVADA_END PUNTO_Y_COMA
+        {:
+          tituloGG=t.toString();
+        :};
+
+ejexG::=RESERVADA_EJEX_GRAFICA //Normalmente arreglo String
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL  contenidoE:ex RESERVADA_END PUNTO_Y_COMA
+        {:
+        if(ex==null){
+        ejexGG=arregloTemporal;
+        } else{
+        ejexGG=ex.toString();
+        }
+        arregloTemporal="";
+        arregloNumeros="";
+        :};
+
+ejeyG::=RESERVADA_EJEY_GRAFICA
+        DOS_PUNTOS DOS_PUNTOS
+        RESERVADA_DOUBLE SIGNO_IGUAL  contenidoE:ey RESERVADA_END PUNTO_Y_COMA
+        {:
+        if(ey==null){
+        ejeyGG=arregloTemporal;
+        } else{
+        ejeyGG=ey.toString();
+        }
+        arregloTemporal="";
+        arregloNumeros="";
+        :};
+
+tituloxG::=RESERVADA_TITULOX_GRAFICA
+           DOS_PUNTOS DOS_PUNTOS
+           RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:x RESERVADA_END PUNTO_Y_COMA
+           {:
+           tituloxGG=x.toString();
+           :};
+
+tituloyG::=RESERVADA_TITULOY_GRAFICA
+           DOS_PUNTOS DOS_PUNTOS
+           RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:y RESERVADA_END PUNTO_Y_COMA
+           {:
+           tituloyGG=y.toString();
+            :};
+
+labelG::=RESRVADA_LABEL_GRAFICA //arreglo cadena
+         DOS_PUNTOS DOS_PUNTOS
+         RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE:ex RESERVADA_END PUNTO_Y_COMA
+         {:
+          if(ex==null){
+             labelGG=arregloTemporal;
+          } else{
+             labelGG=ex.toString();
+          }
+          arregloTemporal="";
+          arregloNumeros="";
+         :};
+
+valuesG::=RESERVADA_VALUES_GRAFICA //arreglo numerico
+          DOS_PUNTOS DOS_PUNTOS
+          tipo SIGNO_IGUAL  contenidoE:ey RESERVADA_END PUNTO_Y_COMA
+          {:
+          if(ey==null){
+             valuesGG=arregloTemporal;
+          } else{
+             valuesGG=ey.toString();
+          }
+          arregloTemporal="";
+          arregloNumeros="";
+          :};
+
+
 barras::=RESERVADA_GRAFICA_BARRA
         PARENTESIS_IZQUIERDO
 
-        RESERVADA_TITULO_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:t RESERVADA_END PUNTO_Y_COMA
-        
-        
-        RESERVADA_EJEX_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL  contenidoE:ex RESERVADA_END PUNTO_Y_COMA
-       
-        RESERVADA_EJEY_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_DOUBLE SIGNO_IGUAL  contenidoE:ey RESERVADA_END PUNTO_Y_COMA
-       
+        sentencias
 
-        RESERVADA_TITULOX_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:x RESERVADA_END PUNTO_Y_COMA
+        sentencias 
 
+        sentencias 
 
-        RESERVADA_TITULOY_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:y RESERVADA_END PUNTO_Y_COMA
-       
+        sentencias
+
+        sentencias
 
         RESERVADA_EXEC RESERVADA_GRAFICA_BARRA  RESERVADA_END PUNTO_Y_COMA
      
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
 
         {:
-        if(ex==null){ //eje x, arreglo char
-            // si ex esta vacio es porque usare un arreglo, aca estoy seguro que no usare un IDE de arreglo
-            String[] partes = dividirStringPorComillas(arregloTemporal);
-            arregloTemporal=partes[1];
-        }else{
-            arregloTemporal=ex.toString();
-        }
-        if(ey==null) {//eje y, arreglo de numeros
-            String[] partes = dividirStringPorComillas(arregloNumeros);
-            arregloNumeros=partes[0];
-        }else{
-            arregloNumeros=ey.toString();
-}
-
-
-        String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
-        double[] valores = convertirStringADoubleArray(arregloNumeros);
+        String[] categorias = ejexGG.replaceAll("\"", "").split(",");
+        double[] valores = convertirStringADoubleArray(ejeyGG);
         
-        ImageCreator.createBarChartImage(categorias,valores,t.toString(),x.toString(),y.toString());
+        ImageCreator.createBarChartImage(categorias,valores,tituloGG,tituloxGG,tituloyGG);
         arregloTemporal="";
         arregloNumeros="";
+        tituloGG="";
+        ejexGG="";
+        ejeyGG="";
+        tituloxGG="";
+        tituloyGG="";
         :};
 
 
 pie::=  RESERVADA_GRAFICA_PIE
         PARENTESIS_IZQUIERDO
 
-        RESRVADA_LABEL_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE:ex RESERVADA_END PUNTO_Y_COMA
-        
-        
-        RESERVADA_VALUES_GRAFICA 
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_DOUBLE SIGNO_IGUAL  contenidoE:ey RESERVADA_END PUNTO_Y_COMA
-       
-
-        RESERVADA_TITULO_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:s RESERVADA_END PUNTO_Y_COMA
-       
+        sentencias2
+        sentencias2
+        sentencias2
 
         RESERVADA_EXEC  RESERVADA_GRAFICA_PIE  RESERVADA_END PUNTO_Y_COMA
-     
-
+    
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
+
         {:
-        if(ex==null){ //eje x, arreglo char
-            // si ex esta vacio es porque usare un arreglo, aca estoy seguro que no usare un IDE de arreglo
-            String[] partes = dividirStringPorComillas(arregloTemporal);
-            arregloTemporal=partes[1];
-        }else{
-            arregloTemporal=ex.toString();
-        }
-        if(ey==null) {//eje y, arreglo de numeros
-            String[] partes = dividirStringPorComillas(arregloNumeros);
-            arregloNumeros=partes[0];
-        }else{
-            arregloNumeros=ey.toString();
-}
+        String[] categorias = labelGG.replaceAll("\"", "").split(",");
+        double[] valores = convertirStringADoubleArray(valuesGG);
 
-        String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
-        double[] valores = convertirStringADoubleArray(arregloNumeros);
-
-        ImageCreator.createPieChartImage(categorias,valores,s.toString());
+        ImageCreator.createPieChartImage(categorias,valores,tituloGG);
         arregloTemporal="";
         arregloNumeros="";
+        tituloGG="";
+        valuesGG="";
+        labelGG="";
         :};
 
 linea::= RESERVADA_GRAFICA_LINE
         PARENTESIS_IZQUIERDO
 
-        RESERVADA_TITULO_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:t RESERVADA_END PUNTO_Y_COMA
-        
-        
-        RESERVADA_EJEX_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE:ex RESERVADA_END PUNTO_Y_COMA
-       
-        RESERVADA_EJEY_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_DOUBLE SIGNO_IGUAL  contenidoE:ey RESERVADA_END PUNTO_Y_COMA
-       
-
-        RESERVADA_TITULOX_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:x RESERVADA_END PUNTO_Y_COMA
-
-
-        RESERVADA_TITULOY_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:y RESERVADA_END PUNTO_Y_COMA
-       
+        sentencias
+        sentencias
+        sentencias
+        sentencias
+        sentencias
 
         RESERVADA_EXEC RESERVADA_GRAFICA_LINE RESERVADA_END PUNTO_Y_COMA
      
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
 
 {:
-        if(ex==null){ //eje x, arreglo char
-            // si ex esta vacio es porque usare un arreglo, aca estoy seguro que no usare un IDE de arreglo
-            String[] partes = dividirStringPorComillas(arregloTemporal);
-            arregloTemporal=partes[1];
-        }else{
-            arregloTemporal=ex.toString();
-        }
-        if(ey==null) {//eje y, arreglo de numeros
-            String[] partes = dividirStringPorComillas(arregloNumeros);
-            arregloNumeros=partes[0];
-        }else{
-            arregloNumeros=ey.toString();
-}
 
-        String[] categorias = arregloTemporal.replaceAll("\"", "").split(",");
-        double[] valores = convertirStringADoubleArray(arregloNumeros);
+        String[] categorias = ejexGG.replaceAll("\"", "").split(",");
+        double[] valores = convertirStringADoubleArray(ejeyGG);
         
-        ImageCreator.createLineChartImage(categorias,valores,t.toString(),x.toString(),y.toString());
+        ImageCreator.createLineChartImage(categorias,valores,tituloGG,tituloxGG,tituloyGG);
         arregloTemporal="";
         arregloNumeros="";
+        tituloGG="";
+        ejexGG="";
+        ejeyGG="";
+        tituloxGG="";
+        tituloyGG="";
         :};
 
 
-histograma::= RESERVADA_GRAFIA_HISTOGRAMA
+histograma::= 
+        RESERVADA_GRAFIA_HISTOGRAMA
         PARENTESIS_IZQUIERDO
-        RESERVADA_TITULO_GRAFICA
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR  CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL STRING:t RESERVADA_END PUNTO_Y_COMA
 
-        RESERVADA_VALUES_GRAFICA 
-        DOS_PUNTOS DOS_PUNTOS
-        RESERVADA_CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO SIGNO_IGUAL contenidoE:ey RESERVADA_END PUNTO_Y_COMA
+        sentencias3
+        sentencias3
 
         RESERVADA_EXEC RESERVADA_GRAFIA_HISTOGRAMA  RESERVADA_END PUNTO_Y_COMA
      
         PARENTESIS_DERECHO  RESERVADA_END  PUNTO_Y_COMA
-{:  
+        {:  
          double[] valores;
-        if(ey==null) {//eje y, arreglo de numeros
-            String[] partes = dividirStringPorComillas(arregloNumeros);
-            arregloNumeros=partes[0];
-        }else{
-            arregloNumeros=ey.toString();
-}
-       valores = convertirStringADoubleArray(arregloNumeros);
+         System.out.println(valuesGG);
+         valores = convertirStringADoubleArray(valuesGG);
   
-        int[] arregloInt = new int[valores.length];
+         int[] arregloInt = new int[valores.length];
 
-        for (int i = 0; i < valores.length; i++) {
+         for (int i = 0; i < valores.length; i++) {
             String valorComoCadena = Double.toString(valores[i]).replace(".", "");
             arregloInt[i] = Integer.parseInt(valorComoCadena);
         }
         
-        ImageCreator.createHistogramImage(arregloInt,t.toString());
+        ImageCreator.createHistogramImage(arregloInt,tituloGG);
 
-        String r=t+"\n";
+        String r="\n                                "+tituloGG+"\n";
+        r=r+"============================================="+"\n";
+        r=r+"Valor                  Fb                      Fa                      Fr"+"\n";
+        r=r+"============================================="+"\n";
         double[] sinR = obtenerArregloSinRepetidos(valores);
         int[] frec = obtenerFrecuencia(valores);
-        int[] arreg = convertirDoubleAInt(valores);
-        int[] frecA = obtenerFrecuenciaAcumulada(arreg);
+        //int[] arreg = convertirDoubleAInt(valores);
+        int[] frecA = obtenerFrecuenciaAcumulada(frec);
         double[] frecR = obtenerFrecuenciaRelativa(frec, valores.length);
         r =r+concatenarArreglos(sinR, frec, frecA, frecR);
+        int up = frecA.length - 1;
+        int upp = frecA[up];
+        r=r+"============================================="+"\n";
+        r=r+"Totales              "+upp+"                       "+upp+"                         100%"+"\n";
+        r=r+"============================================="+"\n";
 
         System.out.println("\n"+"Print desde el cup de la cadena: " + r+"\n");
         gui.listaPrint.add((String) r); 
 
         arregloTemporal="";
         arregloNumeros="";
+        valuesGG="";
+        tituloGG="";
         :};
 
 
