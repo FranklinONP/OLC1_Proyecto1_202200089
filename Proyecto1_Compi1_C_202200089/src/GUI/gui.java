@@ -122,7 +122,7 @@ public class gui extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 1070, 160));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 1190, 190));
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setText("Anterior");
@@ -131,7 +131,7 @@ public class gui extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 380, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 390, -1, -1));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setText("Siguiente");
@@ -140,7 +140,7 @@ public class gui extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 380, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 390, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Consola");
@@ -168,7 +168,7 @@ public class gui extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Visualizacion de Graficas");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 30, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 20, -1, -1));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
@@ -176,18 +176,14 @@ public class gui extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(labelimg, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(labelimg, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(labelimg, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(labelimg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 60, 320, 310));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 50, 350, 330));
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 670, 310));
@@ -442,54 +438,68 @@ public class gui extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    public static void generateHtmlFileFromErrors(LinkedList<Error_> errorList, String filePath) {
-        StringBuilder htmlBuilder = new StringBuilder();
+   public static void generateHtmlFileFromErrors(LinkedList<Error_> errorList, String filePath) {
+    StringBuilder htmlBuilder = new StringBuilder();
 
-        // Crear la estructura básica del documento HTML
-        htmlBuilder.append("<!DOCTYPE html>\n");
-        htmlBuilder.append("<html lang=\"en\">\n");
-        htmlBuilder.append("<head>\n");
-        htmlBuilder.append("<meta charset=\"UTF-8\">\n");
-        htmlBuilder.append("<title>Tabla de errores</title>\n");
-        htmlBuilder.append("</head>\n");
-        htmlBuilder.append("<body>\n");
+    // Crear la estructura básica del documento HTML
+    htmlBuilder.append("<!DOCTYPE html>\n");
+    htmlBuilder.append("<html lang=\"en\">\n");
+    htmlBuilder.append("<head>\n");
+    htmlBuilder.append("<meta charset=\"UTF-8\">\n");
+    htmlBuilder.append("<title>Tabla de errores</title>\n");
 
-        // Generar una tabla para mostrar los errores
-        htmlBuilder.append("<table border=\"1\">\n");
+    // Agregar estilos CSS para centrar la tabla y dar color a los encabezados
+    htmlBuilder.append("<style>\n");
+    htmlBuilder.append("table { margin: 0 auto; border-collapse: collapse; width: 50%; }\n");
+    htmlBuilder.append("th { text-align: center; background-color: #e0e0e0; }\n");
+    htmlBuilder.append("td, th { border: 1px solid #dddddd; text-align: left; padding: 8px; }\n");
+    htmlBuilder.append("</style>\n");
+
+    
+    
+    htmlBuilder.append("</head>\n");
+    htmlBuilder.append("<body>\n");
+
+        // Agregar el título centrado y grande
+    htmlBuilder.append("<h1 style=\"text-align: center;\">Reporte de Errores</h1>\n");
+
+    
+    // Generar una tabla para mostrar los errores
+    htmlBuilder.append("<table border=\"1\">\n");
+    htmlBuilder.append("<tr>\n");
+    htmlBuilder.append("<th>#</th>\n");
+    htmlBuilder.append("<th>Descripcion</th>\n");
+    htmlBuilder.append("<th>Tipo</th>\n");
+    htmlBuilder.append("<th>Linea</th>\n");
+    htmlBuilder.append("<th>Columna</th>\n");
+    htmlBuilder.append("</tr>\n");
+    Integer i = 0;
+    for (Error_ error : errorList) {
+        i = i + 1;
         htmlBuilder.append("<tr>\n");
-        htmlBuilder.append("<th>#</th>\n");
-        htmlBuilder.append("<th>Lexema</th>\n");
-        htmlBuilder.append("<th>Tipo</th>\n");
-        htmlBuilder.append("<th>Linea</th>\n");
-        htmlBuilder.append("<th>Columna</th>\n");
+        htmlBuilder.append("<td>").append(i).append("</td>\n");
+        htmlBuilder.append("<td>").append(error.getLexema()).append("</td>\n");
+        htmlBuilder.append("<td>").append(error.isLexico() ? "Léxico" : "Sintáctico").append("</td>\n");
+        htmlBuilder.append("<td>").append(error.getLinea()).append("</td>\n");
+        htmlBuilder.append("<td>").append(error.getColumna()).append("</td>\n");
         htmlBuilder.append("</tr>\n");
-        Integer i = 0;
-        for (Error_ error : errorList) {
-            i = i + 1;
-            htmlBuilder.append("<tr>\n");
-            htmlBuilder.append("<td>").append(i).append("</td>\n");
-            htmlBuilder.append("<td>").append(error.getLexema()).append("</td>\n");
-            htmlBuilder.append("<td>").append(error.isLexico() ? "Léxico" : "Sintáctico").append("</td>\n");
-            htmlBuilder.append("<td>").append(error.getLinea()).append("</td>\n");
-            htmlBuilder.append("<td>").append(error.getColumna()).append("</td>\n");
-            htmlBuilder.append("</tr>\n");
-        }
-
-        htmlBuilder.append("</table>\n");
-
-        // Cerrar el documento HTML
-        htmlBuilder.append("</body>\n");
-        htmlBuilder.append("</html>\n");
-
-        // Guardar el contenido HTML en un archivo
-        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(htmlBuilder.toString());
-            System.out.println("Archivo HTML guardado en: " + filePath);
-        } catch (IOException e) {
-            System.err.println("Error al guardar el archivo HTML: " + e.getMessage());
-            e.printStackTrace(); // Imprimir detalles del error
-        }
     }
+
+    htmlBuilder.append("</table>\n");
+
+    // Cerrar el documento HTML
+    htmlBuilder.append("</body>\n");
+    htmlBuilder.append("</html>\n");
+
+    // Guardar el contenido HTML en un archivo
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        writer.write(htmlBuilder.toString());
+        System.out.println("Archivo HTML guardado en: " + filePath);
+    } catch (IOException e) {
+        System.err.println("Error al guardar el archivo HTML: " + e.getMessage());
+        e.printStackTrace(); // Imprimir detalles del error
+    }
+}
 
     public static void tablaTokens(LinkedList<Token> listT, String filePath) {
         StringBuilder htmlBuilder = new StringBuilder();
@@ -500,8 +510,19 @@ public class gui extends javax.swing.JFrame {
         htmlBuilder.append("<head>\n");
         htmlBuilder.append("<meta charset=\"UTF-8\">\n");
         htmlBuilder.append("<title>Tabla de Tokens</title>\n");
+        
+        
+            // Agregar estilos CSS para centrar la tabla y dar color a los encabezados
+    htmlBuilder.append("<style>\n");
+    htmlBuilder.append("table { margin: 0 auto; border-collapse: collapse; width: 50%; }\n");
+    htmlBuilder.append("th { text-align: center; background-color: #e0e0e0; }\n");
+    htmlBuilder.append("td, th { border: 1px solid #dddddd; text-align: left; padding: 8px; }\n");
+    htmlBuilder.append("</style>\n");
+        
         htmlBuilder.append("</head>\n");
         htmlBuilder.append("<body>\n");
+    // Agregar el título centrado y grande
+    htmlBuilder.append("<h1 style=\"text-align: center;\">Reporte de Tokens</h1>\n");
 
         // Generar una tabla para mostrar los errores
         htmlBuilder.append("<table border=\"1\">\n");
@@ -549,9 +570,21 @@ public class gui extends javax.swing.JFrame {
         htmlBuilder.append("<head>\n");
         htmlBuilder.append("<meta charset=\"UTF-8\">\n");
         htmlBuilder.append("<title>Tabla de Simbolos</title>\n");
+      // Agregar estilos CSS para centrar la tabla y dar color a los encabezados
+    htmlBuilder.append("<style>\n");
+    htmlBuilder.append("table { margin: 0 auto; border-collapse: collapse; width: 50%; }\n");
+    htmlBuilder.append("th { text-align: center; background-color: #e0e0e0; }\n");
+    htmlBuilder.append("td, th { border: 1px solid #dddddd; text-align: left; padding: 8px; }\n");
+    htmlBuilder.append("</style>\n");      
+        
+        
         htmlBuilder.append("</head>\n");
         htmlBuilder.append("<body>\n");
 
+            // Agregar el título centrado y grande
+    htmlBuilder.append("<h1 style=\"text-align: center;\">Reporte de Simbolos</h1>\n");
+
+        
         // Generar una tabla para mostrar los errores
         htmlBuilder.append("<table border=\"1\">\n");
         htmlBuilder.append("<tr>\n");

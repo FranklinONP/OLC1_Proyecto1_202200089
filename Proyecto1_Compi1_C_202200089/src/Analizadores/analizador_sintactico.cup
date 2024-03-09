@@ -273,7 +273,7 @@ public static double[] convertirStringADoubleArray(String cadena) {
     public void syntax_error(Symbol s)
     {
         //System.out.println("Error de sintaxis en la linea " + (s.left) + ", columna " + (s.right) + ". No se esperaba " + s.value);
-        Error_ nuevoError = new Error_(s.left,s.right,s.value.toString(),false);
+        Error_ nuevoError = new Error_(s.left,s.right,"No se esperaba el siguiente token: "+s.value.toString(),false);
         gui.lista_errores.add(nuevoError);
     }
 
@@ -282,7 +282,7 @@ public static double[] convertirStringADoubleArray(String cadena) {
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
     {
         System.out.println("Error de sintaxis en la linea " + (s.left) + ", columna " + (s.right) + ". No se esperaba " + s.value );
-        Error_ nuevoError = new Error_(s.left,s.right,s.value.toString(),false);
+        Error_ nuevoError = new Error_(s.left,s.right,"No se esperaba el siguiente token: "+s.value.toString(),false);
         gui.lista_errores.add(nuevoError);
     }
  
@@ -577,8 +577,10 @@ print1::=
     RESERVADA_END:e6 
     PUNTO_Y_COMA:e7
     {: 
-        System.out.println("\n"+"Print desde el cup de la cadena: " + s+"\n");
-        gui.listaPrint.add((String) s);
+        
+String cuer = s.toString().replace("\"", "");
+        System.out.println("\n"+"Print desde el cup de la cadena: " + cuer+"\n");
+        gui.listaPrint.add(cuer);
     :};
 
 
@@ -594,11 +596,11 @@ combinado ::= combinacion:c combinado:cc {: RESULT = c.toString() + cc.toString(
             | combinacion:c {: RESULT = c.toString(); :}
             | combinacion:c comb:r{: RESULT = c.toString() + r.toString(); :};
 
-combinacion ::= STRING:s COMA {: RESULT = s; :}
-             | NUMEROS:n COMA {: RESULT = n.toString(); :}
-             | aritmeticas:ar COMA {: RESULT = ar; :}
-             | estadisticas:st COMA {: RESULT = st; :}
-             | ID:iddd COMA {: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);  :};
+combinacion ::= STRING:s COMA {: RESULT = s.toString()+","; :}
+             | NUMEROS:n COMA {: RESULT = n.toString()+","; :}
+             | aritmeticas:ar COMA {: RESULT = ar.toString()+","; :}
+             | estadisticas:st COMA {: RESULT = st.toString()+","; :}
+             | ID:iddd COMA {: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd)+",";  :};
 
 comb ::= STRING:s {: RESULT = s; :}
         | ID:iddd {: RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);  :}
@@ -631,7 +633,11 @@ print2::=RESERVADA_COLUMN
                cuerpo =c.toString().replaceAll(",", "\n");
             }
         }
-        cuerpo=t+"\n"+cuerpo;
+        int longitud = t.toString().length();
+        String lin = "=".repeat(longitud);
+
+        
+        cuerpo=lin+"\n"+t.toString()+"\n"+lin+"\n"+cuerpo;
         System.out.println("\n"+"Print desde el cup de la cadena: " + cuerpo+"\n");
         gui.listaPrint.add((String) cuerpo); 
         arregloTemporal="";

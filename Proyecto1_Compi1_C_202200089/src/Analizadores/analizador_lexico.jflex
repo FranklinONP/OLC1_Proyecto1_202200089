@@ -389,7 +389,7 @@ CERRADURA_LINEA="GrapLine"
 
 
 <YYINITIAL>  . {
-    Error_ nuevoError = new Error_(yyline,yycolumn,yytext(),true);
+    Error_ nuevoError = new Error_(yyline,yycolumn,"Se encontro el siguiente caracter" + "\n"+" el cual no pertenece al lenguaje" + "\n dataForge: "+yytext(),true);
     lista_errores.add(nuevoError);
 }
 

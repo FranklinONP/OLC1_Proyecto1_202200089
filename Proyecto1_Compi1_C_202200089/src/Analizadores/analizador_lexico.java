@@ -828,7 +828,7 @@ public class analizador_lexico implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { Error_ nuevoError = new Error_(yyline,yycolumn,yytext(),true);
+            { Error_ nuevoError = new Error_(yyline,yycolumn,"Se encontro el siguiente caracter" + "\n"+" el cual no pertenece al lenguaje" + "\n dataForge: "+yytext(),true);
     lista_errores.add(nuevoError);
             } 
             // fall through

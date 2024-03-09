@@ -797,7 +797,7 @@ public static double[] convertirStringADoubleArray(String cadena) {
     public void syntax_error(Symbol s)
     {
         //System.out.println("Error de sintaxis en la linea " + (s.left) + ", columna " + (s.right) + ". No se esperaba " + s.value);
-        Error_ nuevoError = new Error_(s.left,s.right,s.value.toString(),false);
+        Error_ nuevoError = new Error_(s.left,s.right,"No se esperaba el siguiente token: "+s.value.toString(),false);
         gui.lista_errores.add(nuevoError);
     }
 
@@ -806,7 +806,7 @@ public static double[] convertirStringADoubleArray(String cadena) {
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
     {
         System.out.println("Error de sintaxis en la linea " + (s.left) + ", columna " + (s.right) + ". No se esperaba " + s.value );
-        Error_ nuevoError = new Error_(s.left,s.right,s.value.toString(),false);
+        Error_ nuevoError = new Error_(s.left,s.right,"No se esperaba el siguiente token: "+s.value.toString(),false);
         gui.lista_errores.add(nuevoError);
     }
  
@@ -1791,8 +1791,10 @@ class CUP$analizador_sintactico$actions {
 		int e7right = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()).right;
 		Object e7 = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.peek()).value;
 		 
-        System.out.println("\n"+"Print desde el cup de la cadena: " + s+"\n");
-        gui.listaPrint.add((String) s);
+        
+String cuer = s.toString().replace("\"", "");
+        System.out.println("\n"+"Print desde el cup de la cadena: " + cuer+"\n");
+        gui.listaPrint.add(cuer);
     
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("print1",30, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-4)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
@@ -1919,7 +1921,7 @@ class CUP$analizador_sintactico$actions {
 		int sleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).right;
 		Object s = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).value;
-		 RESULT = s; 
+		 RESULT = s.toString()+","; 
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("combinacion",33, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -1931,7 +1933,7 @@ class CUP$analizador_sintactico$actions {
 		int nleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).left;
 		int nright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).right;
 		Object n = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).value;
-		 RESULT = n.toString(); 
+		 RESULT = n.toString()+","; 
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("combinacion",33, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -1943,7 +1945,7 @@ class CUP$analizador_sintactico$actions {
 		int arleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).left;
 		int arright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).right;
 		Object ar = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).value;
-		 RESULT = ar; 
+		 RESULT = ar.toString()+","; 
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("combinacion",33, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -1955,7 +1957,7 @@ class CUP$analizador_sintactico$actions {
 		int stleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).left;
 		int stright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).right;
 		Object st = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).value;
-		 RESULT = st; 
+		 RESULT = st.toString()+","; 
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("combinacion",33, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -1967,7 +1969,7 @@ class CUP$analizador_sintactico$actions {
 		int idddleft = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).left;
 		int idddright = ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).right;
 		Object iddd = (Object)((java_cup.runtime.Symbol) CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)).value;
-		 RESULT = obtenerValor(gui.listaSimbolos,(String) iddd);  
+		 RESULT = obtenerValor(gui.listaSimbolos,(String) iddd)+",";  
               CUP$analizador_sintactico$result = parser.getSymbolFactory().newSymbol("combinacion",33, ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.elementAt(CUP$analizador_sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$analizador_sintactico$stack.peek()), RESULT);
             }
           return CUP$analizador_sintactico$result;
@@ -2057,7 +2059,11 @@ class CUP$analizador_sintactico$actions {
                cuerpo =c.toString().replaceAll(",", "\n");
             }
         }
-        cuerpo=t+"\n"+cuerpo;
+        int longitud = t.toString().length();
+        String lin = "=".repeat(longitud);
+
+        
+        cuerpo=lin+"\n"+t.toString()+"\n"+lin+"\n"+cuerpo;
         System.out.println("\n"+"Print desde el cup de la cadena: " + cuerpo+"\n");
         gui.listaPrint.add((String) cuerpo); 
         arregloTemporal="";
