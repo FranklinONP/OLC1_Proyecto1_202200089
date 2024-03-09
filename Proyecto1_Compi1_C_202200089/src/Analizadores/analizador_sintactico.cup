@@ -259,7 +259,10 @@ public static double[] convertirStringADoubleArray(String cadena) {
    
     public static String obtenerValor(LinkedList<ts> lista, String nombreBuscado) {
         for (ts item : lista) {
+            System.out.println("Buscando: "+nombreBuscado+"      Iterando: "+item.getNombre() );
             if (item.getNombre().equals(nombreBuscado)) {
+                System.out.println("Econtro: "+item.getNombre() );
+                System.out.println("Con valor "+item.getValor());
                 return item.getValor();
             }
         }
@@ -306,7 +309,7 @@ non terminal primitivas,arreglos,print, graficas;
 non terminal tipo,dospuntos,contenidoVariable,aritmeticas,estadisticas;
 non terminal cuerpoLista,listaValores;
 non terminal media, mediana, moda,varianza,max,min,contenidoE;
-non terminal suma,resta,multiplicacion,division, modulo,valorAritmetico,tipoAnidada,anidacion;
+non terminal suma,resta,multiplicacion,division,cont, modulo,valorAritmetico,tipoAnidada,anidacion;
 non terminal desicionprint,print1,valorPrint,combinado,combinacion,comb,print2,pp,ppp;
 non terminal pie,barras,linea,histograma;
 non terminal sentencias,sentencias2,sentencias3,ejexG,ejeyG,tituloxG,tituloyG,tituloG,labelG,valuesG;
@@ -331,6 +334,9 @@ contenidoVariable::= NUMEROS:n{:RESULT=n.toString();:}
 //Arreglos
 //============================ Lista Valores ===================================
 //llevara arreglo tanto double como char, no importa ya que solo evaluara sintaxis no sentido
+
+cont::=listaValores:lv{:RESULT=lv;:}|IDE:ide{:arregloTemporal=obtenerValor(gui.listaSimbolos,(String) ide);:};
+
 listaValores::= CORCHETE_IZQUIERDO cuerpoLista:cl CORCHETE_DERECHO {:arregloNumeros=arregloTemporal;
                 System.out.println(" arrS:"+arregloTemporal+" arrN:"+arregloNumeros);:};
 
@@ -369,14 +375,14 @@ arreglos::= RESERVADA_ARRAY
             dospuntos
             IDE:ide
             MENOR_QUE GUION
-            listaValores:lv
+            cont:lv
             RESERVADA_END PUNTO_Y_COMA
             {:
                 //arregloTemporal="["+arregloTemporal+"]";
                 //arregloNumeros=arregloTemporal;
                 ts news = new ts(ide.toString(),arregloTemporal,"Array tipo "+t.toString(),lvleft,lvright);
                 gui.listaSimbolos.add(news);
-                arregloTemporal="";
+                arregloTemporal="";       
             :};
 //==============================================================================
 
