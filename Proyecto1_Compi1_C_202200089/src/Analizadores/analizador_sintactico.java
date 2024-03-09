@@ -2062,8 +2062,8 @@ String cuer = s.toString().replace("\"", "");
         int longitud = t.toString().length();
         String lin = "=".repeat(longitud);
 
-        
-        cuerpo=lin+"\n"+t.toString()+"\n"+lin+"\n"+cuerpo;
+        String tit = t.toString().replace("\"", "");
+        cuerpo=lin+"\n"+tit+"\n"+lin+"\n"+cuerpo;
         System.out.println("\n"+"Print desde el cup de la cadena: " + cuerpo+"\n");
         gui.listaPrint.add((String) cuerpo); 
         arregloTemporal="";
@@ -2445,8 +2445,8 @@ String cuer = s.toString().replace("\"", "");
         }
         
         ImageCreator.createHistogramImage(arregloInt,tituloGG);
-
-        String r="\n                                "+tituloGG+"\n";
+        String tit = tituloGG.replace("\"", "");
+        String r="\n                                "+tit+"\n";
         r=r+"============================================="+"\n";
         r=r+"Valor                  Fb                      Fa                      Fr"+"\n";
         r=r+"============================================="+"\n";
